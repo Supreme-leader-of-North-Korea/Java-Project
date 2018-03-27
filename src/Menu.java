@@ -1,10 +1,10 @@
-import java.util.Scanner;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Menu {
 	
 	//List of data
-	ArrayList<Guest>guestList = new ArrayList<Guest>();
+	static ArrayList<Guest>guestList = new ArrayList<Guest>();
 	
 	public static void mainMenu(){
         System.out.println(" ===========================================");
@@ -20,7 +20,7 @@ public class Menu {
 	
 //Guest Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void guestMenu() {
+	public static void guestMenu() throws FileNotFoundException {
 		
 		int choice = 0;
         
@@ -31,13 +31,16 @@ public class Menu {
         	
         	//Get user's choice
         	System.out.println(" -------------------------------------------");
-            choice = Menu.readInt("Please enter your choice: ");
+            choice = Menu.readInt(" Please enter your choice: ");
+            System.out.println(" -------------------------------------------");
             
             switch(choice) {
-                case 1: System.out.println("Option 1");
+                case 1: System.out.println("Creating new guest");
+                		createNewGuest();
                 		break;
                 		
                 case 5: System.out.println("Returning to main menu...");
+                		FileIO.exportAll(guestList);
 						break;
 						
 				default:System.out.println("Wrong Input. Please input from 1 - 5.");
@@ -58,6 +61,21 @@ public class Menu {
         System.out.println(" * 5. Quit                        		   *");
     }
 	
+	public static void createNewGuest() {
+		Guest g = new Guest();
+		
+        g.setName(Menu.readString("Enter guest name: "));
+		g.setAddress(Menu.readString("Enter guest address: "));
+		g.setCountry(Menu.readString("Enter guest country: "));
+		g.setGender(Menu.readString("Enter guest gender: "));
+		g.setNationality(Menu.readString("Enter guest nationality: "));
+		g.setIdentity(Menu.readString("Enter guest identity[(D)riving License/(P)assport]: "));
+		g.setCreditDetails(Menu.readString("Enter guest credit card detail: "));
+		g.setContact(Menu.readString("Enter guest contact number: "));
+		
+		guestList.add(g);
+	}
+	
 //Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	public static void roomMenu() {
@@ -71,7 +89,7 @@ public class Menu {
         	
         	//Get user's choice
         	System.out.println(" -------------------------------------------");
-            choice = Menu.readInt("Please enter your choice: ");
+            choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
                 case 1: System.out.println("Option 1");
@@ -114,7 +132,7 @@ public class Menu {
         	
         	//Get user's choice
         	System.out.println(" -------------------------------------------");
-            choice = Menu.readInt("Please enter your choice: ");
+            choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
                 case 1: System.out.println("Option 1");
@@ -155,7 +173,7 @@ public class Menu {
         	
         	//Get user's choice
         	System.out.println(" -------------------------------------------");
-            choice = Menu.readInt("Please enter your choice: ");
+            choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
                 case 1: System.out.println("Option 1");
@@ -197,7 +215,7 @@ public class Menu {
         	
         	//Get user's choice
         	System.out.println(" -------------------------------------------");
-            choice = Menu.readInt("Please enter your choice: ");
+            choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
                 case 1: System.out.println("Option 1");

@@ -1,8 +1,9 @@
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class HRPSApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException{
     	
         int choice = 0;
         
@@ -13,7 +14,7 @@ public class HRPSApp {
         	
             //Get user's choice
             System.out.println(" -------------------------------------------");
-            choice = Menu.readInt("Please enter your choice: ");
+            choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
                 case 1: Menu.guestMenu();
