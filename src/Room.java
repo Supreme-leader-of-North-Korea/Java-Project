@@ -6,7 +6,7 @@ public abstract class Room {
 		}
 		
 		//Attributes
-		private int roomId;
+		private string roomId;
 		private int customerName;
 		private String bedType;
 		private RoomStatus roomStatus;
