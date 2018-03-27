@@ -6,13 +6,13 @@ public abstract class Room {
 		}
 		
 		//Attributes
-		private string roomId;
+		private String roomId;
 		private int customerName;
 		private String bedType;
 		private RoomStatus roomStatus;
 		
 		//Methods
-		public Room(int roomId, int customerName, String bedType){
+		public Room(String roomId, int customerName, String bedType){
 			this.roomId = roomId;
 			this.customerName = customerName;
 			this.bedType = bedType;
@@ -20,7 +20,7 @@ public abstract class Room {
 		}
 		
 		//Getter and setters
-		public string getRoomId() {	
+		public String getRoomId() {	
 			return roomId;
 		}
 		
@@ -36,7 +36,7 @@ public abstract class Room {
 			return roomStatus;
 		}
 
-		public void setRoomId(int roomId) {
+		public void setRoomId(String roomId) {
 			this.roomId = roomId;
 		}
 

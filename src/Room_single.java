@@ -8,7 +8,7 @@ public class Room_single extends Room {
 	final boolean withSmoking = false;
 	
 	//Constructor
-	public Room_single(int roomId, int customerName, String bedType) {
+	public Room_single(String roomId, int customerName, String bedType) {
 		super(roomId, customerName, bedType);
 	}
 

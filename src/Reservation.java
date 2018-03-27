@@ -1,44 +1,44 @@
 
 public class Reservation {
-  public enum ReservationStatus {
+		public enum ReservationStatus {
 			CONFIRM, IN_WAITLIST, CHECK_IN, EXPIRED
-				}
+		}
 		
 		//Attributes
-		private int roomId;
+		private int reservationId;
 		private int customerName;
-		private RoomStatus roomStatus;
-    		private int checkInDate;
+		private ReservationStatus reserveStatus;
+    	private String checkInDate;
 		
 		//Methods
-		public Reservation(int roomId, int customerName, String checkInDate){
-			this.roomId = roomId;
+		public Reservation(int reservationId, int customerName, String checkInDate){
+			this.reservationId = reservationId;
 			this.customerName = customerName;
 			this.checkInDate = checkInDate;
 		}
 		
 		//Getter and setters
-		public int getRoomId() {	
-			return roomId;
+		public int getReservationId() {	
+			return reservationId;
 		}
 		
 		public int getCustomerName() {
 			return customerName;
 		}
 		
-		public RoomStatus getRoomStatus() {
-			return roomStatus;
+		public ReservationStatus getReservationStatus() {
+			return reserveStatus;
 		}
 
-		public void setRoomId(int roomId) {
-			this.roomId = roomId;
+		public void setRoomId(int reservationId) {
+			this.reservationId = reservationId;
 		}
 
 		public void setCustomerName(int customerName) {
 			this.customerName = customerName;
 		}
 
-		public void setRoomStatus(RoomStatus roomStatus) {
-			this.roomStatus = roomStatus;
+		public void setReservationStatus(ReservationStatus reserveStatus) {
+			this.reserveStatus = reserveStatus;
 		}	
 }
