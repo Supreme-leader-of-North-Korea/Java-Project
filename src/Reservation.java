@@ -2,13 +2,13 @@
 public class Reservation {
   public enum ReservationStatus {
 			CONFIRM, IN_WAITLIST, CHECK_IN, EXPIRED
-		}
+				}
 		
 		//Attributes
 		private int roomId;
 		private int customerName;
 		private RoomStatus roomStatus;
-    private int checkInDate;
+    		private int checkInDate;
 		
 		//Methods
 		public Reservation(int roomId, int customerName, String checkInDate){
