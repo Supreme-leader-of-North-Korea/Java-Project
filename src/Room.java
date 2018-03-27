@@ -1,5 +1,5 @@
 
-public class Room {
+public abstract class Room {
 	
 		public enum RoomStatus {
 			VACANT, OCCUPIED, RESERVED, UNDER_MAINTENANCE
