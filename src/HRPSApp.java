@@ -3,11 +3,19 @@ import java.util.Scanner;
 public class HRPSApp {
 
     public static void main(String[] args) {
+    	
         int choice;
+        
+        //Open scanner
         Scanner sc = new Scanner(System.in);
+        
+        //Print menu
         Menu.mainMenu();
+        
+        //Select menu
         do {
             choice = sc.nextInt();
+            
             switch(choice) {
                 case 1: Menu.guestMenu();
                 		break;
@@ -24,7 +32,9 @@ public class HRPSApp {
 				default:System.out.println("Wrong Input. Please input from 1 - 6.");
 						break;
             }
-        }while(choice != 6);
+        } while (choice != 6);
+        
+        //Close Scanner
+        sc.close();
     }
-    
 }

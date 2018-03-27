@@ -3,6 +3,7 @@ public class Room {
 	//attributes
 		private int roomId;
 		private boolean assigned;
+		private int customerName;
 		
 		//methods
 		

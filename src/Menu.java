@@ -1,5 +1,6 @@
 
 public class Menu {
+	
 	public static void mainMenu(){
         System.out.println(" ===========================================");
         System.out.println(" *         Hotel Management System         *");
