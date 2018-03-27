@@ -5,9 +5,19 @@ public class Guest {
     private String name, creditDetails, address, country, gender, nationality, identity, contact;
     
     //Constructor
-    public Guest() {
+    public Guest(String name, String creditDetails, String address, String country, String gender, String nationality,
+			String identity, String contact) {
 		super();
+		this.name = name;
+		this.creditDetails = creditDetails;
+		this.address = address;
+		this.country = country;
+		this.gender = gender;
+		this.nationality = nationality;
+		this.identity = identity;
+		this.contact = contact;
 	}
+    
 	
 	//Getter and setters
 	public String getName() {

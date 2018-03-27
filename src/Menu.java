@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -26,6 +27,9 @@ public class Menu {
         
         //Select menu
         do {
+        	//Parse and populate guest list from data file
+        	FileIO.parseGuestList(guestList);
+        	
         	//Print guest menu
         	printGuestMenu();
         	
@@ -62,17 +66,17 @@ public class Menu {
     }
 	
 	public static void createNewGuest() {
-		Guest g = new Guest();
 		
-        g.setName(Menu.readString("Enter guest name: "));
-		g.setAddress(Menu.readString("Enter guest address: "));
-		g.setCountry(Menu.readString("Enter guest country: "));
-		g.setGender(Menu.readString("Enter guest gender: "));
-		g.setNationality(Menu.readString("Enter guest nationality: "));
-		g.setIdentity(Menu.readString("Enter guest identity[(D)riving License/(P)assport]: "));
-		g.setCreditDetails(Menu.readString("Enter guest credit card detail: "));
-		g.setContact(Menu.readString("Enter guest contact number: "));
+		String name = Menu.readString("Enter guest name: ");
+		String addr = Menu.readString("Enter guest address: ");
+		String country = Menu.readString("Enter guest country: ");
+		String gender = Menu.readString("Enter guest gender: ");
+		String nat = Menu.readString("Enter guest nationality: ");
+		String idt = Menu.readString("Enter guest identity[(D)riving License/(P)assport]: ");
+		String ccd = Menu.readString("Enter guest credit card detail: ");
+		String contact = Menu.readString("Enter guest contact number: ");
 		
+		Guest g = new Guest(name, addr, country, gender, nat, idt, ccd, contact);
 		guestList.add(g);
 	}
 	
