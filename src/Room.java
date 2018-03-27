@@ -1,30 +1,54 @@
 
 public class Room {
-	//attributes
-		private int roomId;
-		private boolean assigned;
-		private int customerName;
-		
-		//methods
-		
-		public Room(int room_Id){
-			roomId = room_Id;
+	
+		public enum RoomStatus {
+			VACANT, OCCUPIED, RESERVED, UNDER_MAINTENANCE
 		}
-		public int getRoomID() {	
+		
+		//Attributes
+		private int roomId;
+		private int customerName;
+		private String bedType;
+		private RoomStatus roomStatus;
+		
+		//Methods
+		public Room(int roomId, int customerName, String bedType){
+			this.roomId = roomId;
+			this.customerName = customerName;
+			this.bedType = bedType;
+			roomStatus = RoomStatus.VACANT;
+		}
+		
+		//Getter and setters
+		public int getRoomId() {	
 			return roomId;
 		}
-		 public int getCustomerName(){
-			 return customerName;
-		 }
-		 public boolean isOccupied() {
-			 return assigned;
-		 }
-		 public void assign(int cust_name) {
-			 customerName = cust_name;
-			 assigned = true;
-		 }
-		 public void unAssign() {
-			 assigned = false;
-		 }
+		
+		public int getCustomerName() {
+			return customerName;
+		}
+		
+		public String getBedType() {
+			return bedType;
+		}
+		
+		public RoomStatus getRoomStatus() {
+			return roomStatus;
+		}
 
+		public void setRoomId(int roomId) {
+			this.roomId = roomId;
+		}
+
+		public void setCustomerName(int customerName) {
+			this.customerName = customerName;
+		}
+
+		public void setBedType(String bedType) {
+			this.bedType = bedType;
+		}
+
+		public void setRoomStatus(RoomStatus roomStatus) {
+			this.roomStatus = roomStatus;
+		}	
 }
