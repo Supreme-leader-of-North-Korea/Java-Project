@@ -20,7 +20,7 @@ public abstract class Room {
 		}
 		
 		//Getter and setters
-		public int getRoomId() {	
+		public string getRoomId() {	
 			return roomId;
 		}
 		
