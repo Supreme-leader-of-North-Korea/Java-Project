@@ -5,6 +5,12 @@ public class HRPSApp {
 
     public static void main(String[] args) throws FileNotFoundException{
     	
+    	//List of data
+    	ArrayList<Guest>guestList = new ArrayList<Guest>();
+    	
+    	//Parse and populate guest list from data file
+    	FileIO.parseGuestList(guestList);
+    	
         int choice = 0;
         
         //Select menu
@@ -17,7 +23,7 @@ public class HRPSApp {
             choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
-                case 1: Menu.guestMenu();
+                case 1: Menu.guestMenu(guestList);
                 		break;
 				case 2: Menu.roomMenu();		
 						break;

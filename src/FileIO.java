@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public class FileIO {
 	}
 	
 	public static void exportAll (ArrayList<Guest> glist) throws FileNotFoundException {
-		PrintWriter fileOut = new PrintWriter (fileName);
+		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 		
 		fileOut.println("Guest List");
 		

@@ -4,9 +4,6 @@ import java.util.*;
 
 public class Menu {
 	
-	//List of data
-	static ArrayList<Guest>guestList = new ArrayList<Guest>();
-	
 	public static void mainMenu(){
         System.out.println(" ===========================================");
         System.out.println(" *         Hotel Management System         *");
@@ -21,15 +18,12 @@ public class Menu {
 	
 //Guest Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void guestMenu() throws FileNotFoundException {
+	public static void guestMenu(ArrayList<Guest>guestList) throws FileNotFoundException {
 		
 		int choice = 0;
         
         //Select menu
         do {
-        	//Parse and populate guest list from data file
-        	FileIO.parseGuestList(guestList);
-        	
         	//Print guest menu
         	printGuestMenu();
         	
@@ -40,7 +34,12 @@ public class Menu {
             
             switch(choice) {
                 case 1: System.out.println("Creating new guest");
-                		createNewGuest();
+                		createNewGuest(guestList);
+                		break;
+                		
+                case 2: System.out.println("Updating guest details");
+                		updateGuest(guestList);
+                		FileIO.exportAll(guestList);
                 		break;
                 		
                 case 5: System.out.println("Returning to main menu...");
@@ -65,7 +64,7 @@ public class Menu {
         System.out.println(" * 5. Quit                        		   *");
     }
 	
-	public static void createNewGuest() {
+	public static void createNewGuest(ArrayList<Guest>guestList) {
 		
 		String name = Menu.readString("Enter guest name: ");
 		String addr = Menu.readString("Enter guest address: ");
@@ -78,6 +77,62 @@ public class Menu {
 		
 		Guest g = new Guest(name, addr, country, gender, nat, idt, ccd, contact);
 		guestList.add(g);
+	}
+	
+	public static void updateGuest(ArrayList<Guest>guestList) {
+		//Ask for guest identity as primary key
+		String identifier = Menu.readString("Please enter identity of guest to update: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (Guest g: guestList) {
+			if (identifier.equals(g.getIdentity())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Guest with identity: " + identifier + " not found!");
+		} else {
+			System.out.println("Guest with identity: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println("Please enter new guest details ('Enter' key to skip)");
+			
+			String name = Menu.readString("Enter new guest name: ");
+			if (!name.equals("")) 
+				guestList.get(index).setName(name);
+			
+			String addr = Menu.readString("Enter new guest address: ");
+			if (!addr.equals("")) 
+				guestList.get(index).setAddress(addr);
+			
+			String country = Menu.readString("Enter new guest country: ");
+			if (!country.equals("")) 
+				guestList.get(index).setCountry(country);
+			
+			String gender = Menu.readString("Enter new guest gender: ");
+			if (!gender.equals("")) 
+				guestList.get(index).setGender(gender);
+			
+			String nat = Menu.readString("Enter new guest nationality: ");
+			if (!nat.equals("")) 
+				guestList.get(index).setNationality(nat);
+			
+			String ccd = Menu.readString("Enter new guest credit card detail: ");
+			if (!ccd.equals("")) 
+				guestList.get(index).setCreditDetails(ccd);;
+			
+			String contact = Menu.readString("Enter new guest contact number: ");
+			if (!contact.equals("")) 
+				guestList.get(index).setContact(contact);
+					
+			System.out.println(" -------------------------------------------");
+			System.out.println(" Guest updated!");
+		}
 	}
 	
 //Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
