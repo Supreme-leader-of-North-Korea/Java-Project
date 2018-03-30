@@ -45,12 +45,14 @@ public class Menu {
                 case 4: System.out.println("Returning to main menu...");
                 	FileIO.exportAll(guestList);
 			break;
-						
+		case 5: System.out.println("Exiting...");
+			System.exit(0);
+			break;		
 		default: System.out.println("Wrong Input. Please input from 1 - 5.");
 			 break;
             }
             
-        } while (choice != 5);  
+        } while (choice != 4);  
 	}
 	
 	public static void printGuestMenu() {
