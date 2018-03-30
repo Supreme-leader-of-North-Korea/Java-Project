@@ -16,6 +16,11 @@ public class FileIO {
 	
 	//Retrieve data from file
 	public static void parseGuestList (ArrayList<Guest> glist) throws FileNotFoundException{
+		try { // to create file when it does not exist, else Exception will be thrown
+			file.createNewFile();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		Scanner myScanner = new Scanner (new File (fileName));
 		String str;
 		
