@@ -41,7 +41,9 @@ public class Menu {
                 		updateGuest(guestList);
                 		FileIO.exportAll(guestList);
                 		break;
-                		
+                case 3: System.out.println("Updating guest details");
+                	searchGuest(guestList);
+                	break;			
                 case 4: System.out.println("Returning to main menu...");
                 	FileIO.exportAll(guestList);
 			break;
@@ -138,6 +140,40 @@ public class Menu {
 		}
 	}
 	
+	public static void searchGuest(ArrayList<Guest>guestList) {
+		//Ask for guest name as primary key
+		String identifier = Menu.readString("Please enter the name of guest you would like to search: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (Guest g: guestList) {
+			System.out.println(g.getName());
+			if (identifier.equals(g.getName())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Guest with name: " + identifier + " not found!");
+		} else {
+			System.out.println("Guest with name: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println("Name: " + guestList.get(index).getName() + 
+							   "\nAddress: " + guestList.get(index).getAddress() + 
+							   "\nCountry: " + guestList.get(index).getCountry() + 
+							   "\nGender: " + guestList.get(index).getGender() + 
+							   "\nNationality: " + guestList.get(index).getNationality() + 
+							   "\nIdentity: " + guestList.get(index).getIdentity() +
+							   "\nCredit Card Details: " + guestList.get(index).getCreditDetails() +
+							   "\nContact: " + guestList.get(index).getContact());
+			System.out.println(" -------------------------------------------");
+			
+		}
+	}
 //Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	public static void roomMenu() {
