@@ -42,12 +42,12 @@ public class Menu {
                 		FileIO.exportAll(guestList);
                 		break;
                 		
-                case 5: System.out.println("Returning to main menu...");
-                		FileIO.exportAll(guestList);
-						break;
+                case 4: System.out.println("Returning to main menu...");
+                	FileIO.exportAll(guestList);
+			break;
 						
-				default:System.out.println("Wrong Input. Please input from 1 - 5.");
-						break;
+		default: System.out.println("Wrong Input. Please input from 1 - 5.");
+			 break;
             }
             
         } while (choice != 5);  
