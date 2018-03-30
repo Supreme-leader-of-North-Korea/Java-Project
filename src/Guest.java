@@ -5,8 +5,8 @@ public class Guest {
     private String name, creditDetails, address, country, gender, nationality, identity, contact;
     
     //Constructor
-    public Guest(String name, String creditDetails, String address, String country, String gender, String nationality,
-			String identity, String contact) {
+    public Guest(String name, String address, String country, String gender, String nationality,
+			String identity, String creditDetails,String contact) {
 		super();
 		this.name = name;
 		this.creditDetails = creditDetails;
