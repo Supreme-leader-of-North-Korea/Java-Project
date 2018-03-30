@@ -46,6 +46,7 @@ public class Menu {
                 	FileIO.exportAll(guestList);
 			break;
 		case 5: System.out.println("Exiting...");
+			FileIO.exportAll(guestList);
 			System.exit(0);
 			break;		
 		default: System.out.println("Wrong Input. Please input from 1 - 5.");
@@ -156,14 +157,16 @@ public class Menu {
                 case 1: System.out.println("Option 1");
                 		break;
                 		
-                case 5: System.out.println("Returning to main menu...");
+                case 7: System.out.println("Returning to main menu...");
 						break;
-						
-				default:System.out.println("Wrong Input. Please input from 1 - 8.");
-						break;
+		case 8: System.out.println("Exiting...");
+			System.exit(0);
+			break;		
+		default:System.out.println("Wrong Input. Please input from 1 - 8.");
+			break;
             }
             
-        } while (choice != 8);  
+        } while (choice != 7);  
 	}
 	
 	public static void printRoomMenu() {
@@ -199,14 +202,16 @@ public class Menu {
                 case 1: System.out.println("Option 1");
                 		break;
                 		
-                case 5: System.out.println("Returning to main menu...");
-						break;
-						
+                case 4: System.out.println("Returning to main menu...");
+			break;
+		case 5: System.out.println("Exiting...");
+			System.exit(0);
+			break;				
 				default:System.out.println("Wrong Input. Please input from 1 - 5.");
 						break;
             }
             
-        } while (choice != 5);
+        } while (choice != 4);
 	}
 	
 	public static void printRoomServiceMenu() {
@@ -234,7 +239,7 @@ public class Menu {
         	
         	//Get user's choice
         	System.out.println(" -------------------------------------------");
-            choice = Menu.readInt(" Please enter your choice: ");
+		choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
                 case 1: System.out.println("Option 1");
@@ -242,12 +247,14 @@ public class Menu {
                 		
                 case 5: System.out.println("Returning to main menu...");
 						break;
-						
-				default:System.out.println("Wrong Input. Please input from 1 - 6.");
-						break;
+		case 6: System.out.println("Exiting...");
+			System.exit(0);
+			break;				
+		default:System.out.println("Wrong Input. Please input from 1 - 6.");
+			break;
             }
             
-        } while (choice != 6);
+        } while (choice != 5);
 		
 	}
 	
@@ -282,14 +289,16 @@ public class Menu {
                 case 1: System.out.println("Option 1");
                 		break;
                 		
-                case 5: System.out.println("Returning to main menu...");
+                case 4: System.out.println("Returning to main menu...");
 						break;
-						
-				default:System.out.println("Wrong Input. Please input from 1 - 5.");
-						break;
+		case 5: System.out.println("Exiting...");
+			System.exit(0);
+			break;						
+		default:System.out.println("Wrong Input. Please input from 1 - 5.");
+			break;
             }
             
-        } while (choice != 5);
+        } while (choice != 4);
 	}
     
     public static void printPaymentMenu() {
