@@ -55,13 +55,13 @@ public class Menu {
 	
 	public static void printGuestMenu() {
 		System.out.println(" ===========================================");
-        System.out.println(" *                  Guest                  *");
-        System.out.println(" ===========================================");
-        System.out.println(" * 1. New Guest                            *");
-        System.out.println(" * 2. Update Guest Details                 *");
-        System.out.println(" * 3. Search Guest Details                 *");
-        System.out.println(" * 4. Previous          		       *");
-        System.out.println(" * 5. Quit                        	       *");
+        	System.out.println(" *                  Guest                  *");
+        	System.out.println(" ===========================================");
+        	System.out.println(" * 1. New Guest                            *");
+        	System.out.println(" * 2. Update Guest Details                 *");
+        	System.out.println(" * 3. Search Guest Details                 *");
+        	System.out.println(" * 4. Previous          		       *");
+        	System.out.println(" * 5. Quit                        	       *");
     }
 	
 	public static void createNewGuest(ArrayList<Guest>guestList) {
