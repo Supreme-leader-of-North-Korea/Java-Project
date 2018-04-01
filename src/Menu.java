@@ -174,7 +174,7 @@ public class Menu {
 	}
 //Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void roomMenu() {
+	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) {
 		
 		int choice = 0;
         
@@ -190,14 +190,16 @@ public class Menu {
             switch(choice) {
                 case 1: System.out.println("Option 1");
                 		break;
-                		
+                case 6: System.out.println("Printing Room Status statistic report");
+                		printRoomReport(roomList);
+                		break;
                 case 7: System.out.println("Returning to main menu...");
 						break;
-		case 8: System.out.println("Exiting...");
-			System.exit(0);
-			break;		
-		default:System.out.println("Wrong Input. Please input from 1 - 8.");
-			break;
+                case 8: System.out.println("Exiting...");
+                		System.exit(0);
+                		break;		
+                default:System.out.println("Wrong Input. Please input from 1 - 8.");
+                		break;
             }
             
         } while (choice != 7);  
@@ -216,6 +218,160 @@ public class Menu {
         System.out.println(" * 7. Previous                             *");
         System.out.println(" * 8. Quit                                 *");
     }
+	
+	public static void printRoomReport(ArrayList<Room>roomList) {
+		
+		//Print room occupancy rate
+		System.out.println("Printing occupancy rate");
+		System.out.println(" -------------------------------------------");
+		
+		//Get single room occupancy rate
+		int single_occuCount = 0;
+		int single_totalCount = 0;
+		ArrayList<Room>single_occuList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r instanceof Room_single) {
+				if (r.getRoomStatus() == Room.RoomStatus.OCCUPIED) {
+					single_occuCount++;
+					single_occuList.add(r);
+				}
+				single_totalCount++;
+			}
+		}
+		
+		//Get double room occupancy rate
+		int double_occuCount = 0;
+		int double_totalCount = 0;
+		ArrayList<Room>double_occuList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r instanceof Room_double) {
+				if (r.getRoomStatus() == Room.RoomStatus.OCCUPIED) {
+					double_occuCount++;
+					double_occuList.add(r);
+				}
+				double_totalCount++;
+			}
+		}
+		
+		//Get deluxe room occupancy rate
+		int deluxe_occuCount = 0;
+		int deluxe_totalCount = 0;
+		ArrayList<Room>deluxe_occuList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r instanceof Room_deluxe) {
+				if (r.getRoomStatus() == Room.RoomStatus.OCCUPIED) {
+					deluxe_occuCount++;
+					deluxe_occuList.add(r);
+				}
+				deluxe_totalCount++;
+			}
+		}
+		
+		//Get deluxe room occupancy rate
+		int vip_occuCount = 0;
+		int vip_totalCount = 0;
+		ArrayList<Room>vip_occuList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r instanceof Room_vip) {
+				if (r.getRoomStatus() == Room.RoomStatus.OCCUPIED) {
+					vip_occuCount++;
+					vip_occuList.add(r);
+				}
+				vip_totalCount++;
+			}
+		}
+		
+		System.out.println("Single:  Number: " + single_occuCount + " out of " + single_totalCount);
+		System.out.print("         Rooms: ");
+		printRooms (single_occuList);
+		
+		System.out.println("Double:  Number: " + double_occuCount + " out of " + double_totalCount);
+		System.out.print("         Rooms: ");
+		printRooms (double_occuList);
+		
+		System.out.println("Deluxe:  Number: " + deluxe_occuCount + " out of " + deluxe_totalCount);
+		System.out.print("         Rooms: ");
+		printRooms (deluxe_occuList);
+		
+		System.out.println("VIP:     Number: " + vip_occuCount + " out of " + vip_totalCount);
+		System.out.print("         Rooms: ");
+		printRooms (vip_occuList);
+		
+		//Print room status
+		System.out.println("Printing room status");
+		System.out.println(" -------------------------------------------");
+		
+		//Get vacant rooms
+		ArrayList<Room>vacantList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r.getRoomStatus() == Room.RoomStatus.VACANT) {
+				vacantList.add(r);
+			}
+		}
+		
+		//Get occupied rooms
+		ArrayList<Room>occupiedList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r.getRoomStatus() == Room.RoomStatus.OCCUPIED) {
+				occupiedList.add(r);
+			}
+		}
+		
+		//Get reserved rooms
+		ArrayList<Room>resList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r.getRoomStatus() == Room.RoomStatus.RESERVED) {
+				resList.add(r);
+			}
+		}
+		
+		//Get maintenance rooms
+		ArrayList<Room>maintList = new ArrayList<Room>();
+		
+		for (Room r: roomList) {
+			if (r.getRoomStatus() == Room.RoomStatus.UNDER_MAINTENANCE) {
+				maintList.add(r);
+			}
+		}
+		
+		System.out.println("Vacant: ");
+		System.out.print("         Rooms: ");
+		printRooms (vacantList);
+		
+		System.out.println("Occupied: ");
+		System.out.print("         Rooms: ");
+		printRooms (occupiedList);
+		
+		System.out.println("Reserved: ");
+		System.out.print("         Rooms: ");
+		printRooms (resList);
+		
+		System.out.println("Under maintenance: ");
+		System.out.print("         Rooms: ");
+		printRooms (maintList);
+	}
+	
+	public static void printRooms (ArrayList<Room>occuList) {
+		
+		if (occuList.isEmpty())
+			System.out.print("None");
+		else {	
+			for (Room r: occuList) {
+				String roomId = r.getRoomId();
+				roomId = roomId.substring(0, 2) + "-" + roomId.substring(2, roomId.length());
+				System.out.print(roomId + " ");
+			}
+		}
+		
+		System.out.println("\n");
+	}
 
 //Room Service Menu -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
