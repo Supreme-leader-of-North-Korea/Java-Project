@@ -79,7 +79,7 @@ public class FileIO {
 			
 			Room temp;
 			
-			switch (arr[2]) {
+			switch (arr[4]) {
 				case "single": temp = new Room_single (arr[0], Integer.parseInt(arr[1]), arr[2], Room.strToRoomStatus(arr[3]));
 							   break;
 				case "double": temp = new Room_double (arr[0], Integer.parseInt(arr[1]), arr[2], Room.strToRoomStatus(arr[3]));
@@ -112,7 +112,16 @@ public class FileIO {
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getCustomerName() + "|");
 		fout.print(r.getBedType() + "|");
-		fout.println(r.getRoomStatus());
+		fout.print(r.getRoomStatus() + "|");
+		
+		if (r instanceof Room_single)
+			fout.println("single");
+		else if (r instanceof Room_double)
+			fout.println("double");
+		else if (r instanceof Room_deluxe)
+			fout.println("deluxe");
+		else
+			fout.println("vip");
 	}
 	
 	public static void exportGuest (Guest g, PrintWriter fout) {

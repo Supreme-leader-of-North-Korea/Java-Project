@@ -26,7 +26,7 @@ public class HRPSApp {
             switch(choice) {
                 case 1: Menu.guestMenu(guestList, roomList);
                 		break;
-				case 2: Menu.roomMenu();		
+				case 2: Menu.roomMenu(guestList, roomList);		
 						break;
 				case 3: Menu.roomServiceMenu();		
 						break;
