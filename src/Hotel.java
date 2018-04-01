@@ -4,8 +4,6 @@ public class Hotel {
     private String name, address, country, gender, nationality, identity;
     private int credit, contact;
     
-    
-    
     public void create() {
         Scanner s = new Scanner(System.in);
         System.out.println("Please enter your name: ");

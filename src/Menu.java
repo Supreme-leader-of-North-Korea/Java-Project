@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -41,32 +40,32 @@ public class Menu {
                 		updateGuest(guestList);
                 		FileIO.exportAll(guestList);
                 		break;
-                case 3: System.out.println("Updating guest details");
-                	searchGuest(guestList);
-                	break;			
+                case 3: System.out.println("Searching guest details");
+                		searchGuest(guestList);
+                		break;			
                 case 4: System.out.println("Returning to main menu...");
-                	FileIO.exportAll(guestList);
-			break;
-		case 5: System.out.println("Exiting...");
-			FileIO.exportAll(guestList);
-			System.exit(0);
-			break;		
-		default: System.out.println("Wrong Input. Please input from 1 - 5.");
-			 break;
+                		FileIO.exportAll(guestList);
+                		break;
+				case 5: System.out.println("Exiting...");
+						FileIO.exportAll(guestList);
+						System.exit(0);
+						break;		
+				default: System.out.println("Wrong Input. Please input from 1 - 5.");
+						 break;
             }
             
         } while (choice != 4);  
 	}
 	
 	public static void printGuestMenu() {
-		System.out.println(" ===========================================");
+			System.out.println(" ===========================================");
         	System.out.println(" *                  Guest                  *");
         	System.out.println(" ===========================================");
         	System.out.println(" * 1. New Guest                            *");
         	System.out.println(" * 2. Update Guest Details                 *");
         	System.out.println(" * 3. Search Guest Details                 *");
-        	System.out.println(" * 4. Previous          		       *");
-        	System.out.println(" * 5. Quit                        	       *");
+        	System.out.println(" * 4. Previous                             *");
+        	System.out.println(" * 5. Quit                                 *");
     }
 	
 	public static void createNewGuest(ArrayList<Guest>guestList) {
@@ -148,7 +147,6 @@ public class Menu {
 		int index = 0;
 		
 		for (Guest g: guestList) {
-			System.out.println(g.getName());
 			if (identifier.equals(g.getName())) {
 				found = true;
 				break;
@@ -210,12 +208,12 @@ public class Menu {
         System.out.println(" *                  Room                   *");
         System.out.println(" ===========================================");
         System.out.println(" * 1. Check Room Status by Guest Name      *");
-        System.out.println(" * 2. Check Room Status by Room		       *");
+        System.out.println(" * 2. Check Room Status by Room	Number     *");
         System.out.println(" * 3. Update Room Details                  *");
-        System.out.println(" * 4. Room Check-in            			   *");
-        System.out.println(" * 5. Room Check-out           			   *");
+        System.out.println(" * 4. Room Check-in                        *");
+        System.out.println(" * 5. Room Check-out                       *");
         System.out.println(" * 6. Print Room Status statistic report   *");
-        System.out.println(" * 7. Previous          			       *");
+        System.out.println(" * 7. Previous                             *");
         System.out.println(" * 8. Quit                                 *");
     }
 
