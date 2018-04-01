@@ -11,12 +11,38 @@ public abstract class Room {
 		private String bedType;
 		private RoomStatus roomStatus;
 		
-		//Methods
-		public Room(String roomId, int customerName, String bedType){
+		//Constructor
+		public Room(String roomId, int customerName, String bedType, RoomStatus roomStatus){
 			this.roomId = roomId;
 			this.customerName = customerName;
 			this.bedType = bedType;
-			roomStatus = RoomStatus.VACANT;
+			this.roomStatus = roomStatus;
+		}
+		
+		//Constructor overload, when room is vacant, there is no customer name
+		public Room(String roomId, String bedType, RoomStatus roomStatus) {
+			this.roomId = roomId;
+			this.customerName = 0;
+			this.bedType = bedType;
+			this.roomStatus = roomStatus;
+		}
+		
+		//Methods
+		public static RoomStatus strToRoomStatus (String status) {
+			RoomStatus roomStatus = Room.RoomStatus.VACANT;
+			
+			switch (status) {
+				case "VACANT": roomStatus = Room.RoomStatus.VACANT;
+							   break;
+				case "OCCUPIED": roomStatus = Room.RoomStatus.OCCUPIED;
+				 				 break;
+				case "RESERVED": roomStatus = Room.RoomStatus.RESERVED;
+				 				 break;
+				case "UNDER_MAINTENANCE": roomStatus = Room.RoomStatus.UNDER_MAINTENANCE;
+				 						  break;
+			}
+			
+			return roomStatus;
 		}
 		
 		//Getter and setters

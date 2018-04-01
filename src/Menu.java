@@ -17,7 +17,7 @@ public class Menu {
 	
 //Guest Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void guestMenu(ArrayList<Guest>guestList) throws FileNotFoundException {
+	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) throws FileNotFoundException {
 		
 		int choice = 0;
         
@@ -38,16 +38,16 @@ public class Menu {
                 		
                 case 2: System.out.println("Updating guest details");
                 		updateGuest(guestList);
-                		FileIO.exportAll(guestList);
+                		FileIO.exportAll(guestList, roomList);
                 		break;
                 case 3: System.out.println("Searching guest details");
                 		searchGuest(guestList);
                 		break;			
                 case 4: System.out.println("Returning to main menu...");
-                		FileIO.exportAll(guestList);
+                		FileIO.exportAll(guestList, roomList);
                 		break;
 				case 5: System.out.println("Exiting...");
-						FileIO.exportAll(guestList);
+						FileIO.exportAll(guestList, roomList);
 						System.exit(0);
 						break;		
 				default: System.out.println("Wrong Input. Please input from 1 - 5.");
@@ -325,11 +325,11 @@ public class Menu {
                 		
                 case 4: System.out.println("Returning to main menu...");
 						break;
-		case 5: System.out.println("Exiting...");
-			System.exit(0);
-			break;						
-		default:System.out.println("Wrong Input. Please input from 1 - 5.");
-			break;
+				case 5: System.out.println("Exiting...");
+						System.exit(0);
+						break;						
+				default:System.out.println("Wrong Input. Please input from 1 - 5.");
+						break;
             }
             
         } while (choice != 4);
