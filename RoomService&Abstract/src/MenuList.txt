@@ -1,0 +1,3 @@
+Menu List
+Maggie|Cook maggie for 5 mins|3|
+Water|Just water|9.0|
