@@ -20,7 +20,8 @@ public class Menu {
 	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) throws FileNotFoundException {
 		
 		int choice = 0;
-        
+        GuestFileIO gfio = new GuestFileIO();
+        RoomFileIO rfio = new RoomFileIO();
         //Select menu
         do {
         	//Print guest menu
@@ -38,17 +39,20 @@ public class Menu {
                 		
                 case 2: System.out.println("Updating guest details");
                 		updateGuest(guestList);
-                		FileIO.exportAll(guestList, roomList);
+                		gfio.exportAll(guestList);
+                                rfio.exportAll(roomList);
                 		break;
                 case 3: System.out.println("Searching guest details");
                 		searchGuest(guestList);
                 		break;			
                 case 4: System.out.println("Returning to main menu...");
-                		FileIO.exportAll(guestList, roomList);
+                		gfio.exportAll(guestList);
+                                rfio.exportAll(roomList);
                 		break;
 				case 5: System.out.println("Exiting...");
-						FileIO.exportAll(guestList, roomList);
-						System.exit(0);
+						gfio.exportAll(guestList);
+                                rfio.exportAll(roomList);
+                		System.exit(0);
 						break;		
 				default: System.out.println("Wrong Input. Please input from 1 - 5.");
 						 break;
@@ -177,7 +181,8 @@ public class Menu {
 	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) {
 		
 		int choice = 0;
-        
+                GuestFileIO gfio = new GuestFileIO();
+        RoomFileIO rfio = new RoomFileIO();
         //Select menu
         do {
         	//Print room menu
@@ -375,10 +380,10 @@ public class Menu {
 
 //Room Service Menu -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void roomServiceMenu() {
+	public static void roomServiceMenu(ArrayList<RoomService>serviceList, ArrayList<MenuItem>menuList) throws FileNotFoundException{
 		
 		int choice = 0;
-        
+                MenuFileIO mfio = new MenuFileIO();
         //Select menu
         do {
         	//Print room service menu
@@ -389,16 +394,26 @@ public class Menu {
             choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
-                case 1: System.out.println("Option 1");
-                		break;
-                		
+                case 1: System.out.println("Creating new menu item...");
+                        createNewMenu(menuList);
+                	break;
+                case 2: System.out.println("Updating menu details...");
+                	updateMenu(menuList);
+                	mfio.exportAll(menuList);
+                	break;
+                case 3: System.out.println("Removing menu details...");
+                	removeMenu(menuList);
+                	mfio.exportAll(menuList);
+                	break;
                 case 4: System.out.println("Returning to main menu...");
+                        mfio.exportAll(menuList);
 			break;
 		case 5: System.out.println("Exiting...");
+                        mfio.exportAll(menuList);
 			System.exit(0);
 			break;				
-				default:System.out.println("Wrong Input. Please input from 1 - 5.");
-						break;
+		default:System.out.println("Wrong Input. Please input from 1 - 5.");
+			break;
             }
             
         } while (choice != 4);
@@ -415,6 +430,85 @@ public class Menu {
         System.out.println(" * 4. Previous          			       *");
         System.out.println(" * 5. Quit                                 *");
     }
+        
+        public static void createNewMenu(ArrayList<MenuItem>menuList) {
+		
+		String name = Menu.readString("Enter menu name: ");
+		String desc = Menu.readString("Preparation method: ");
+		String price = Menu.readString("Enter the item price: ");
+		
+		MenuItem m = new MenuItem(name, desc, price);
+		menuList.add(m);
+	}
+        
+        public static void updateMenu(ArrayList<MenuItem>menuList) {
+		//Ask for guest identity as primary key
+		String identifier = Menu.readString("Please enter the name of menu item to update: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (MenuItem m: menuList) {
+			System.out.println(m.getName());
+			if (identifier.equals(m.getName())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Menu with name: " + identifier + " not found!");
+		} else {
+			System.out.println("Menu with name: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println("Please enter new menu details ('Enter' key to skip)");
+			
+			String name = Menu.readString("Enter new menu name: ");
+			if (!name.equals("")) 
+				menuList.get(index).setName(name);
+			
+			String desc = Menu.readString("Enter new menu preparation method: ");
+			if (!desc.equals("")) 
+				menuList.get(index).setDescription(desc);
+			
+			String price = Menu.readString("Enter new menu price: ");
+			if (!price.equals("")) 
+				menuList.get(index).setPrice(price);
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println(" Menu item updated!");
+		}
+	}
+        
+        public static void removeMenu(ArrayList<MenuItem>menuList) {
+		//Ask for guest name as primary key
+		String identifier = Menu.readString("Please enter the name of guest you would like to search: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (MenuItem m: menuList) {
+			System.out.println(m.getName());
+			if (identifier.equals(m.getName())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Menu with name: " + identifier + " not found!");
+		} else {
+			System.out.println("Menu with name: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			menuList.remove(index);
+			System.out.println(" -------------------------------------------");
+			
+		}
+	}
 	
 //Reservation Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
