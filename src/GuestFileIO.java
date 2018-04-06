@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class GuestFileIO extends FileIO<Guest>{
 	
 	//Attributes
-	final static String fileName = "datalist.txt";
+	final static String fileName = "Guestlist.txt";
 	final static File file = new File(fileName);
 	
 	//Retrieve data from file
