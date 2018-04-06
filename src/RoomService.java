@@ -3,16 +3,22 @@ public class RoomService {
     public enum Status{
         CONFIRMED, PREPARING, DELIVERED
     }
-    private String roomNo;
-    private String remarks;
+    private String roomNo, remarks, menuItem, quantity;
     private Status status;
     
-    public RoomService(String no, String remarks) {
+    public RoomService(String no, String item, String quantity, String remarks) {
+        menuItem = item;
         roomNo = no;
+        this.quantity = quantity;
         this.remarks = remarks;
         status = Status.PREPARING;
     }
-    
+    public String getQuantity() {
+        return quantity;
+    }
+    public String getMenuItem() {
+        return menuItem;
+    }
     public String getRoomNo (){
         return roomNo;
     }
@@ -22,7 +28,12 @@ public class RoomService {
     public Status getStatus() {
         return status;
     }
-    
+    public void setQuantity(String quan) {
+        quantity = quan;
+    }
+    public void setMenuItem(String item) {
+        menuItem = item;
+    }
     public void setRoomNo (String no){
         roomNo = no;
     }

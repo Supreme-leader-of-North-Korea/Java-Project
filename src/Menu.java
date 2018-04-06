@@ -384,6 +384,7 @@ public class Menu {
 		
 		int choice = 0;
                 MenuFileIO mfio = new MenuFileIO();
+                ServiceFileIO sfio = new ServiceFileIO();
         //Select menu
         do {
         	//Print room service menu
@@ -405,10 +406,13 @@ public class Menu {
                 	removeMenu(menuList);
                 	mfio.exportAll(menuList);
                 	break;
-                case 4: System.out.println("Returning to main menu...");
+                case 4: createNewRS(menuList, serviceList);
+                        sfio.exportAll(serviceList);
+                        break;
+                case 5: System.out.println("Returning to main menu...");
                         mfio.exportAll(menuList);
 			break;
-		case 5: System.out.println("Exiting...");
+		case 6: System.out.println("Exiting...");
                         mfio.exportAll(menuList);
 			System.exit(0);
 			break;				
@@ -416,7 +420,7 @@ public class Menu {
 			break;
             }
             
-        } while (choice != 4);
+        } while (choice != 5);
 	}
 	
 	public static void printRoomServiceMenu() {
@@ -427,8 +431,8 @@ public class Menu {
         System.out.println(" * 2. Update Room Service Menu Item        *");
         System.out.println(" * 3. Remove Room Service Menu Item        *");
         System.out.println(" * 4. Create Room Service Order	           *");
-        System.out.println(" * 4. Previous          			       *");
-        System.out.println(" * 5. Quit                                 *");
+        System.out.println(" * 5. Previous          			       *");
+        System.out.println(" * 6. Quit                                 *");
     }
         
         public static void createNewMenu(ArrayList<MenuItem>menuList) {
@@ -508,6 +512,29 @@ public class Menu {
 			System.out.println(" -------------------------------------------");
 			
 		}
+	}
+        
+        public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList) {
+            
+		String no = Menu.readString("Enter your room no: ");
+                
+		if (menuList.isEmpty())
+			System.out.print("None");
+		else {	
+			for (MenuItem m: menuList) {
+				String name = m.getName();
+                                String desc = m.getDescription();
+                                String price = m.getPrice();
+				System.out.println(name + " | " + desc + " | " + price);
+			}
+		}
+		String order = Menu.readString("Enter your order: ");
+                String quantity = Menu.readString("How many would you like to order ?: ");
+                String remark = Menu.readString("Any remark(s) for your order ? ('Enter' key to skip)");
+                if (remark.equals(""))
+                    remark = "-";
+		RoomService rs = new RoomService(no, order, quantity, remark);
+                serviceList.add(rs);
 	}
 	
 //Reservation Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------

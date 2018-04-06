@@ -30,7 +30,7 @@ public class ServiceFileIO extends FileIO<RoomService> {
 			str = myScanner.nextLine();
 			String[] arr = str.split("\\|");
 			
-			RoomService temp = new RoomService (arr[0], arr[1]);
+			RoomService temp = new RoomService (arr[0], arr[1], arr[2], arr[3]);
 			list.add(temp);
 		}
 		
@@ -39,6 +39,8 @@ public class ServiceFileIO extends FileIO<RoomService> {
 	
 	public  void export (RoomService rs, PrintWriter fout) {
 		fout.print(rs.getRoomNo() + "|");
+                fout.print(rs.getMenuItem() + "|");
+                fout.print(rs.getQuantity() + "|");
 		fout.print(rs.getRemarks() + "|");
 		fout.println(rs.getStatus() + "|");
 	}
