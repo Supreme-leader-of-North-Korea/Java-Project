@@ -10,6 +10,7 @@ public class HRPSApp {
     	ArrayList<Room>roomList = new ArrayList<Room>();
     	ArrayList<MenuItem>menuList = new ArrayList<MenuItem>();
         ArrayList<RoomService>serviceList = new ArrayList<RoomService>();
+        ArrayList<Reservation>reservationList = new ArrayList<Reservation>();
     	//Parse and populate guest list from data file
     	//FileIO.parseDataList(guestList, roomList);
     	
@@ -37,7 +38,7 @@ public class HRPSApp {
                 		break;
 				case 2: Menu.roomMenu(guestList, roomList);		
 						break;
-				case 3: Menu.reservationMenu();	
+				case 3: Menu.reservationMenu(reservationList);	
 						break;
 				case 4: Menu.roomServiceMenu(serviceList, menuList);		
 						break;

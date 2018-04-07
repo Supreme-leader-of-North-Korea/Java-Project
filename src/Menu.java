@@ -182,7 +182,7 @@ public class Menu {
 		
 		int choice = 0;
                 GuestFileIO gfio = new GuestFileIO();
-        RoomFileIO rfio = new RoomFileIO();
+                RoomFileIO rfio = new RoomFileIO();
         //Select menu
         do {
         	//Print room menu
@@ -193,14 +193,25 @@ public class Menu {
             choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
-                case 1: System.out.println("Option 1");
+                case 1: searchRoomByName(roomList);
+                		break;
+                case 2: searchRoomByNo(roomList);
+                		break;
+                case 3: updateRoom(roomList);
+                        rfio.exportAll(roomList);
+                		break;
+                case 4: 
+                		break;
+                case 5: 
                 		break;
                 case 6: System.out.println("Printing Room Status statistic report");
                 		printRoomReport(roomList);
                 		break;
                 case 7: System.out.println("Returning to main menu...");
+                        rfio.exportAll(roomList);
 						break;
                 case 8: System.out.println("Exiting...");
+                        rfio.exportAll(roomList);
                 		System.exit(0);
                 		break;		
                 default:System.out.println("Wrong Input. Please input from 1 - 8.");
@@ -223,7 +234,125 @@ public class Menu {
         System.out.println(" * 7. Previous                             *");
         System.out.println(" * 8. Quit                                 *");
     }
-	
+	public static void searchRoomByName(ArrayList<Room>roomList) {
+		//Ask for guest name as primary key
+		String identifier = Menu.readString("Please enter the room number you would like to search: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (Room r: roomList) {
+			if (identifier.equals(r.getCustomerName())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Room with customer name: " + identifier + " not found!");
+		} else {
+			System.out.println("Room with customer name: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+                        System.out.println("Room No: " + roomList.get(index).getRoomId() +
+                                           "\nBed Type: " + roomList.get(index).getBedType() +
+                                           "\nRoom Status: " + roomList.get(index).getRoomStatus() +
+                                           "\nCustomer Name: " + roomList.get(index).getCustomerName());
+			System.out.println(" -------------------------------------------");
+			
+		}
+	}
+        
+        public static void searchRoomByNo(ArrayList<Room>roomList) {
+		//Ask for guest name as primary key
+		String identifier = Menu.readString("Please enter the room number you would like to search: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (Room r: roomList) {
+			if (identifier.equals(r.getRoomId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Room with room ID: " + identifier + " not found!");
+		} else {
+			System.out.println("Room with room ID: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+                        if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.VACANT))
+                            System.out.println("Room No: " + roomList.get(index).getRoomId() +
+                                                "\nBed Type: " + roomList.get(index).getBedType() +
+                                                "\nRoom Status: " + roomList.get(index).getRoomStatus() +
+                                                "\nCustomer Name: -");
+                        else 
+                            System.out.println("Room No: " + roomList.get(index).getRoomId() +
+                                                "\nBed Type: " + roomList.get(index).getBedType() +
+                                                "\nRoom Status: " + roomList.get(index).getRoomStatus() +
+                                                "\nCustomer Name: " + roomList.get(index).getCustomerName());
+			System.out.println(" -------------------------------------------");
+			
+		}
+	}
+        
+        public static void updateRoom(ArrayList<Room>roomList) {
+		//Ask for guest identity as primary key
+		String identifier = Menu.readString("Please enter the room ID to update it's details: ");
+		boolean input = true;
+		boolean found = false;
+		int index = 0;
+		
+		for (Room r: roomList) {
+			if (identifier.equals(r.getRoomId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Guest with identity: " + identifier + " not found!");
+		} else {
+			System.out.println("Guest with identity: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println("Please enter new room details ('Enter' key to skip)");
+			
+			String type = Menu.readString("Enter new bed type: ");
+			if (!type.equals("")) 
+				roomList.get(index).setBedType(type);
+			
+			String status = Menu.readString("Enter new room status: [(V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance]");
+				
+                        switch(status) {
+                            case "V": roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+                                      break;
+                            case "O": roomList.get(index).setRoomStatus(Room.RoomStatus.OCCUPIED);
+                                      break;
+                            case "R": roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
+                                      break;
+                            case "U": roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
+                                      break;
+                            case "": break;
+                            default: System.out.println("Please enter (V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance");
+                                     input = false; 
+                                     break;
+                        }
+			
+					
+			System.out.println(" -------------------------------------------");
+                        if(input)
+                            System.out.println(" Room updated!");
+                        else 
+                            System.out.println(" Please try again with the correct input !");
+		}
+	}
+        
 	public static void printRoomReport(ArrayList<Room>roomList) {
 		
 		//Print room occupancy rate
@@ -539,7 +668,7 @@ public class Menu {
 	
 //Reservation Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void reservationMenu() {
+	public static void reservationMenu(ArrayList<Reservation>reservationList) {
 		
 		int choice = 0;
         
