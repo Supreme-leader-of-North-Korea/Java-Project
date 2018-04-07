@@ -178,7 +178,7 @@ public class Menu {
 	}
 //Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) {
+	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) throws FileNotFoundException{
 		
 		int choice = 0;
                 GuestFileIO gfio = new GuestFileIO();
@@ -668,7 +668,7 @@ public class Menu {
 	
 //Reservation Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void reservationMenu(ArrayList<Reservation>reservationList) {
+	public static void reservationMenu(ArrayList<Reservation>reservationList) throws FileNotFoundException{
 		
 		int choice = 0;
         
