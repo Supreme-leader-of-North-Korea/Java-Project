@@ -8,8 +8,8 @@ public class Room_vip extends Room{
 	final boolean withSmoking = true;
 	
 	//Constructor
-	public Room_vip(String roomId, int customerName, String bedType, RoomStatus roomStatus) {
-		super(roomId, customerName, bedType, roomStatus);
+	public Room_vip(String roomId, String customerName, String bedType, String checkIn, String checkOut, String pax, RoomStatus roomStatus) {
+		super(roomId, customerName, bedType, checkIn, checkOut, pax, roomStatus);
 	}
 	
 	//Constructor overload, when room is vacant, there is no customer name

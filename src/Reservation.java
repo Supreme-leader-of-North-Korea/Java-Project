@@ -1,17 +1,17 @@
 
 public class Reservation {
 		public enum ReservationStatus {
-			CONFIRM, IN_WAITLIST, CHECK_IN, EXPIRED
+			CONFIRMED, IN_WAITLIST, CHECK_IN, EXPIRED
 		}
 		
 		//Attributes
 		private int reservationId;
-		private int customerName;
+		private String customerName;
 		private ReservationStatus reserveStatus;
-    	private String checkInDate;
+                private String checkInDate;
 		
 		//Methods
-		public Reservation(int reservationId, int customerName, String checkInDate){
+		public Reservation(int reservationId, String customerName, String checkInDate){
 			this.reservationId = reservationId;
 			this.customerName = customerName;
 			this.checkInDate = checkInDate;
@@ -22,7 +22,7 @@ public class Reservation {
 			return reservationId;
 		}
 		
-		public int getCustomerName() {
+		public String getCustomerName() {
 			return customerName;
 		}
 		
@@ -34,7 +34,7 @@ public class Reservation {
 			this.reservationId = reservationId;
 		}
 
-		public void setCustomerName(int customerName) {
+		public void setCustomerName(String customerName) {
 			this.customerName = customerName;
 		}
 
