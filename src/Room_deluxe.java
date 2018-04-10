@@ -8,8 +8,8 @@ public class Room_deluxe extends Room{
 	final boolean withSmoking = false;
 	
 	//Constructor
-	public Room_deluxe(String roomId, int customerName, String bedType, RoomStatus roomStatus) {
-		super(roomId, customerName, bedType, roomStatus);
+	public Room_deluxe(String roomId, String customerName, String bedType, String checkIn, String checkOut, String pax, RoomStatus roomStatus) {
+		super(roomId, customerName, bedType, checkIn, checkOut, pax, roomStatus);
 	}
 	
 	//Constructor overload, when room is vacant, there is no customer name

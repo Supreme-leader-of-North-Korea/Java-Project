@@ -10,6 +10,7 @@ public class HRPSApp {
     	ArrayList<Room>roomList = new ArrayList<Room>();
     	ArrayList<MenuItem>menuList = new ArrayList<MenuItem>();
         ArrayList<RoomService>serviceList = new ArrayList<RoomService>();
+        ArrayList<Reservation>reservationList = new ArrayList<Reservation>();
     	//Parse and populate guest list from data file
     	//FileIO.parseDataList(guestList, roomList);
     	
@@ -17,10 +18,13 @@ public class HRPSApp {
         ServiceFileIO sfio = new ServiceFileIO();
         MenuFileIO mfio = new MenuFileIO();
         RoomFileIO rfio = new RoomFileIO();
+        ReservationFileIO refio = new ReservationFileIO();
+        
         rfio.parseList(roomList);
     	gfio.parseList(guestList);
     	sfio.parseList(serviceList);
         mfio.parseList(menuList);
+        refio.parseList(reservationList);
         int choice = 0;
         
         //Select menu
@@ -35,9 +39,9 @@ public class HRPSApp {
             switch(choice) {
                                 case 1: Menu.guestMenu(guestList, roomList);
                 		break;
-				case 2: Menu.roomMenu(guestList, roomList);		
+				case 2: Menu.roomMenu(guestList, roomList, reservationList);		
 						break;
-				case 3: Menu.reservationMenu();	
+				case 3: Menu.reservationMenu(guestList, roomList, reservationList);	
 						break;
 				case 4: Menu.roomServiceMenu(serviceList, menuList);		
 						break;

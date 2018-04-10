@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RoomFileIO extends FileIO<Room>{
+public class FileIO {
 	
 	//Attributes
-	final static String fileName = "RoomList.txt";
-	final static File file = new File(fileName);
+	final static String fileName = "datalist.txt";
+
+	public FileIO() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	//Retrieve data from file
-        
-	public void parseList (ArrayList<Room> rlist) throws FileNotFoundException{
-		
-		// to create file when it does not exist, else Exception will be thrown
+	public static void parseDataList (ArrayList<Guest> glist, ArrayList<Room> rlist) throws FileNotFoundException{
 		File file = new File(fileName);
 		
 		// to create file when it does not exist, else Exception will be thrown
@@ -29,28 +29,10 @@ public class RoomFileIO extends FileIO<Room>{
 		Scanner myScanner = new Scanner (file);
 		String str;
 		
-		
+		//Read title 'Room List'
 		if (myScanner.hasNextLine())
 		{
-			while (myScanner.hasNextLine() && rlist.size() < 48) {
-			str = myScanner.nextLine();
-			String[] arr = str.split("\\|");
-			
-			Room temp;
-			
-			switch (arr[7]) {
-				case "single": temp = new Room_single (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-							   break;
-				case "double": temp = new Room_double (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-							   break;
-				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-							   break;
-				default: temp = new Room_vip (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-						 break;
-			}
-			
-			rlist.add(temp);
-		}
+			myScanner.nextLine();
 		} else {
 			//If data list is empty, generate empty rooms
 			
@@ -97,30 +79,39 @@ public class RoomFileIO extends FileIO<Room>{
 			
 			Room temp;
 			
-			switch (arr[7]) {
-				case "single": temp = new Room_single (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+			switch (arr[4]) {
+				case "single": temp = new Room_single (arr[0], Integer.parseInt(arr[1]), arr[2], Room.strToRoomStatus(arr[3]));
 							   break;
-				case "double": temp = new Room_double (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				case "double": temp = new Room_double (arr[0], Integer.parseInt(arr[1]), arr[2], Room.strToRoomStatus(arr[3]));
 							   break;
-				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				case "deluxe": temp = new Room_deluxe (arr[0], Integer.parseInt(arr[1]), arr[2], Room.strToRoomStatus(arr[3]));
 							   break;
-				default: temp = new Room_vip (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				default: temp = new Room_vip (arr[0], Integer.parseInt(arr[1]), arr[2], Room.strToRoomStatus(arr[3]));
 						 break;
 			}
 			
 			rlist.add(temp);
 		}
 		
+		//Read title 'Guest List'
+		if (myScanner.hasNextLine())
+			myScanner.nextLine();
+		
+		while (myScanner.hasNextLine()) {
+			str = myScanner.nextLine();
+			String[] arr = str.split("\\|");
+			
+			Guest temp = new Guest (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7]);
+			glist.add(temp);
+		}
+		
 		myScanner.close();
 	}
 	
-	public void export (Room r, PrintWriter fout) {
+	public static void exportRoom (Room r, PrintWriter fout) {
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getCustomerName() + "|");
 		fout.print(r.getBedType() + "|");
-                fout.print(r.getCheckIn() + "|");
-                fout.print(r.getCheckOut() + "|");
-                fout.print(r.getPax() + "|");
 		fout.print(r.getRoomStatus() + "|");
 		
 		if (r instanceof Room_single)
@@ -133,13 +124,34 @@ public class RoomFileIO extends FileIO<Room>{
 			fout.println("vip");
 	}
 	
-	public void exportAll (ArrayList<Room> rlist) throws FileNotFoundException {
+	public static void exportGuest (Guest g, PrintWriter fout) {
+		fout.print(g.getName() + "|");
+		fout.print(g.getCreditDetails() + "|");
+		fout.print(g.getAddress() + "|");
+		fout.print(g.getCountry() + "|");
+		fout.print(g.getGender() + "|");
+		fout.print(g.getNationality() + "|");
+		fout.print(g.getIdentity() + "|");
+		fout.println(g.getContact());
+	}
+	
+	public static void exportAll (ArrayList<Guest> glist, ArrayList<Room> rlist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 		
+		//First: Output Room List
+		fileOut.println("Room List");
 		
 		for (Room temp: rlist) 
-			export(temp, fileOut);
+			exportRoom (temp, fileOut);
 		
+		//Second: Output Guest List
+		
+		fileOut.println("Guest List");
+		
+		for (Guest temp: glist) 
+			exportGuest (temp, fileOut);
+		
+		//Close file stream
 		fileOut.close();
 	}
 }
