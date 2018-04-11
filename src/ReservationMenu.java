@@ -104,4 +104,134 @@ public class ReservationMenu extends Menu {
 			
 			}
 	        }
+	
+		public static void searchReservation(ArrayList<Reservation>reservationList) {
+		//Ask for guest name as primary key
+		int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
+		
+		boolean found = false;
+		int index = 0;
+		
+		for (Reservation r: reservationList) {
+			if (identifier == (r.getReservationId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Reservation ID: " + identifier + " not found!");
+		} else {
+			System.out.println("Reservation ID: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println("Reservation ID: " + reservationList.get(index).getReservationId() + 
+					   "\nCustomer Name: " + reservationList.get(index).getCustomerName() + 
+					   "\nRoom ID: " + reservationList.get(index).getRoomId() + 
+					   "\nCredit Card Information: " + reservationList.get(index).getCreditCard() + 
+					   "\nCheck In Date: " + reservationList.get(index).getCheckIn() + 
+					   "\nCheck Out Date: " + reservationList.get(index).getCheckOut() +
+					   "\nNumber of pax(s) staying: " + reservationList.get(index).getPax() +
+					   "\nReservation Status: " + reservationList.get(index).getReservationStatus());
+			System.out.println(" -------------------------------------------");
+			
+		}
+	}
+        
+        public static void updateReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
+		//Ask for guest identity as primary key
+		int identifier = Menu.readInt("Please enter the reservation ID you would like to update: ");
+		
+		boolean found = false;
+		int index = 0;
+		int guestIndex = 0;
+                int roomIndex = 0;
+		for (Reservation r: reservationList) {
+			if (identifier == (r.getReservationId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Reservation ID: " + identifier + " not found!");
+		} else {
+			System.out.println("Reservation ID: " + identifier + " found!");
+			
+			System.out.println(" -------------------------------------------");
+			System.out.println("Please enter new reservation details ('Enter' key to skip)");
+			
+			String name = Menu.readString("Enter new guest name: ");
+			if (!name.equals("")) {
+                            found = false;
+                            for (Guest g: guestList) {
+                                if (name.equals(g.getName())) {
+        				found = true;
+        				break;
+        			}
+        			guestIndex++;
+                            }
+                            if (!found) 
+                                System.out.println("Guest name " + name + " not found in Guest List.");
+                             
+                        } else {
+                            found = false;
+                            name = reservationList.get(index).getCustomerName();
+                            for (Guest g: guestList) {
+                                if (name.equals(g.getName())) {
+        				found = true;
+        				break;
+        			}
+        			guestIndex++;
+                            }
+                            if (!found) 
+                                System.out.println("Guest name " + name + " not found in Guest List.");
+                            
+                        }
+                        if (found) {
+                        String cc = Menu.readString("Enter new guest credit card information: ");
+                                if (!cc.equals("")) {
+                                    if (cc.equals(guestList.get(guestIndex).getCreditDetails())) {
+                                        reservationList.get(index).setCreditCard(cc);
+                                        reservationList.get(index).setCustomerName(name);
+                                        found = false;
+                                        String id = reservationList.get(index).getRoomId();
+                                        for (Room r: roomList) {
+                                            if (id.equals(r.getRoomId())) {
+                                                found = true;
+                                                break;
+                                            }
+                                        roomIndex++;
+                                        }
+                                        if (!found) {
+                                            System.out.println("Incorrect room ID, please check reservation");
+                                         } 
+                                    } else 
+                                       System.out.println("Incorrect credit card detail."); 
+                                }
+                                if (found) {
+                                            roomList.get(roomIndex).setCustomerName(name);
+                                            String in = Menu.readString("Enter new Check In Date: ");
+                                            if (!in.equals("")) {
+                                                reservationList.get(index).setCheckIn(in);
+                                                roomList.get(roomIndex).setCheckIn(in);
+                                            }
+                                            String out = Menu.readString("Enter new Check Out Date: ");
+                                            if (!out.equals("")) {
+                                                reservationList.get(index).setCheckOut(out);
+                                                roomList.get(roomIndex).setCheckOut(out);
+                                            }
+                                            String pax = Menu.readString("Enter new number of pax staying: ");
+                                            if (!pax.equals("")) {
+                                                reservationList.get(index).setPax(pax);
+                                                roomList.get(roomIndex).setPax(pax);
+                                            }
+                                            System.out.println(" -------------------------------------------");
+                                            System.out.println(" Reservation updated!");
+                                }
+                        }     
+		}
+	}
 }
