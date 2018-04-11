@@ -30,7 +30,7 @@ public class MenuFileIO extends FileIO<MenuItem> {
 			str = myScanner.nextLine();
 			String[] arr = str.split("\\|");
 			
-			MenuItem temp = new MenuItem (arr[0], arr[1], arr[2]);
+			MenuItem temp = new MenuItem (arr[0], arr[1], Double.parseDouble(arr[2]));
 			list.add(temp);
 		}
 		

@@ -15,7 +15,7 @@ public class Guest {
 		this.gender = gender;
 		this.nationality = nationality;
 		this.identity = identity;
-                this.ic = ic;
+        this.ic = ic;
 		this.contact = contact;
 	}
     
@@ -53,9 +53,9 @@ public class Guest {
 		return contact;
 	}
         
-        public String getIC() {
-            return ic;
-        }
+    public String getIC() {
+        return ic;
+    }
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -87,7 +87,7 @@ public class Guest {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-        public void setIC(String ic) {
-            this.ic = ic;
-        }
+    public void setIC(String ic) {
+        this.ic = ic;
+    }
 }

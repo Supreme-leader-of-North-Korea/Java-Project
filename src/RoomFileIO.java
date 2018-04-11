@@ -39,14 +39,14 @@ public class RoomFileIO extends FileIO<Room>{
 			Room temp;
 			
 			switch (arr[7]) {
-				case "single": temp = new Room_single (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-							   break;
-				case "double": temp = new Room_double (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-							   break;
-				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-							   break;
-				default: temp = new Room_vip (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
-						 break;
+				case "single": 	temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+							   	break;
+				case "double": 	temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				case "deluxe": 	temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				   				break;
 			}
 			
 			rlist.add(temp);
@@ -66,23 +66,23 @@ public class RoomFileIO extends FileIO<Room>{
 					
 					//Randomly generate bed type
 					switch (generator.nextInt(3)) {
-						case 0: bedType = "single";
+						case 0: bedType = "SINGLE_SIZE";
 								break;
-						case 1: bedType = "double";
+						case 1: bedType = "DOUBLE_SIZE";
 								break;
-						default: bedType = "master";
+						default: bedType = "KING_SIZE";
 								 break;
 					}
 					
 					//Randomly generate room type
 					switch (generator.nextInt(4)) {
-						case 0: temp = new Room_single (roomNumber, bedType, Room.RoomStatus.VACANT) ;
+						case 0: temp = new Room_single (roomNumber, Room.strToBedType(bedType), Room.RoomStatus.VACANT) ;
 								break;
-						case 1: temp = new Room_double (roomNumber, bedType, Room.RoomStatus.VACANT) ;
+						case 1: temp = new Room_double (roomNumber, Room.strToBedType(bedType), Room.RoomStatus.VACANT) ;
 								break;
-						case 2: temp = new Room_deluxe (roomNumber, bedType, Room.RoomStatus.VACANT) ;
+						case 2: temp = new Room_deluxe (roomNumber, Room.strToBedType(bedType), Room.RoomStatus.VACANT) ;
 								break;
-						default: temp = new Room_vip (roomNumber, bedType, Room.RoomStatus.VACANT) ;
+						default: temp = new Room_vip (roomNumber, Room.strToBedType(bedType), Room.RoomStatus.VACANT) ;
 								 break;
 					}
 					
@@ -98,13 +98,13 @@ public class RoomFileIO extends FileIO<Room>{
 			Room temp;
 			
 			switch (arr[7]) {
-				case "single": temp = new Room_single (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				case "single": temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   break;
-				case "double": temp = new Room_double (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				case "double": temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   break;
-				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   break;
-				default: temp = new Room_vip (arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]));
+				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 						 break;
 			}
 			
