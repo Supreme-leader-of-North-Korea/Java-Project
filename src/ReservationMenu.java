@@ -61,13 +61,8 @@ public class ReservationMenu extends Menu {
 	             boolean found = false;
 	                int index = 0;
 	                int roomIndex = 0;
-			for (Guest g: guestList) {
-				if (identifier.equals(g.getIC())) {
-					found = true;
-					break;
-				}
-				index++;
-			}
+			
+			index = guestICSearch(guestList, identifier);
 			
 			if (!found) {
 				System.out.println("Guest with IC: " + identifier + " not found!");
@@ -79,13 +74,8 @@ public class ReservationMenu extends Menu {
 	                        String checkOut = Menu.readString("Please enter the check out date [DD/MM/YYYY]: ");
 	                        String pax = Menu.readString("Please enter the number of pax staying: ");
 				
-	                        for (Room r: roomList) {
-	                            if (roomID.equals(r.getRoomId())) {
-					found = true;
-					break;
-				}
-	                            roomIndex++;
-	                        }
+	                        roomIndex = roomIDSearch(roomList,roomID);
+				
 	                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	                        Date date = new Date();
 	                        roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
@@ -112,13 +102,7 @@ public class ReservationMenu extends Menu {
 		boolean found = false;
 		int index = 0;
 		
-		for (Reservation r: reservationList) {
-			if (identifier == (r.getReservationId())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
+		index = reservationSearch(reservationList, identifier);
 		
 		if (!found) {
 			System.out.println("Reservation ID: " + identifier + " not found!");
@@ -147,13 +131,8 @@ public class ReservationMenu extends Menu {
 		int index = 0;
 		int guestIndex = 0;
                 int roomIndex = 0;
-		for (Reservation r: reservationList) {
-			if (identifier == (r.getReservationId())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
+		
+		index = reservationSearch(reservationList, identifier);
 		
 		if (!found) {
 			System.out.println("Reservation ID: " + identifier + " not found!");
@@ -198,13 +177,7 @@ public class ReservationMenu extends Menu {
                                         reservationList.get(index).setCustomerName(name);
                                         found = false;
                                         String id = reservationList.get(index).getRoomId();
-                                        for (Room r: roomList) {
-                                            if (id.equals(r.getRoomId())) {
-                                                found = true;
-                                                break;
-                                            }
-                                        roomIndex++;
-                                        }
+                                        roomIndex = roomIDSearch(roomList,id);
                                         if (!found) {
                                             System.out.println("Incorrect room ID, please check reservation");
                                          } 
