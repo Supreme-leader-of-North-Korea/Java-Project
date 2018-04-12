@@ -8,17 +8,17 @@ public class Reservation {
 		private int reservationId;
 		private String guestName, roomId, creditCard, guestIC;
 		private ReservationStatus reserveStatus;
-        private String checkInDate, checkOut, pax;
+        private String checkInDate, checkOutDate, pax;
 		
 		//Methods
 		public Reservation(int reservationId, String roomId, String guestName, String creditCard, 
-				String checkInDate, String checkOut, String pax, ReservationStatus reserveStatus, String guestIC){
+				String checkInDate, String checkOutDate, String pax, ReservationStatus reserveStatus, String guestIC){
 			this.reservationId = reservationId;
             this.roomId = roomId;
 			this.guestName = guestName;
             this.creditCard = creditCard;
 			this.checkInDate = checkInDate;
-            this.checkOut = checkOut;
+            this.checkOutDate = checkOutDate;
             this.pax = pax;
             this.reserveStatus = reserveStatus;
             this.guestIC = guestIC;
@@ -40,70 +40,38 @@ public class Reservation {
 			
 			return reservationStatus;
 		}
-        
+
 		//Getter and setters
-		public int getReservationId() {	
+		public int getReservationId() {
 			return reservationId;
 		}
-		
-        public void setReservationId(int reservationId) {
+
+		public void setReservationId(int reservationId) {
 			this.reservationId = reservationId;
 		}
-        
-        public String getRoomId() {
+
+		public String getGuestName() {
+			return guestName;
+		}
+
+		public void setGuestName(String guestName) {
+			this.guestName = guestName;
+		}
+
+		public String getRoomId() {
 			return roomId;
 		}
 
 		public void setRoomId(String roomId) {
 			this.roomId = roomId;
 		}
-		
-		public String getGuestName() {
-			return guestName;
-		}
-		
-		public void setGuestName(String guestName) {
-			this.guestName = guestName;
-		}
-		
+
 		public String getCreditCard() {
 			return creditCard;
 		}
 
-		public void setCreditCard(String credit) {
-			this.creditCard = credit;
-		}
-
-        public String getCheckIn() {
-			return checkInDate;
-		}
-        
-        public void setCheckIn(String checkIn) {
-			checkInDate = checkIn;
-		}
-        
-        public String getCheckOut() {
-			return checkOut;
-		}
-        
-        public void setCheckOut(String checkOut) {
-			this.checkOut = checkOut;
-		}
-       
-        public String getPax() {
-        	return pax;
-        }
-
-        public void setPax(String pax) {
-        	this.pax = pax;
-        }
-		
-		public ReservationStatus getReservationStatus() {
-			return reserveStatus;
-		}
-		
-		public void setReservationStatus(ReservationStatus reserveStatus) {
-			this.reserveStatus = reserveStatus;
+		public void setCreditCard(String creditCard) {
+			this.creditCard = creditCard;
 		}
 
 		public String getGuestIC() {
@@ -129,4 +97,21 @@ public class Reservation {
 		public void setCheckInDate(String checkInDate) {
 			this.checkInDate = checkInDate;
 		}
+
+		public String getCheckOutDate() {
+			return checkOutDate;
+		}
+
+		public void setCheckOutDate(String checkOutDate) {
+			this.checkOutDate = checkOutDate;
+		}
+
+		public String getPax() {
+			return pax;
+		}
+
+		public void setPax(String pax) {
+			this.pax = pax;
+		}
+        
 }

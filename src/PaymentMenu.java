@@ -8,9 +8,6 @@ public class PaymentMenu extends Menu{
 			ArrayList<Payment>paymentList) throws FileNotFoundException{
 		
 		int choice = 0;
-		ReservationFileIO refio = new ReservationFileIO();
-        GuestFileIO gfio = new GuestFileIO();
-        RoomFileIO rfio = new RoomFileIO();
         PaymentFileIO pfio = new PaymentFileIO();
         //Select menu
         do {
@@ -131,7 +128,7 @@ public class PaymentMenu extends Menu{
 			
 			if (roomList.get(roomIndex) instanceof Room_single) {
 				WDrates = paymentList.get(index).getSingleRoomPrice();
-				wifiEnable = roomList.get(roomIndex).isWifiEnabled();
+				//wifiEnable = Room_single.isWifiEnabled();
 			}else if (roomList.get(roomIndex) instanceof Room_double) {
 				WDrates = paymentList.get(index).getDoubleRoomPrice();
 				//wifiEnable = Room_double.isWifiEnabled();

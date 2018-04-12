@@ -26,27 +26,18 @@ public class ReservationMenu extends Menu {
 	                        refio.exportAll(reservationList);
 	                        rfio.exportAll(roomList);
 	                		break;
-	                case 2: searchReservation(reservationList);
-                       		break;
-                	case 3: updateReservation(guestList, roomList, reservationList);
-                        	rfio.exportAll(roomList);
-                        	refio.exportAll(reservationList);
-                        	break;
-                	case 4: removeReservation(roomList, reservationList);
-	                        rfio.exportAll(roomList);
-	                        refio.exportAll(reservationList);
-	                        break;		
+	                		
 	                case 5: System.out.println("Returning to main menu...");
 	                        refio.exportAll(reservationList);
 	                        rfio.exportAll(roomList);
 							break;
-			case 6: System.out.println("Exiting...");
+	                case 6: System.out.println("Exiting...");
 	                        refio.exportAll(reservationList);
 	                        rfio.exportAll(roomList);
-				System.exit(0);
-				break;				
-			default:System.out.println("Wrong Input. Please input from 1 - 6.");
-				break;
+	                        System.exit(0);
+							break;				
+					default:System.out.println("Wrong Input. Please input from 1 - 6.");
+							break;
 	            }
 	            
 	        } while (choice != 5);
@@ -84,17 +75,17 @@ public class ReservationMenu extends Menu {
 	                        String pax = Menu.readString("Please enter the number of pax staying: ");
 				
 	                        roomIndex = roomIDSearch(roomList,roomID);
-				
+	                        
 	                        roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
-	                        roomList.get(roomIndex).setCheckIn(checkIn);
-	                        roomList.get(roomIndex).setCheckOut(checkOut);
+	                        roomList.get(roomIndex).setCheckInDate(checkIn);
+	                        roomList.get(roomIndex).setCheckOutDate(checkOut);
 	                        roomList.get(roomIndex).setPax(pax);
 	                        roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.RESERVED);
 	                        Random random = new Random( System.currentTimeMillis() );
 	                        int id = 10000+random.nextInt(20000);
 	                        Reservation reservation = new Reservation(id, roomID, guestList.get(index).getName(), 
 	                        					guestList.get(index).getCreditDetails(), checkIn, checkOut, pax, 
-	                        					Reservation.ReservationStatus.CONFIRMED,guestList.get(index).getIC());
+	                        					Reservation.ReservationStatus.CONFIRMED,guestList.get(index).getIc());
 	                        reservationList.add(reservation);
 							System.out.println("Room with room ID: " + roomID + " reserved!");
 							System.out.println("Reservation ID: " + id);
@@ -106,9 +97,8 @@ public class ReservationMenu extends Menu {
 	
 		public static void searchReservation(ArrayList<Reservation>reservationList) {
 		//Ask for guest name as primary key
-		String identifier = Menu.readString("Please enter the reservation ID you would like to search: ");
-		
-		int index = reservationIdSearch(reservationList, identifier);
+		int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
+		int index = reservationSearch(reservationList, identifier);
 		
 		if (index == -1) {
 			System.out.println("Reservation ID: " + identifier + " not found!");
@@ -120,23 +110,19 @@ public class ReservationMenu extends Menu {
 					   "\nCustomer Name: " + reservationList.get(index).getGuestName() + 
 					   "\nRoom ID: " + reservationList.get(index).getRoomId() + 
 					   "\nCredit Card Information: " + reservationList.get(index).getCreditCard() + 
-					   "\nCheck In Date: " + reservationList.get(index).getCheckIn() + 
-					   "\nCheck Out Date: " + reservationList.get(index).getCheckOut() +
+					   "\nCheck In Date: " + reservationList.get(index).getCheckInDate() + 
+					   "\nCheck Out Date: " + reservationList.get(index).getCheckOutDate() +
 					   "\nNumber of pax(s) staying: " + reservationList.get(index).getPax() +
-					   "\nReservation Status: " + reservationList.get(index).getReservationStatus());
+					   "\nReservation Status: " + reservationList.get(index).getReserveStatus());
 			System.out.println(" -------------------------------------------");
 			
 		}
 	}
         
         public static void updateReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
-		//Ask for guest identity as primary key
-			String identifier = Menu.readString("Please enter the reservation ID you would like to update: ");
-			
-			int guestIndex = 0;
+			int identifier = Menu.readInt("Please enter the reservation ID you would like to update: ");
 	        int roomIndex = 0;
-			
-	        int index = reservationIdSearch(reservationList, identifier);
+	        int index = reservationSearch(reservationList, identifier);
 			
 			if (index == -1) {
 				System.out.println("Reservation ID: " + identifier + " not found!");
@@ -165,13 +151,13 @@ public class ReservationMenu extends Menu {
 	                roomList.get(roomIndex).setCustomerName(name);
 	                String in = Menu.readString("Enter new Check In Date: ");
 	                if (!in.equals("")) {
-	                    reservationList.get(index).setCheckIn(in);
-	                    roomList.get(roomIndex).setCheckIn(in);
+	                    reservationList.get(index).setCheckInDate(in);
+	                    roomList.get(roomIndex).setCheckInDate(in);
 	                }
 	                String out = Menu.readString("Enter new Check Out Date: ");
 	                if (!out.equals("")) {
-	                    reservationList.get(index).setCheckOut(out);
-	                    roomList.get(roomIndex).setCheckOut(out);
+	                    reservationList.get(index).setCheckOutDate(out);
+	                    roomList.get(roomIndex).setCheckOutDate(out);
 	                }
 	                String pax = Menu.readString("Enter new number of pax staying: ");
 	                if (!pax.equals("")) {
@@ -182,41 +168,6 @@ public class ReservationMenu extends Menu {
 	                System.out.println(" Reservation updated!");
 				}
 			}
-        }
-	public static void removeReservation(ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
-            int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
-		
-		boolean found = false;
-		int index = 0;
-		int roomIndex = 0;
-		for (Reservation r: reservationList) {
-			if (identifier == (r.getReservationId())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		
-		if (!found) {
-			System.out.println("Reservation ID: " + identifier + " not found!");
-		} else {
-                    String id = reservationList.get(index).getRoomId();
-                    found = false;
-                    for (Room rm: roomList) {
-			if (id.equals(rm.getRoomId())) {
-				found = true;
-				break;
-			}
-			roomIndex++;
-                    }
-                    reservationList.remove(index);
-                    roomList.get(roomIndex).setCustomerName("-");
-                    roomList.get(roomIndex).setCheckIn("-");
-                    roomList.get(roomIndex).setCheckOut("-");
-                    roomList.get(roomIndex).setPax("-");
-                    roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.VACANT);
-                    System.out.println("Reservation ID: " + identifier + " removed!");
-                }
         }
 }
             

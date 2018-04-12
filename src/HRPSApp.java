@@ -47,7 +47,7 @@ public class HRPSApp {
 						break;
 				case 3: ReservationMenu.reservationMenu(guestList, roomList, reservationList);	
 						break;
-				case 4: RoomServiceMenu.roomServiceMenu(serviceList, menuList);		
+				case 4: RoomServiceMenu.roomServiceMenu(serviceList, menuList, roomList);		
 						break;
 				case 5: System.out.println("Exiting. Goodbye!");
 						gfio.exportAll(guestList);

@@ -18,8 +18,6 @@ public class Menu {
         System.out.println(" * 5. Quit                                 *");
     } 
 	
-//Misc
-	// search for guest
 	public static String guestNameSearch(ArrayList<Guest>guestList, String identifier) {
 		ArrayList<Guest>guestList2 = new ArrayList<Guest>();
 
@@ -38,7 +36,7 @@ public class Menu {
 			System.out.println("There does not exist a Guest: " + identifier);
 		} else {
 			for (Guest g: guestList2) {
-				System.out.println(number + ":" + g.getName() + ", IC No.:" + g.getIC());
+				System.out.println(number + ":" + g.getName() + ", IC No.:" + g.getIc());
 				number++;
 			}
 			System.out.println(number + ":Quit");
@@ -49,19 +47,18 @@ public class Menu {
 			}
 			if(guestNo != number) {
 				System.out.println(guestNo + ":" + guestList2.get(guestNo-1).getName() +" has been selected!");
-				IC = guestList2.get(guestNo-1).getIC();
+				IC = guestList2.get(guestNo-1).getIc();
 			}
 		}
 		return IC;
 	}
-	
 	
 	public static int guestICSearch(ArrayList<Guest>guestList, String identifier) {
 		
 		boolean found = false;
 		int index = 0;
 		for (Guest g: guestList) {
-			if (identifier.equals(g.getIC())) {
+			if (identifier.equals(g.getIc())) {
 				found = true;
 				break;
 			}
@@ -108,7 +105,7 @@ public class Menu {
 	}
 	
 	
-	public static int reservationRoomSearch(ArrayList<Reservation>reservationList, String identifier) {
+	public static int reservationSearch(ArrayList<Reservation>reservationList, String identifier) {
 		boolean found = false;
 		int index = 0;
 		for (Reservation re: reservationList) {
@@ -123,13 +120,12 @@ public class Menu {
 		else 
 			return -1;
 	}
-	
-
-	public static int reservationIdSearch(ArrayList<Reservation>reservationList, String identifier) {
+	//method overriding
+	public static int reservationSearch(ArrayList<Reservation>reservationList, int identifier) {
 		boolean found = false;
 		int index = 0;
 		for (Reservation re: reservationList) {
-			if (Integer.parseInt(identifier)==(re.getReservationId())) {
+			if (identifier==re.getReservationId()) {
 				found = true;
 				break;
 			}
@@ -156,6 +152,46 @@ public class Menu {
 		else 
 			return -1;
 	}
+	public static int menuNameSearch(ArrayList<MenuItem>menuList, String identifier) {
+		boolean found = false;
+		int index = 0;
+		
+		for (MenuItem m: menuList) {
+			System.out.println(m.getName());
+			if (identifier.equals(m.getName())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		if(found == true) 
+			return index;
+		else 
+			return -1;
+	}
+	
+	public static boolean roomOccupancyCheck(ArrayList<Room>roomList,String roomNo) {
+		boolean found = false;
+		int index = 0;
+		for (Room r: roomList) {
+			if (roomNo.equals(r.getRoomId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		if(found) {
+			if(roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)){
+				return true;
+			}else {
+				System.out.println("Room No: " + roomNo + " is currently not occupied!");
+				return false;
+			}
+		}else {
+			System.out.println("Room No: " + roomNo + " does not exist!");
+			return false;
+		}
+	}
 	
 	public static double rsTotal(ArrayList<RoomService>serviceList, String identifier) {
 		double total = 0;
@@ -167,6 +203,8 @@ public class Menu {
 		return total;
 	}
 
+	
+	//misc methods
 	@SuppressWarnings("resource")
 	public static String readString(String prompt) {
 		System.out.print(prompt);

@@ -1,3 +1,5 @@
+import java.util.Date;
+
 
 public abstract class Room {
 	
@@ -7,22 +9,23 @@ public abstract class Room {
 		public enum BedType {
 			SINGLE_SIZE, DOUBLE_SIZE, KING_SIZE
 		}
-		abstract boolean isWifiEnabled();
+		
 		//Attributes
 		private String roomId, guestIC;
 		private String customerName;
-		private String checkIn, checkOut, pax;
+		//private Date checkInDate, checkOutDate;
+		private String checkInDate, checkOutDate, pax;
 		private RoomStatus roomStatus;
 		private BedType bedType;
 		
 		//Constructor
-		public Room(String roomId, String customerName, BedType bedType, String checkIn, 
-				String checkOut, String pax, RoomStatus roomStatus, String guestIC){
+		public Room(String roomId, String customerName, BedType bedType, String checkInDate, 
+				String checkOutDate, String pax, RoomStatus roomStatus, String guestIC){
 			this.roomId = roomId;
 			this.customerName = customerName;
 			this.bedType = bedType;
-			this.checkIn = checkIn;
-			this.checkOut = checkOut;
+			this.checkInDate = checkInDate;
+			this.checkOutDate = checkOutDate;
 			this.pax = pax;
 			this.roomStatus = roomStatus;
 			this.guestIC = guestIC;
@@ -33,9 +36,9 @@ public abstract class Room {
 			this.roomId = roomId;
 			this.customerName = "-";
 			this.bedType = bedType;
-                        this.checkIn = "-";
-                        this.checkOut = "-";
-                        this.pax = "-";
+            this.checkInDate = "-";
+            this.checkOutDate = "-";
+            this.pax = "-";
 			this.roomStatus = roomStatus;
 		}
 		
@@ -71,64 +74,71 @@ public abstract class Room {
 			
 			return bedType;
 		}
-		
+
 		//Getter and setters
-		public String getRoomId() {	
+		public String getRoomId() {
 			return roomId;
 		}
-		
-		public String getCustomerName() {
-			return customerName;
-		}
-		
-		public BedType getBedType() {
-			return bedType;
-		}
-		
-		public RoomStatus getRoomStatus() {
-			return roomStatus;
-		}
-                public String getCheckIn() {
-                    return checkIn;
-                }
-                public String getCheckOut(){ 
-                    return checkOut;
-                }
-                public String getPax(){
-                    return pax;
-                }
 
-				public String getGuestIC() {
-					return guestIC;
-				}
-                
 		public void setRoomId(String roomId) {
 			this.roomId = roomId;
+		}
+
+		public String getGuestIC() {
+			return guestIC;
+		}
+
+		public void setGuestIC(String guestIC) {
+			this.guestIC = guestIC;
+		}
+
+		public String getCustomerName() {
+			return customerName;
 		}
 
 		public void setCustomerName(String customerName) {
 			this.customerName = customerName;
 		}
 
-		public void setBedType(BedType bedType) {
-			this.bedType = bedType;
+		public String getCheckInDate() {
+			return checkInDate;
+		}
+
+		public void setCheckInDate(String checkInDate) {
+			this.checkInDate = checkInDate;
+		}
+
+		public String getCheckOutDate() {
+			return checkOutDate;
+		}
+
+		public void setCheckOutDate(String checkOutDate) {
+			this.checkOutDate = checkOutDate;
+		}
+
+		public String getPax() {
+			return pax;
+		}
+
+		public void setPax(String pax) {
+			this.pax = pax;
+		}
+
+		public RoomStatus getRoomStatus() {
+			return roomStatus;
 		}
 
 		public void setRoomStatus(RoomStatus roomStatus) {
 			this.roomStatus = roomStatus;
 		}
-        public void setCheckIn(String in) {
-        	checkIn = in;
-        }
-        public void setCheckOut(String out) {
-            checkOut = out; 
-        }
-        public void setPax(String pax) {
-        	this.pax = pax;
-        }
-               
-      public void setGuestIC(String guestIC) {
-    	  this.guestIC = guestIC;
-      }
-                
+
+		public BedType getBedType() {
+			return bedType;
+		}
+
+		public void setBedType(BedType bedType) {
+			this.bedType = bedType;
+		}
+
+		
 }

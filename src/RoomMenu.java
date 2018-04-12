@@ -13,9 +13,7 @@ public class RoomMenu extends Menu {
 			
 			int choice = 0;
 			ReservationFileIO refio = new ReservationFileIO();
-            GuestFileIO gfio = new GuestFileIO();
             RoomFileIO rfio = new RoomFileIO();
-            PaymentFileIO pfio = new PaymentFileIO();
 	        //Select menu
 	        do {
 	        	//Print room menu
@@ -86,8 +84,8 @@ public class RoomMenu extends Menu {
 			                        "\nBed Type: " + roomList.get(index).getBedType() +
 			                        "\nRoom Status: " + roomList.get(index).getRoomStatus() +
 			                        "\nCustomer Name: " + roomList.get(index).getCustomerName() +
-			                        "\nCheck In: " + roomList.get(index).getCheckIn() +
-			                        "\nCheck Out: " + roomList.get(index).getCheckOut() +
+			                        "\nCheck In: " + roomList.get(index).getCheckInDate() +
+			                        "\nCheck Out: " + roomList.get(index).getCheckOutDate() +
 			                        "\nNumber of pax staying: " + roomList.get(index).getPax());
 				System.out.println(" -------------------------------------------");
 				
@@ -108,8 +106,8 @@ public class RoomMenu extends Menu {
 	                                            "\nBed Type: " + roomList.get(index).getBedType() +
 	                                            "\nRoom Status: " + roomList.get(index).getRoomStatus() +
 	                                            "\nCustomer Name: " + roomList.get(index).getCustomerName() +
-	                                            "\nCheck In: " + roomList.get(index).getCheckIn() +
-	                                            "\nCheck Out: " + roomList.get(index).getCheckOut() +
+	                                            "\nCheck In: " + roomList.get(index).getCheckInDate() +
+	                                            "\nCheck Out: " + roomList.get(index).getCheckOutDate() +
 	                                            "\nNumber of pax staying: " + roomList.get(index).getPax());
 				System.out.println(" -------------------------------------------");
 				
@@ -119,7 +117,7 @@ public class RoomMenu extends Menu {
 	    public static void updateRoom(ArrayList<Room>roomList) {
 			//Ask for guest identity as primary key
 			String identifier = Menu.readString("Please enter the room ID to update it's details: ");
-			boolean input = true;
+			boolean input = false;
 			
 			int index = roomIDSearch(roomList,identifier);
 			
@@ -131,46 +129,52 @@ public class RoomMenu extends Menu {
 				System.out.println(" -------------------------------------------");
 				System.out.println("Please enter new room details ('Enter' key to skip)");
 				
-				String type = Menu.readString("Enter new bed type: ");
-				
-				switch(type.toUpperCase()) {
-            	case "S": roomList.get(index).setBedType(Room.BedType.SINGLE_SIZE);
-                          break;
-                case "D": roomList.get(index).setBedType(Room.BedType.DOUBLE_SIZE);
-                          break;
-                case "K": roomList.get(index).setBedType(Room.BedType.KING_SIZE);
-                		  break;
-                case "":  
-                		  break;
-                default:  System.out.println("Please enter (S)ingle/(D)ouble/(K)ing");
-                   		  System.out.println(" Please try again with the correct input !"); 
-                   		  input = false; 
-                   		  break;
-            }
-				
-				String status = Menu.readString("Enter new room status: [(V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance]");
-				
-	            switch(status.toUpperCase()) {
-	            	case "V": roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+				do {
+					String type = Menu.readString("Enter new bed type: ");
+					switch(type.toUpperCase()) {
+	            	case "S": roomList.get(index).setBedType(Room.BedType.SINGLE_SIZE);
+	            			  input = true;
 	                          break;
-	                case "O": roomList.get(index).setRoomStatus(Room.RoomStatus.OCCUPIED);
-	                          break;
-	                case "R": roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
+	                case "D": roomList.get(index).setBedType(Room.BedType.DOUBLE_SIZE);
+				              input = true;
+			                  break;
+	                case "K": roomList.get(index).setBedType(Room.BedType.KING_SIZE);
+			                  input = true;		  
+			                  break;
+	                case "":  input = true;
 	                		  break;
-	                case "U": roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
-	                		  break;
-	                case "":  
-	                		  break;
-	                default:  System.out.println("Please enter (V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance");
+	                default:  System.out.println("Please enter (S)ingle/(D)ouble/(K)ing");
 	                   		  System.out.println(" Please try again with the correct input !"); 
 	                   		  input = false; 
 	                   		  break;
-	            }
-	                        
-				System.out.println(" -------------------------------------------");
-	                       
+					}
+				}while(!input);
 				
-							
+				String status = Menu.readString("Enter new room status: [(V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance]");
+				do {
+		            switch(status.toUpperCase()) {
+		            	case "V": roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+		      		  			  input = true;
+		            			  break;
+		                case "O": roomList.get(index).setRoomStatus(Room.RoomStatus.OCCUPIED);
+		      		  			  input = true;
+		                		  break;
+		                case "R": roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
+		      		  			  input = true;
+		                		  break;
+		                case "U": roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
+		                		  input = true;
+		                		  break;
+		                case "":  input = true;
+		                		  break;
+		                default:  System.out.println("Please enter (V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance");
+		                   		  System.out.println(" Please try again with the correct input !"); 
+		                   		  input = false; 
+		                   		  break;
+		            }
+				}while(!input);   
+				
+				System.out.println(" -------------------------------------------");
 							if(input)
 	                            System.out.println(" Room updated!");
 	                       
@@ -207,8 +211,8 @@ public class RoomMenu extends Menu {
 		                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		                    Date date = new Date();
 		                    roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
-		                    roomList.get(roomIndex).setCheckIn(dateFormat.format(date));
-		                    roomList.get(roomIndex).setCheckOut(checkOut);
+		                    roomList.get(roomIndex).setCheckInDate(dateFormat.format(date));
+		                    roomList.get(roomIndex).setCheckOutDate(checkOut);
 		                    roomList.get(roomIndex).setPax(pax);
 		                    roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 		                    System.out.println("Guest " + guestList.get(index).getName() + " have successfully checked in room " + roomID);
@@ -218,13 +222,13 @@ public class RoomMenu extends Menu {
                 	}
 				}
 	        } else if (choice == 2) {
-	                identifier = Menu.readString(" Please enter the reservation number: ");
+	                int resIdentifier = Menu.readInt(" Please enter the reservation number: ");
 			
-	                index = reservationIdSearch(reservationList, identifier);
+	                index = reservationSearch(reservationList, resIdentifier);
 	                if (index == -1) {
-	                	System.out.println("Reservation number: " + identifier + " not found!");
+	                	System.out.println("Reservation number: " + resIdentifier + " not found!");
 	                } else {
-	                	System.out.println("Reservation number: " + identifier + " found!");
+	                	System.out.println("Reservation number: " + resIdentifier + " found!");
 	                	roomIndex = roomIDSearch(roomList, reservationList.get(index).getRoomId());
 	                    if (roomIndex == -1) {
 	                    	System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " not found!");
@@ -232,10 +236,10 @@ public class RoomMenu extends Menu {
 	                            System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " found!");
 	                            roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 	                            roomList.get(roomIndex).setCustomerName(reservationList.get(index).getGuestName());
-	                            roomList.get(roomIndex).setCheckIn(reservationList.get(index).getCheckIn());
-	                            roomList.get(roomIndex).setCheckOut(reservationList.get(index).getCheckOut());
+	                            roomList.get(roomIndex).setCheckInDate(reservationList.get(index).getCheckInDate());
+	                            roomList.get(roomIndex).setCheckOutDate(reservationList.get(index).getCheckOutDate());
 	                            roomList.get(roomIndex).setPax(reservationList.get(index).getPax());
-	                            reservationList.get(index).setReservationStatus(Reservation.ReservationStatus.CHECKED_IN);
+	                            reservationList.get(index).setReserveStatus(Reservation.ReservationStatus.CHECKED_IN);
 	                    }
 	                }
 	       } else {
@@ -254,18 +258,18 @@ public class RoomMenu extends Menu {
 	               if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 	                    System.out.println("Room with ID: " + identifier + " found!");
 	                    
-	                    int reservationIndex = reservationRoomSearch(reservationList,identifier);
+	                    int reservationIndex = reservationSearch(reservationList,identifier);
 	                    if (reservationIndex == -1) {
-	                    	System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOut() + " not found!");
+	                    	System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOutDate() + " not found!");
 	                    } else {
-	                    	System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOut() + " found!");
+	                    	System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOutDate() + " found!");
 	                    	reservationList.remove(reservationIndex);
 	                    }
 	                    	PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
 	                    	
 	                    	roomList.get(index).setCustomerName("-");
-		                    roomList.get(index).setCheckIn("-");
-		                    roomList.get(index).setCheckOut("-");
+		                    roomList.get(index).setCheckInDate("-");
+		                    roomList.get(index).setCheckOutDate("-");
 		                    roomList.get(index).setPax("-");
 		                    roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
 	                    } else 

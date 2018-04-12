@@ -62,14 +62,44 @@ public class GuestMenu extends Menu {
     }
 	
 	public static void createNewGuest(ArrayList<Guest>guestList) {
-		System.out.println("All fields are mandatory");
+		boolean input = false;
 		
+		System.out.println("All fields are mandatory");
+			
 		String name 	= Menu.readNonEmptyString("Enter guest name: "									);
 		String addr 	= Menu.readNonEmptyString("Enter guest address: "								);
 		String country 	= Menu.readNonEmptyString("Enter guest country: "								);
-		String gender 	= Menu.readNonEmptyString("Enter guest gender: "								);
 		String nat 		= Menu.readNonEmptyString("Enter guest nationality: "							);
-		String idt 		= Menu.readNonEmptyString("Enter guest identity[(D)riving License/(P)assport]: ");
+		String gender;
+		do {
+			gender 	= Menu.readNonEmptyString("Enter guest gender: [(M)ale/(F)emale]"			);		
+			switch(gender.toUpperCase()) {
+		    	case "M": gender = "male";
+			  			  input = true;
+			  			  break;
+		        case "F": gender = "female";
+			  			  input = true;
+			  			  break;
+		        default:  System.out.println(" Please try again with the correct input !"); 
+		           		  input = false; 
+		           		  break;
+			}
+		}while(!input);
+		String idt;
+		do {
+			idt 	= Menu.readNonEmptyString("Enter guest identity[(D)riving License/(P)assport]: ");
+			switch(idt.toUpperCase()) {
+		    	case "D": idt = "drivingLicense";
+		    			  input = true;
+		    			  break;
+		        case "P": idt = "passport";
+		        		  input = true;
+		                  break;
+		        default:  System.out.println(" Please try again with the correct input !"); 
+		           		  input = false; 
+		           		  break;
+			}
+		}while(!input);
         String ic 		= Menu.readNonEmptyString("Enter IC Number: "									);
 		String ccd 		= Menu.readNonEmptyString("Enter guest credit card detail: "					);
 		String contact 	= Menu.readNonEmptyString("Enter guest contact number: "						);
@@ -125,14 +155,26 @@ public class GuestMenu extends Menu {
 			String contact = Menu.readString("Enter new guest contact number: ");
 			if (!contact.equals("")) 
 				guestList.get(index).setContact(contact);
-					
+
+			
+			//Update reservation and room accordingly
+			int roomIndex = roomICSearch(roomList,identifier);
+			//Guest is currently staying in a room
+			if(roomIndex != -1) {
+				if (!name.equals("")) 
+					roomList.get(roomIndex).setCustomerName(name);
+			}
+			int reservationIndex = reservationICSearch(reservationList,identifier);
+			//Guest has a reservation
+			if (reservationIndex != -1) {
+				if (!name.equals("")) 
+					reservationList.get(reservationIndex).setGuestName(name);
+				if (!ccd.equals(""))
+					reservationList.get(reservationIndex).setCreditCard(ccd);
+			}
+			
 			System.out.println(" -------------------------------------------");
 			System.out.println(" Guest updated!");
-			
-			//Need to update reservation and room accordingly
-			int roomIndex = roomICSearch(roomList,identifier);
-			int reservationIndex = reservationICSearch(reservationList,identifier);
-			
 		}
 	}
 	

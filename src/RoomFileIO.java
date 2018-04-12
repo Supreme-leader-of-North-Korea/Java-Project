@@ -118,8 +118,8 @@ public class RoomFileIO extends FileIO<Room>{
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getCustomerName() + "|");
 		fout.print(r.getBedType() + "|");
-                fout.print(r.getCheckIn() + "|");
-                fout.print(r.getCheckOut() + "|");
+                fout.print(r.getCheckInDate() + "|");
+                fout.print(r.getCheckOutDate() + "|");
                 fout.print(r.getPax() + "|");
 		fout.print(r.getRoomStatus() + "|");
 		

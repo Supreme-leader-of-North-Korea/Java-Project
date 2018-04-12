@@ -44,10 +44,10 @@ public class ReservationFileIO extends FileIO<Reservation>{
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getGuestName() + "|");
 		fout.print(r.getCreditCard() + "|");
-		fout.print(r.getCheckIn() + "|");
-		fout.print(r.getCheckOut() + "|");
+		fout.print(r.getCheckInDate() + "|");
+		fout.print(r.getCheckOutDate() + "|");
 		fout.print(r.getPax() + "|");
-                fout.println(r.getReservationStatus());
+        fout.println(r.getReserveStatus());
 	}
 	
 	public void exportAll (ArrayList<Reservation> rlist) throws FileNotFoundException {

@@ -35,6 +35,7 @@ public class PaymentFileIO extends FileIO<Payment>{
 			
 			while(i<=8) {
 				arr[i]= Double.parseDouble(arr1[i]);
+				i++;
 			}
 			Payment temp = new Payment(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8]);
 			plist.add(temp);
