@@ -76,9 +76,6 @@ public class ReservationMenu extends Menu {
 				
 	                        roomIndex = roomIDSearch(roomList,roomID);
 				
-	                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                        Date date = new Date();
-	                        
 	                        roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
 	                        roomList.get(roomIndex).setCheckIn(checkIn);
 	                        roomList.get(roomIndex).setCheckOut(checkOut);
