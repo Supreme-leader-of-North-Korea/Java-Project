@@ -1,3 +1,4 @@
+import java.util.Date;
 
 public class Reservation {
 		public enum ReservationStatus {
@@ -6,23 +7,25 @@ public class Reservation {
 		
 		//Attributes
 		private int reservationId;
-		private String customerName, roomId, creditCard;
+		private String guestName, roomId, creditCard, guestIC, pax;
 		private ReservationStatus reserveStatus;
-                private String checkInDate, checkOut, pax;
+        private Date checkInDate, checkOutDate;
 		
 		//Methods
-		public Reservation(int reservationId, String roomId, String customerName, String creditCard, String checkInDate, String checkOut, String pax, ReservationStatus reserveStatus){
+		public Reservation(int reservationId, String roomId, String guestName, String creditCard, 
+				Date checkInDate, Date checkOutDate, String pax, ReservationStatus reserveStatus, String guestIC){
 			this.reservationId = reservationId;
-                        this.roomId = roomId;
-			this.customerName = customerName;
-                        this.creditCard = creditCard;
+            this.roomId = roomId;
+			this.guestName = guestName;
+            this.creditCard = creditCard;
 			this.checkInDate = checkInDate;
-                        this.checkOut = checkOut;
-                        this.pax = pax;
-                        this.reserveStatus = reserveStatus;
+            this.checkOutDate = checkOutDate;
+            this.pax = pax;
+            this.reserveStatus = reserveStatus;
+            this.guestIC = guestIC;
 		}
 		
-                public static Reservation.ReservationStatus strToReservationStatus (String status) {
+        public static Reservation.ReservationStatus strToReservationStatus (String status) {
 			Reservation.ReservationStatus reservationStatus = Reservation.ReservationStatus.IN_WAITLIST;
 			
 			switch (status) {
@@ -38,56 +41,78 @@ public class Reservation {
 			
 			return reservationStatus;
 		}
+
 		//Getter and setters
-		public int getReservationId() {	
+		public int getReservationId() {
 			return reservationId;
 		}
-		
-		public String getCustomerName() {
-			return customerName;
+
+		public void setReservationId(int reservationId) {
+			this.reservationId = reservationId;
 		}
+
+		public String getGuestName() {
+			return guestName;
+		}
+
+		public void setGuestName(String guestName) {
+			this.guestName = guestName;
+		}
+
 		public String getRoomId() {
 			return roomId;
 		}
-                public String getCreditCard() {
-			return creditCard;
-		}
-		public ReservationStatus getReservationStatus() {
-			return reserveStatus;
-		}
-                public String getCheckIn() {
-			return checkInDate;
-		}
-                public String getCheckOut() {
-			return checkOut;
-		}
-                public String getPax() {
-			return pax;
-		}
-                
-                public void setReservationId(int reservationId) {
-			this.reservationId = reservationId;
-		}
+
 		public void setRoomId(String roomId) {
 			this.roomId = roomId;
 		}
 
-		public void setCustomerName(String customerName) {
-			this.customerName = customerName;
+		public String getCreditCard() {
+			return creditCard;
 		}
-                public void setCreditCard(String credit) {
-			this.creditCard = credit;
+
+		public void setCreditCard(String creditCard) {
+			this.creditCard = creditCard;
 		}
-		public void setReservationStatus(ReservationStatus reserveStatus) {
+
+		public String getGuestIC() {
+			return guestIC;
+		}
+
+		public void setGuestIC(String guestIC) {
+			this.guestIC = guestIC;
+		}
+
+		public ReservationStatus getReserveStatus() {
+			return reserveStatus;
+		}
+
+		public void setReserveStatus(ReservationStatus reserveStatus) {
 			this.reserveStatus = reserveStatus;
 		}
-                public void setCheckIn(String checkIn) {
-			checkInDate = checkIn;
+
+		public Date getCheckInDate() {
+			return checkInDate;
 		}
-                public void setCheckOut(String checkOut) {
-			this.checkOut = checkOut;
+
+		public void setCheckInDate(Date checkInDate) {
+			this.checkInDate = checkInDate;
 		}
-                public void setPax(String pax) {
+
+		public Date getCheckOutDate() {
+			return checkOutDate;
+		}
+
+		public void setCheckOutDate(Date checkOutDate) {
+			this.checkOutDate = checkOutDate;
+		}
+
+		public String getPax() {
+			return pax;
+		}
+
+		public void setPax(String pax) {
 			this.pax = pax;
 		}
+        
 }

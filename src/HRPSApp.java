@@ -10,7 +10,9 @@ public class HRPSApp {
     	ArrayList<Room>roomList = new ArrayList<Room>();
     	ArrayList<MenuItem>menuList = new ArrayList<MenuItem>();
         ArrayList<RoomService>serviceList = new ArrayList<RoomService>();
-        ArrayList<Reservation>reservationList = new ArrayList<Reservation>();
+        ArrayList<Payment>paymentList = new ArrayList<Payment>();
+        ArrayList<Reservation>reservationList = new ArrayList<Reservation>();         
+        
     	//Parse and populate guest list from data file
     	//FileIO.parseDataList(guestList, roomList);
     	
@@ -18,12 +20,14 @@ public class HRPSApp {
         ServiceFileIO sfio = new ServiceFileIO();
         MenuFileIO mfio = new MenuFileIO();
         RoomFileIO rfio = new RoomFileIO();
+        PaymentFileIO pfio = new PaymentFileIO();
         ReservationFileIO refio = new ReservationFileIO();
         
         rfio.parseList(roomList);
     	gfio.parseList(guestList);
     	sfio.parseList(serviceList);
         mfio.parseList(menuList);
+        pfio.parseList(paymentList);
         refio.parseList(reservationList);
         int choice = 0;
         
@@ -37,26 +41,24 @@ public class HRPSApp {
             choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
-                                case 1: Menu.guestMenu(guestList, roomList);
+                case 1: GuestMenu.guestMenu(guestList, roomList, reservationList);
                 		break;
-				case 2: Menu.roomMenu(guestList, roomList, reservationList);		
+				case 2: RoomMenu.roomMenu(guestList, roomList, reservationList, serviceList, paymentList);		
 						break;
-				case 3: Menu.reservationMenu(guestList, roomList, reservationList);	
+				case 3: ReservationMenu.reservationMenu(guestList, roomList, reservationList);	
 						break;
-				case 4: Menu.roomServiceMenu(serviceList, menuList);		
+				case 4: RoomServiceMenu.roomServiceMenu(serviceList, menuList, roomList);		
 						break;
-				case 5: Menu.paymentMenu();
-						break;
-				case 6: System.out.println("Exiting. Goodbye!");
+				case 5: System.out.println("Exiting. Goodbye!");
 						gfio.exportAll(guestList);
-                                                rfio.exportAll(roomList);
-                                                sfio.exportAll(serviceList);
-                                                mfio.exportAll(menuList);
+                        rfio.exportAll(roomList);
+                        sfio.exportAll(serviceList);
+                        mfio.exportAll(menuList);
 						break;
-				default:System.out.println("Wrong Input. Please input from 1 - 6.");
+				default:System.out.println("Wrong Input. Please input from 1 - 5.");
 						break;
             }
        
-        } while (choice != 6);
+        } while (choice != 5);
     }
 }

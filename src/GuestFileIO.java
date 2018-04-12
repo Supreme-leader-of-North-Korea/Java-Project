@@ -45,7 +45,7 @@ public class GuestFileIO extends FileIO<Guest>{
 		fout.print(g.getGender() + "|");
 		fout.print(g.getNationality() + "|");
 		fout.print(g.getIdentity() + "|");
-                fout.print(g.getIC() + "|");
+        fout.print(g.getIc() + "|");
 		fout.print(g.getCreditDetails() + "|");
 		fout.println(g.getContact());
 	}

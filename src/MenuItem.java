@@ -1,8 +1,8 @@
 public class MenuItem {
-    private String name, description, price;
-
+    private String name, description;
+    private double price;
     
-    public MenuItem(String name, String desc, String price){
+    public MenuItem(String name, String desc, double price){
         this.name = name;
         description = desc;
         this.price = price;
@@ -14,7 +14,7 @@ public class MenuItem {
     public String getDescription() {
         return description;
     }
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
     
@@ -24,7 +24,7 @@ public class MenuItem {
     public void setDescription(String desc) {
         description = desc;
     }
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }
