@@ -183,5 +183,40 @@ public class ReservationMenu extends Menu {
 				}
 			}
         }
+	public static void removeReservation(ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
+            int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
+		
+		boolean found = false;
+		int index = 0;
+		int roomIndex = 0;
+		for (Reservation r: reservationList) {
+			if (identifier == (r.getReservationId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		
+		if (!found) {
+			System.out.println("Reservation ID: " + identifier + " not found!");
+		} else {
+                    String id = reservationList.get(index).getRoomId();
+                    found = false;
+                    for (Room rm: roomList) {
+			if (id.equals(rm.getRoomId())) {
+				found = true;
+				break;
+			}
+			roomIndex++;
+                    }
+                    reservationList.remove(index);
+                    roomList.get(roomIndex).setCustomerName("-");
+                    roomList.get(roomIndex).setCheckIn("-");
+                    roomList.get(roomIndex).setCheckOut("-");
+                    roomList.get(roomIndex).setPax("-");
+                    roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.VACANT);
+                    System.out.println("Reservation ID: " + identifier + " removed!");
+                }
+        }
 }
             
