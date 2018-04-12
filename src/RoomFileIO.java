@@ -39,13 +39,13 @@ public class RoomFileIO extends FileIO<Room>{
 			Room temp;
 			
 			switch (arr[7]) {
-				case "single": 	temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "single": 	temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   	break;
-				case "double": 	temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "double": 	temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 								break;
-				case "deluxe": 	temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "deluxe": 	temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 								break;
-				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 				   				break;
 			}
 			
@@ -98,13 +98,13 @@ public class RoomFileIO extends FileIO<Room>{
 			Room temp;
 			
 			switch (arr[7]) {
-				case "single": temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "single": temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   break;
-				case "double": temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "double": temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   break;
-				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 							   break;
-				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), arr[3], arr[4], arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 						 break;
 			}
 			

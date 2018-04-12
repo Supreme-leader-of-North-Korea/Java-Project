@@ -1,12 +1,13 @@
 
 public class Payment {
-	private double tax, promo, wifiPrice, tvPrice, WErates, singleRoomPrice, doubleRoomPrice, deluxeRoomPrice, vipRoomPrice;
+	private double tax, promo, wifiPrice, tvPrice, WErates, singleRoomPrice;
+	private double doubleRoomPrice, overStayingFine, deluxeRoomPrice, vipRoomPrice;
     
 	
 	
 	//Constructor
-    public Payment(double tax, double promo, double wifiPrice, double tvPrice, double WErates,
-    		double singleRoomPrice, double doubleRoomPrice, double deluxeRoomPrice, double vipRoomPrice) {
+    public Payment(double tax, double promo, double wifiPrice, double tvPrice, double WErates, double singleRoomPrice, 
+    		double doubleRoomPrice, double deluxeRoomPrice, double vipRoomPrice, double overStayingFine) {
     	this.tax = tax;
     	this.promo = promo;
     	this.wifiPrice = wifiPrice;
@@ -16,6 +17,7 @@ public class Payment {
 		this.doubleRoomPrice = doubleRoomPrice;
 		this.deluxeRoomPrice = deluxeRoomPrice;
 		this.vipRoomPrice = vipRoomPrice;
+		this.overStayingFine = overStayingFine;
 	}
 
 
@@ -90,6 +92,14 @@ public class Payment {
 
 	public void setVipRoomPrice(double vipRoomPrice) {
 		this.vipRoomPrice = vipRoomPrice;
+	}
+
+	public double getOverStayingFine() {
+		return overStayingFine;
+	}
+
+	public void setOverStayingFine(double overStayingFine) {
+		this.overStayingFine = overStayingFine;
 	}  
     
 }

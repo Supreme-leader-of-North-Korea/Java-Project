@@ -13,14 +13,14 @@ public abstract class Room {
 		//Attributes
 		private String roomId, guestIC;
 		private String customerName;
-		//private Date checkInDate, checkOutDate;
-		private String checkInDate, checkOutDate, pax;
+		private Date checkInDate, checkOutDate;
+		private String pax;
 		private RoomStatus roomStatus;
 		private BedType bedType;
 		
 		//Constructor
-		public Room(String roomId, String customerName, BedType bedType, String checkInDate, 
-				String checkOutDate, String pax, RoomStatus roomStatus, String guestIC){
+		public Room(String roomId, String customerName, BedType bedType, Date checkInDate, 
+				Date checkOutDate, String pax, RoomStatus roomStatus, String guestIC){
 			this.roomId = roomId;
 			this.customerName = customerName;
 			this.bedType = bedType;
@@ -36,8 +36,8 @@ public abstract class Room {
 			this.roomId = roomId;
 			this.customerName = "-";
 			this.bedType = bedType;
-            this.checkInDate = "-";
-            this.checkOutDate = "-";
+            this.checkInDate = null;
+            this.checkOutDate = null;
             this.pax = "-";
 			this.roomStatus = roomStatus;
 		}
@@ -100,19 +100,19 @@ public abstract class Room {
 			this.customerName = customerName;
 		}
 
-		public String getCheckInDate() {
+		public Date getCheckInDate() {
 			return checkInDate;
 		}
 
-		public void setCheckInDate(String checkInDate) {
+		public void setCheckInDate(Date checkInDate) {
 			this.checkInDate = checkInDate;
 		}
 
-		public String getCheckOutDate() {
+		public Date getCheckOutDate() {
 			return checkOutDate;
 		}
 
-		public void setCheckOutDate(String checkOutDate) {
+		public void setCheckOutDate(Date checkOutDate) {
 			this.checkOutDate = checkOutDate;
 		}
 

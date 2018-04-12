@@ -58,7 +58,7 @@ public class ReservationMenu extends Menu {
 	        
 		public static void makeReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
        	 	String identifier = Menu.readString("Please enter the guest IC Number: ");
-            boolean found = false;
+
             int index = 0;
             int roomIndex = 0;	            
 		
@@ -69,8 +69,8 @@ public class ReservationMenu extends Menu {
 			} else {
 				System.out.println("Guest with IC: " + identifier + " found!");
 				String roomID = Menu.readString("Please enter the room ID: ");
-				String checkIn = Menu.readString("Please enter the check in date [DD/MM/YYYY]: ");
-				String checkOut = Menu.readString("Please enter the check out date [DD/MM/YYYY]: ");
+				Date checkIn = Menu.readDate("Please enter the check in date [DD/MM/YYYY]: ");
+				Date checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
 				String pax = Menu.readString("Please enter the number of pax staying: ");
 	
 				roomIndex = roomIDSearch(roomList,roomID);
@@ -93,7 +93,6 @@ public class ReservationMenu extends Menu {
        }	        
 	
 		public static void searchReservation(ArrayList<Reservation>reservationList) {
-		//Ask for guest name as primary key
 		int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
 		int index = reservationSearch(reservationList, identifier);
 		
@@ -146,13 +145,13 @@ public class ReservationMenu extends Menu {
 	           }
 				if (found) {
 	                roomList.get(roomIndex).setCustomerName(name);
-	                String in = Menu.readString("Enter new Check In Date: ");
-	                if (!in.equals("")) {
+	                Date in = Menu.readDate("Enter new Check In Date: ");
+	                if (in != null) {
 	                    reservationList.get(index).setCheckInDate(in);
 	                    roomList.get(roomIndex).setCheckInDate(in);
 	                }
-	                String out = Menu.readString("Enter new Check Out Date: ");
-	                if (!out.equals("")) {
+	                Date out = Menu.readDate("Enter new Check Out Date: ");
+	                if (out != null) {
 	                    reservationList.get(index).setCheckOutDate(out);
 	                    roomList.get(roomIndex).setCheckOutDate(out);
 	                }

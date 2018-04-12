@@ -32,12 +32,21 @@ public class PaymentFileIO extends FileIO<Payment>{
 			String[] arr1 = str.split("\\|");
 			int i=0;
 			double[] arr = null;
-			
+			arr[0]= Double.parseDouble(arr1[0]);
+			arr[1]= Double.parseDouble(arr1[1]);
+			arr[2]= Double.parseDouble(arr1[2]);
+			arr[3]= Double.parseDouble(arr1[3]);
+			arr[4]= Double.parseDouble(arr1[4]);
+			arr[5]= Double.parseDouble(arr1[5]);
+			arr[6]= Double.parseDouble(arr1[6]);
+			arr[7]= Double.parseDouble(arr1[7]);
+			arr[8]= Double.parseDouble(arr1[8]);
+			arr[9]= Double.parseDouble(arr1[9]);
 			while(i<=8) {
 				arr[i]= Double.parseDouble(arr1[i]);
 				i++;
 			}
-			Payment temp = new Payment(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8]);
+			Payment temp = new Payment(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9]);
 			plist.add(temp);
 		}
 		

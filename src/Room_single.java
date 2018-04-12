@@ -1,3 +1,4 @@
+import java.util.Date;
 
 public class Room_single extends Room {
 	
@@ -6,7 +7,7 @@ public class Room_single extends Room {
 	private boolean wifiEnabled, withView, withSmoking;
 	
 	//Constructor
-	public Room_single(String roomId, String customerName, BedType bedType, String checkIn, String checkOut, String pax, RoomStatus roomStatus, String guestIC) {
+	public Room_single(String roomId, String customerName, BedType bedType, Date checkIn, Date checkOut, String pax, RoomStatus roomStatus, String guestIC) {
 		super(roomId, customerName, bedType, checkIn, checkOut, pax, roomStatus, guestIC);
 	}
 	

@@ -206,12 +206,14 @@ public class RoomMenu extends Menu {
 	        			System.out.println("Incorrect room ID !");
 	        		} else {
 	        			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
-	                		String checkOut = Menu.readString("Please enter the check out date [DD/MM/YYYY]: ");
+	                		Date checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
 	                	  	String pax = Menu.readString("Please enter the number of pax staying: ");
-		                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		                    
 		                    Date date = new Date();
+		                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	                	  	
 		                    roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
-		                    roomList.get(roomIndex).setCheckInDate(dateFormat.format(date));
+		                    roomList.get(roomIndex).setCheckInDate(readDate(dateFormat.format(date)));
 		                    roomList.get(roomIndex).setCheckOutDate(checkOut);
 		                    roomList.get(roomIndex).setPax(pax);
 		                    roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
@@ -255,7 +257,7 @@ public class RoomMenu extends Menu {
 				if (index == -1) {
 					System.out.println("Room with ID: " + identifier + " not found!");
 				} else {
-	               if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
+	               if (roomOccupancyCheck(roomList, identifier)) {
 	                    System.out.println("Room with ID: " + identifier + " found!");
 	                    
 	                    int reservationIndex = reservationSearch(reservationList,identifier);
@@ -268,8 +270,8 @@ public class RoomMenu extends Menu {
 	                    	PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
 	                    	
 	                    	roomList.get(index).setCustomerName("-");
-		                    roomList.get(index).setCheckInDate("-");
-		                    roomList.get(index).setCheckOutDate("-");
+		                    roomList.get(index).setCheckInDate(null);
+		                    roomList.get(index).setCheckOutDate(null);
 		                    roomList.get(index).setPax("-");
 		                    roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
 	                    } else 

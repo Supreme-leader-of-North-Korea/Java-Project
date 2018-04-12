@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -248,7 +249,15 @@ public class Menu {
 		}
 		return input;
 	}
-	
-	
+	public static Date readDate(String prompt) {
+		SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy"); 
+	    Date t = null;
+	    try {
+	       t = ft.parse(prompt); 
+	    } catch (ParseException e) { 
+	       System.out.println("Unparseable using " + ft); 
+	    }
+		return t;
+	}
 	
 }

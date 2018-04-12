@@ -1,3 +1,4 @@
+import java.util.Date;
 
 public class Reservation {
 		public enum ReservationStatus {
@@ -6,13 +7,13 @@ public class Reservation {
 		
 		//Attributes
 		private int reservationId;
-		private String guestName, roomId, creditCard, guestIC;
+		private String guestName, roomId, creditCard, guestIC, pax;
 		private ReservationStatus reserveStatus;
-        private String checkInDate, checkOutDate, pax;
+        private Date checkInDate, checkOutDate;
 		
 		//Methods
 		public Reservation(int reservationId, String roomId, String guestName, String creditCard, 
-				String checkInDate, String checkOutDate, String pax, ReservationStatus reserveStatus, String guestIC){
+				Date checkInDate, Date checkOutDate, String pax, ReservationStatus reserveStatus, String guestIC){
 			this.reservationId = reservationId;
             this.roomId = roomId;
 			this.guestName = guestName;
@@ -90,19 +91,19 @@ public class Reservation {
 			this.reserveStatus = reserveStatus;
 		}
 
-		public String getCheckInDate() {
+		public Date getCheckInDate() {
 			return checkInDate;
 		}
 
-		public void setCheckInDate(String checkInDate) {
+		public void setCheckInDate(Date checkInDate) {
 			this.checkInDate = checkInDate;
 		}
 
-		public String getCheckOutDate() {
+		public Date getCheckOutDate() {
 			return checkOutDate;
 		}
 
-		public void setCheckOutDate(String checkOutDate) {
+		public void setCheckOutDate(Date checkOutDate) {
 			this.checkOutDate = checkOutDate;
 		}
 
