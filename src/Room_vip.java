@@ -2,26 +2,40 @@
 public class Room_vip extends Room{
 
 	//Room attributes
-	final int rate = 400;
-	final boolean wifiEnabled = true;
-	final boolean withView = true;
-	final boolean withSmoking = true;
+	private double rate;
+	private boolean wifiEnabled, withView, withSmoking;
 	
 	//Constructor
-	public Room_vip(String roomId, int customerName, String bedType, RoomStatus roomStatus) {
-		super(roomId, customerName, bedType, roomStatus);
+	public Room_vip(String roomId, String customerName, BedType bedType, String checkIn, String checkOut, String pax, RoomStatus roomStatus, String guestIC) {
+		super(roomId, customerName, bedType, checkIn, checkOut, pax, roomStatus, guestIC);
 	}
 	
 	//Constructor overload, when room is vacant, there is no customer name
-	public Room_vip(String roomId, String bedType, RoomStatus roomStatus) {
+	public Room_vip(String roomId, BedType bedType, RoomStatus roomStatus) {
 		super(roomId, bedType, roomStatus);
 	}
 
 	//Getter and setters
-	public int getRate() {
+	public double getRate() {
 		return rate;
 	}
 	
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
+
+	public void setWifiEnabled(boolean wifiEnabled) {
+		this.wifiEnabled = wifiEnabled;
+	}
+
+	public void setWithView(boolean withView) {
+		this.withView = withView;
+	}
+
+	public void setWithSmoking(boolean withSmoking) {
+		this.withSmoking = withSmoking;
+	}
+
 	public boolean isWifiEnabled() {
 		return wifiEnabled;
 	}

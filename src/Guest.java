@@ -2,11 +2,11 @@
 public class Guest {
 	
 	//Attributes
-    private String name, creditDetails, address, country, gender, nationality, identity, contact;
+    private String name, creditDetails, address, country, gender, nationality, identity, contact, ic;
     
     //Constructor
     public Guest(String name, String address, String country, String gender, String nationality,
-			String identity, String creditDetails,String contact) {
+			String identity, String ic, String creditDetails,String contact) {
 		super();
 		this.name = name;
 		this.creditDetails = creditDetails;
@@ -15,6 +15,7 @@ public class Guest {
 		this.gender = gender;
 		this.nationality = nationality;
 		this.identity = identity;
+        this.ic = ic;
 		this.contact = contact;
 	}
     
@@ -51,7 +52,10 @@ public class Guest {
 	public String getContact() {
 		return contact;
 	}
-
+        
+    public String getIC() {
+        return ic;
+    }
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -83,4 +87,7 @@ public class Guest {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
+    public void setIC(String ic) {
+        this.ic = ic;
+    }
 }
