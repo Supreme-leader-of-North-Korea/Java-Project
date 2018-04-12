@@ -97,7 +97,7 @@ public class ReservationMenu extends Menu {
 	
 		public static void searchReservation(ArrayList<Reservation>reservationList) {
 		//Ask for guest name as primary key
-		int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
+		String identifier = Menu.readString("Please enter the reservation ID you would like to search: ");
 		
 		boolean found = false;
 		int index = 0;
@@ -125,7 +125,7 @@ public class ReservationMenu extends Menu {
         
         public static void updateReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		//Ask for guest identity as primary key
-		int identifier = Menu.readInt("Please enter the reservation ID you would like to update: ");
+		String identifier = Menu.readString("Please enter the reservation ID you would like to update: ");
 		
 		boolean found = false;
 		int index = 0;
