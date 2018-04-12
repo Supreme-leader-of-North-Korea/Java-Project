@@ -141,7 +141,7 @@ public class RoomServiceMenu extends Menu {
 	        public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList) {
 	            
 			String no = Menu.readString("Enter your room no: ");
-	                
+	                int index = 1;
 			if (menuList.isEmpty())
 				System.out.print("None");
 			else {	
@@ -149,7 +149,8 @@ public class RoomServiceMenu extends Menu {
 					String name = m.getName();
 	                                String desc = m.getDescription();
 	                                double price = m.getPrice();
-					System.out.println(name + " | " + desc + " | " + price);
+					System.out.println(index + " | " + name + " | " + desc + " | " + price);
+                                        index++;
 				}
 			}
 					String order = Menu.readString("Enter your order: ");
@@ -157,8 +158,8 @@ public class RoomServiceMenu extends Menu {
 	                String remark = Menu.readString("Any remark(s) for your order ? ('Enter' key to skip)");
 	                if (remark.equals(""))
 	                    remark = "-";
-	                	int orderNo = Integer.parseInt(order);
-	                	RoomService rs = new RoomService(no, order, quantity, remark, menuList.get(orderNo-1).getPrice());
+	                	int orderNo = Integer.parseInt(order) - 1;
+	                	RoomService rs = new RoomService(no, order, quantity, remark, menuList.get(orderNo).getPrice(), RoomService.Status.PREPARING);
 	                	serviceList.add(rs);
 		}
 		

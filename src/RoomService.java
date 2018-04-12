@@ -8,12 +8,12 @@ public class RoomService {
     private Status status;
     private double price;
     
-    public RoomService(String no, String item, int quantity, String remarks, double price) {
+    public RoomService(String no, String item, int quantity, String remarks, double price, Status status) {
         menuItem = item;
         roomId = no;
         this.quantity = quantity;
         this.remarks = remarks;
-        status = Status.PREPARING;
+        this.status = status;
         this.price = price;
     }
     public double getPrice() {
@@ -52,4 +52,20 @@ public class RoomService {
     public void setPrice(double price) {
 		this.price = price;
 	}
+    
+    public static Status strToStatus (String status) {
+			Status roomStatus = RoomService.Status.PREPARING;
+			
+			switch (status) {
+				case "PREPARING": 			  roomStatus = RoomService.Status.PREPARING;;
+										  break;
+				case "CONFIRMED": 		  roomStatus = RoomService.Status.CONFIRMED;;
+				 				 		  break;
+				case "DELIVERED": 		  roomStatus = RoomService.Status.DELIVERED;
+				 				 		  break;
+				
+			}
+			
+			return roomStatus;
+		}
 }
