@@ -26,7 +26,16 @@ public class ReservationMenu extends Menu {
 	                        refio.exportAll(reservationList);
 	                        rfio.exportAll(roomList);
 	                		break;
-	                		
+	                case 2: searchReservation(reservationList);
+                       		break;
+                	case 3: updateReservation(guestList, roomList, reservationList);
+                        	rfio.exportAll(roomList);
+                        	refio.exportAll(reservationList);
+                        	break;
+                	case 4: removeReservation(roomList, reservationList);
+	                        rfio.exportAll(roomList);
+	                        refio.exportAll(reservationList);
+	                        break;		
 	                case 5: System.out.println("Returning to main menu...");
 	                        refio.exportAll(reservationList);
 	                        rfio.exportAll(roomList);
