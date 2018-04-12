@@ -7,12 +7,15 @@ import java.util.Date;
 public class RoomMenu extends Menu {
 	//Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-		public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList) throws FileNotFoundException{
+		public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
+				ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
+				ArrayList<Payment>paymentList) throws FileNotFoundException{
 			
 			int choice = 0;
 			ReservationFileIO refio = new ReservationFileIO();
             GuestFileIO gfio = new GuestFileIO();
             RoomFileIO rfio = new RoomFileIO();
+            PaymentFileIO pfio = new PaymentFileIO();
 	        //Select menu
 	        do {
 	        	//Print room menu
@@ -34,7 +37,7 @@ public class RoomMenu extends Menu {
 	                        rfio.exportAll(roomList);
 	                        refio.exportAll(reservationList);
 	                		break;
-	                case 5: checkOut(guestList,roomList,reservationList, serviceList);
+	                case 5: checkOut(guestList,roomList,reservationList, serviceList,paymentList);
 	                		rfio.exportAll(roomList);
 	                		refio.exportAll(reservationList);
 	                		break;
@@ -217,7 +220,7 @@ public class RoomMenu extends Menu {
 	        } else if (choice == 2) {
 	                identifier = Menu.readString(" Please enter the reservation number: ");
 			
-	                index = reservationSearch(reservationList, identifier);
+	                index = reservationIdSearch(reservationList, identifier);
 	                if (index == -1) {
 	                	System.out.println("Reservation number: " + identifier + " not found!");
 	                } else {
@@ -228,7 +231,7 @@ public class RoomMenu extends Menu {
 	                    } else {
 	                            System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " found!");
 	                            roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
-	                            roomList.get(roomIndex).setCustomerName(reservationList.get(index).getCustomerName());
+	                            roomList.get(roomIndex).setCustomerName(reservationList.get(index).getGuestName());
 	                            roomList.get(roomIndex).setCheckIn(reservationList.get(index).getCheckIn());
 	                            roomList.get(roomIndex).setCheckOut(reservationList.get(index).getCheckOut());
 	                            roomList.get(roomIndex).setPax(reservationList.get(index).getPax());
@@ -240,38 +243,25 @@ public class RoomMenu extends Menu {
 	       }
 	    }
 	    
-	    public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList) {
+	    public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
+	    							ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList) {
 	            String identifier = Menu.readString("Please enter the room ID: ");
-	            int reservationIndex = 0;
+
 	            int index = roomIDSearch(roomList, identifier);
 				if (index == -1) {
 					System.out.println("Room with ID: " + identifier + " not found!");
 				} else {
 	               if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 	                    System.out.println("Room with ID: " + identifier + " found!");
-	                    boolean found = false;
-	                    for (Reservation re: reservationList) {
-		                    if (identifier.equals(re.getRoomId())) {
-		                            //if (roomList.get(index).getCheckOut().equals(re.getCheckOut())) {
-		                            	found = true;
-										break;
-		                           // }
-		                    }
-		                    reservationIndex++;
-	                    }
-
-	                    if (!found) {
+	                    
+	                    int reservationIndex = reservationRoomSearch(reservationList,identifier);
+	                    if (reservationIndex == -1) {
 	                    	System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOut() + " not found!");
 	                    } else {
 	                    	System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOut() + " found!");
 	                    	reservationList.remove(reservationIndex);
 	                    }
-	                    	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH");
-	                    	Date date = new Date();
-	                    	
-	                    	double rsTotal = rsTotal(serviceList, identifier);
-	                    	
-	                    	
+	                    	PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
 	                    	
 	                    	roomList.get(index).setCustomerName("-");
 		                    roomList.get(index).setCheckIn("-");

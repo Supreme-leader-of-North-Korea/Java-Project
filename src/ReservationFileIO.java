@@ -31,7 +31,8 @@ public class ReservationFileIO extends FileIO<Reservation>{
 			str = myScanner.nextLine();
 			String[] arr = str.split("\\|");
 			
-			Reservation temp = new Reservation(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], Reservation.strToReservationStatus(arr[7]));
+			Reservation temp = new Reservation(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], 
+					arr[4], arr[5], arr[6], Reservation.strToReservationStatus(arr[7]), arr[7]);
 			rlist.add(temp);
 		}
 		
@@ -41,7 +42,7 @@ public class ReservationFileIO extends FileIO<Reservation>{
 	public void export (Reservation r, PrintWriter fout) {
 		fout.print(r.getReservationId() + "|");
 		fout.print(r.getRoomId() + "|");
-		fout.print(r.getCustomerName() + "|");
+		fout.print(r.getGuestName() + "|");
 		fout.print(r.getCreditCard() + "|");
 		fout.print(r.getCheckIn() + "|");
 		fout.print(r.getCheckOut() + "|");

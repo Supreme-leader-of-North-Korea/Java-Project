@@ -108,18 +108,44 @@ public class Menu {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	public static int reservationSearch(ArrayList<Reservation>reservationList, String identifier) {
+	public static int reservationRoomSearch(ArrayList<Reservation>reservationList, String identifier) {
 		boolean found = false;
 		int index = 0;
-		for (Reservation r: reservationList) {
-			if (Integer.parseInt(identifier)==(r.getReservationId())) {
+		for (Reservation re: reservationList) {
+			if (identifier.equals(re.getRoomId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}		
+		if(found == true) 
+			return index;
+		else 
+			return -1;
+	}
+	
+
+	public static int reservationIdSearch(ArrayList<Reservation>reservationList, String identifier) {
+		boolean found = false;
+		int index = 0;
+		for (Reservation re: reservationList) {
+			if (Integer.parseInt(identifier)==(re.getReservationId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}		
+		if(found == true) 
+			return index;
+		else 
+			return -1;
+	}
+
+	public static int reservationICSearch(ArrayList<Reservation>reservationList, String identifier) {
+		boolean found = false;
+		int index = 0;
+		for (Reservation re: reservationList) {
+			if (identifier.equals(re.getGuestIC())) {
 				found = true;
 				break;
 			}
@@ -145,6 +171,14 @@ public class Menu {
 	public static String readString(String prompt) {
 		System.out.print(prompt);
 		return new java.util.Scanner(System.in).nextLine();
+	}
+	
+	public static String readNonEmptyString(String prompt) {
+		String check;
+		do {
+			check = readString(prompt);
+		}while (check.equals(""));
+		return check;
 	}
 	
 	public static int readInt(String prompt) {

@@ -4,10 +4,12 @@ import java.util.ArrayList;
 public class GuestMenu extends Menu {
 //Guest Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList) throws FileNotFoundException {
+	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
+			ArrayList<Reservation>reservationList) throws FileNotFoundException {
 		int choice = 0;
         GuestFileIO gfio = new GuestFileIO();
         RoomFileIO rfio = new RoomFileIO();
+        ReservationFileIO refio = new ReservationFileIO();
         //Select menu
         do {
         	//Print guest menu
@@ -24,9 +26,10 @@ public class GuestMenu extends Menu {
                 		gfio.exportAll(guestList);
                 		break;
                 case 2: System.out.println("Updating guest details");
-                		updateGuest(guestList);
+                		updateGuest(guestList,roomList,reservationList);
                 		gfio.exportAll(guestList);
-                        rfio.exportAll(roomList);
+                        rfio.exportAll(roomList);;
+                        refio.exportAll(reservationList);
                 		break;
                 case 3: System.out.println("Searching guest details");
                 		searchGuest(guestList);
@@ -61,15 +64,15 @@ public class GuestMenu extends Menu {
 	public static void createNewGuest(ArrayList<Guest>guestList) {
 		System.out.println("All fields are mandatory");
 		
-		String name 	= Menu.readString("Enter guest name: "									);
-		String addr 	= Menu.readString("Enter guest address: "								);
-		String country 	= Menu.readString("Enter guest country: "								);
-		String gender 	= Menu.readString("Enter guest gender: "								);
-		String nat 		= Menu.readString("Enter guest nationality: "							);
-		String idt 		= Menu.readString("Enter guest identity[(D)riving License/(P)assport]: ");
-        String ic 		= Menu.readString("Enter IC Number: "									);
-		String ccd 		= Menu.readString("Enter guest credit card detail: "					);
-		String contact 	= Menu.readString("Enter guest contact number: "						);
+		String name 	= Menu.readNonEmptyString("Enter guest name: "									);
+		String addr 	= Menu.readNonEmptyString("Enter guest address: "								);
+		String country 	= Menu.readNonEmptyString("Enter guest country: "								);
+		String gender 	= Menu.readNonEmptyString("Enter guest gender: "								);
+		String nat 		= Menu.readNonEmptyString("Enter guest nationality: "							);
+		String idt 		= Menu.readNonEmptyString("Enter guest identity[(D)riving License/(P)assport]: ");
+        String ic 		= Menu.readNonEmptyString("Enter IC Number: "									);
+		String ccd 		= Menu.readNonEmptyString("Enter guest credit card detail: "					);
+		String contact 	= Menu.readNonEmptyString("Enter guest contact number: "						);
 		
 		int index = guestICSearch(guestList, ic);
 		
@@ -81,7 +84,7 @@ public class GuestMenu extends Menu {
 		}
 	}
 	
-	public static void updateGuest(ArrayList<Guest>guestList) {
+	public static void updateGuest(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		//Ask for guest identity as primary key
 		String identifier = Menu.readString("Please enter identity of guest to update: ");
 		int index = guestICSearch(guestList, identifier);
@@ -116,7 +119,8 @@ public class GuestMenu extends Menu {
 			
 			String ccd = Menu.readString("Enter new guest credit card detail: ");
 			if (!ccd.equals("")) 
-				guestList.get(index).setCreditDetails(ccd);;
+				guestList.get(index).setCreditDetails(ccd);
+				
 			
 			String contact = Menu.readString("Enter new guest contact number: ");
 			if (!contact.equals("")) 
@@ -124,6 +128,11 @@ public class GuestMenu extends Menu {
 					
 			System.out.println(" -------------------------------------------");
 			System.out.println(" Guest updated!");
+			
+			//Need to update reservation and room accordingly
+			int roomIndex = roomICSearch(roomList,identifier);
+			int reservationIndex = reservationICSearch(reservationList,identifier);
+			
 		}
 	}
 	

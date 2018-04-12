@@ -2,10 +2,8 @@
 public class Room_single extends Room {
 	
 	//Room attributes
-	final int rate = 100;
-	final boolean wifiEnabled = true;
-	final boolean withView = false;
-	final boolean withSmoking = false;
+	private double rate;
+	private boolean wifiEnabled, withView, withSmoking;
 	
 	//Constructor
 	public Room_single(String roomId, String customerName, BedType bedType, String checkIn, String checkOut, String pax, RoomStatus roomStatus, String guestIC) {
@@ -18,19 +16,37 @@ public class Room_single extends Room {
 	}
 
 	//Getter and setters
-	public int getRate() {
+	public double getRate() {
 		return rate;
+	}
+
+	public void setRate(double rate) {
+		this.rate = rate;
 	}
 
 	public boolean isWifiEnabled() {
 		return wifiEnabled;
 	}
 
+	public void setWifiEnabled(boolean wifiEnabled) {
+		this.wifiEnabled = wifiEnabled;
+	}
+
 	public boolean isWithView() {
 		return withView;
+	}
+
+	public void setWithView(boolean withView) {
+		this.withView = withView;
 	}
 
 	public boolean isWithSmoking() {
 		return withSmoking;
 	}
+
+	public void setWithSmoking(boolean withSmoking) {
+		this.withSmoking = withSmoking;
+	}
+
+	
 }

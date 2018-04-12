@@ -1,71 +1,74 @@
 
 public class Payment {
-	private String tax, promo, singleSizePrice, doubleSizePrice, kingSizePrice, singleRoomPrice, doubleRoomPrice, deluxeRoomPrice, vipRoomPrice;
-    //Constructor
-    public Payment(String tax, String promo, String singleSizePrice, String doubleSizePrice, String kingSizePrice, 
-    		String singleRoomPrice, String doubleRoomPrice, String deluxeRoomPrice, String vipRoomPrice) {
+	private double tax, promo, wifiPrice, tvPrice, WErates, singleRoomPrice, doubleRoomPrice, deluxeRoomPrice, vipRoomPrice;
+    
+	
+	
+	//Constructor
+    public Payment(double tax, double promo, double wifiPrice, double tvPrice, double WErates,
+    		double singleRoomPrice, double doubleRoomPrice, double deluxeRoomPrice, double vipRoomPrice) {
     	this.tax = tax;
     	this.promo = promo;
-    	this.singleSizePrice = singleSizePrice;
-    	this.doubleSizePrice = doubleSizePrice;
-		this.kingSizePrice = kingSizePrice;
+    	this.wifiPrice = wifiPrice;
+    	this.tvPrice = tvPrice;
+    	this.WErates = WErates;
 		this.singleRoomPrice = singleRoomPrice;
 		this.doubleRoomPrice = doubleRoomPrice;
 		this.deluxeRoomPrice = deluxeRoomPrice;
 		this.vipRoomPrice = vipRoomPrice;
 	}
-	public String getTax() {
+	public double getTax() {
 		return tax;
 	}
-	public void setTax(String tax) {
+	public void setTax(double tax) {
 		this.tax = tax;
 	}
-	public String getPromo() {
+	public double getPromo() {
 		return promo;
 	}
-	public void setPromo(String promo) {
+	public void setPromo(double promo) {
 		this.promo = promo;
 	}
-	public String getSingleSizePrice() {
-		return singleSizePrice;
+	public double getWifiPrice() {
+		return wifiPrice;
 	}
-	public void setSingleSizePrice(String singleSizePrice) {
-		this.singleSizePrice = singleSizePrice;
+	public void setWifiPrice(double wifiPrice) {
+		this.wifiPrice = wifiPrice;
 	}
-	public String getDoubleSizePrice() {
-		return doubleSizePrice;
+	public double getTvPrice() {
+		return tvPrice;
 	}
-	public void setDoubleSizePrice(String doubleSizePrice) {
-		this.doubleSizePrice = doubleSizePrice;
+	public void setTvPrice(double tvPrice) {
+		this.tvPrice = tvPrice;
 	}
-	public String getKingSizePrice() {
-		return kingSizePrice;
+	public double getWErates() {
+		return WErates;
 	}
-	public void setKingSizePrice(String kingSizePrice) {
-		this.kingSizePrice = kingSizePrice;
+	public void setWErates(double wErates) {
+		WErates = wErates;
 	}
-	public String getSingleRoomPrice() {
+	public double getSingleRoomPrice() {
 		return singleRoomPrice;
 	}
-	public void setSingleRoomPrice(String singleRoomPrice) {
+	public void setSingleRoomPrice(double singleRoomPrice) {
 		this.singleRoomPrice = singleRoomPrice;
 	}
-	public String getDoubleRoomPrice() {
+	public double getDoubleRoomPrice() {
 		return doubleRoomPrice;
 	}
-	public void setDoubleRoomPrice(String doubleRoomPrice) {
+	public void setDoubleRoomPrice(double doubleRoomPrice) {
 		this.doubleRoomPrice = doubleRoomPrice;
 	}
-	public String getDeluxeRoomPrice() {
+	public double getDeluxeRoomPrice() {
 		return deluxeRoomPrice;
 	}
-	public void setDeluxeRoomPrice(String deluxeRoomPrice) {
+	public void setDeluxeRoomPrice(double deluxeRoomPrice) {
 		this.deluxeRoomPrice = deluxeRoomPrice;
 	}
-	public String getVipRoomPrice() {
+	public double getVipRoomPrice() {
 		return vipRoomPrice;
 	}
-	public void setVipRoomPrice(String vipRoomPrice) {
+	public void setVipRoomPrice(double vipRoomPrice) {
 		this.vipRoomPrice = vipRoomPrice;
 	}
     

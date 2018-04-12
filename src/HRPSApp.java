@@ -41,9 +41,9 @@ public class HRPSApp {
             choice = Menu.readInt(" Please enter your choice: ");
             
             switch(choice) {
-                case 1: GuestMenu.guestMenu(guestList, roomList);
+                case 1: GuestMenu.guestMenu(guestList, roomList, reservationList);
                 		break;
-				case 2: RoomMenu.roomMenu(guestList, roomList, reservationList, serviceList);		
+				case 2: RoomMenu.roomMenu(guestList, roomList, reservationList, serviceList, paymentList);		
 						break;
 				case 3: ReservationMenu.reservationMenu(guestList, roomList, reservationList);	
 						break;
