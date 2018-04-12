@@ -7,7 +7,7 @@ public abstract class Room {
 		public enum BedType {
 			SINGLE_SIZE, DOUBLE_SIZE, KING_SIZE
 		}
-		
+		abstract boolean isWifiEnabled();
 		//Attributes
 		private String roomId, guestIC;
 		private String customerName;

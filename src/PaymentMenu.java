@@ -131,7 +131,7 @@ public class PaymentMenu extends Menu{
 			
 			if (roomList.get(roomIndex) instanceof Room_single) {
 				WDrates = paymentList.get(index).getSingleRoomPrice();
-				//wifiEnable = Room_single.isWifiEnabled();
+				wifiEnable = roomList.get(roomIndex).isWifiEnabled();
 			}else if (roomList.get(roomIndex) instanceof Room_double) {
 				WDrates = paymentList.get(index).getDoubleRoomPrice();
 				//wifiEnable = Room_double.isWifiEnabled();
