@@ -74,10 +74,10 @@ public class GuestMenu extends Menu {
 		do {
 			gender 	= Menu.readNonEmptyString("Enter guest gender: [(M)ale/(F)emale]"			);		
 			switch(gender.toUpperCase()) {
-		    	case "M": gender = "male";
+		    	case "M": gender = "Male";
 			  			  input = true;
 			  			  break;
-		        case "F": gender = "female";
+		        case "F": gender = "Female";
 			  			  input = true;
 			  			  break;
 		        default:  System.out.println(" Please try again with the correct input !"); 
@@ -89,10 +89,10 @@ public class GuestMenu extends Menu {
 		do {
 			idt 	= Menu.readNonEmptyString("Enter guest identity[(D)riving License/(P)assport]: ");
 			switch(idt.toUpperCase()) {
-		    	case "D": idt = "drivingLicense";
+		    	case "D": idt = "Driving License";
 		    			  input = true;
 		    			  break;
-		        case "P": idt = "passport";
+		        case "P": idt = "Passport";
 		        		  input = true;
 		                  break;
 		        default:  System.out.println(" Please try again with the correct input !"); 
@@ -179,8 +179,7 @@ public class GuestMenu extends Menu {
 	}
 	
 	public static void searchGuest(ArrayList<Guest>guestList) {
-		//Ask for guest name as primary key
-		
+		//Ask for guest name to search
 		String identifier = Menu.readString("Please enter name of guest to update: ");
 		
 		String IC = guestNameSearch(guestList, identifier);
@@ -192,7 +191,8 @@ public class GuestMenu extends Menu {
 							   "\nCountry: " + guestList.get(index).getCountry() + 
 							   "\nGender: " + guestList.get(index).getGender() + 
 							   "\nNationality: " + guestList.get(index).getNationality() + 
-							   "\nIdentity: " + guestList.get(index).getIdentity() +
+							   "\nIC:" + guestList.get(index).getIc() +
+							   "\nIdentity Type: " + guestList.get(index).getIdentity() +
 							   "\nCredit Card Details: " + guestList.get(index).getCreditDetails() +
 							   "\nContact: " + guestList.get(index).getContact());
 			System.out.println(" -------------------------------------------");

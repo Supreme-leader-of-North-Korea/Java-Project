@@ -60,34 +60,71 @@ public class ReservationMenu extends Menu {
        	 	String identifier = Menu.readString("Please enter the guest IC Number: ");
 
             int index = 0;
-            int roomIndex = 0;	            
-		
+            int roomIndex = 0;	         
+            boolean input = false;
+            
 			index = guestICSearch(guestList, identifier);
 			
 			if (index == -1) {
 				System.out.println("Guest with IC: " + identifier + " not found!");
+				System.out.println("Please create guest first");
+				GuestMenu.createNewGuest(guestList);
 			} else {
 				System.out.println("Guest with IC: " + identifier + " found!");
-				String roomID = Menu.readString("Please enter the room ID: ");
 				Date checkIn = Menu.readDate("Please enter the check in date [DD/MM/YYYY]: ");
 				Date checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
+				String roomType = Menu.readNonEmptyString("Please Enter the type of room "
+						+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+				do {
+				switch (roomType.charAt(0)) {
+				case 'S':	roomType = "SINGLE";
+							input = true;
+							break;
+				case 'O':	roomType = "DOUBLE";
+							input = true;
+							break;
+				case 'E':	roomType = "DELUXE";
+							input = true;
+							break;
+				case 'V':	roomType = "VIP";
+							input = true;
+							break;
+				default:	roomType = Menu.readNonEmptyString("Please Enter the correct type of room "
+							+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+							input = false;
+							break;
+				
+				}
+				}while(!input);
+				
+				searchRoomType(roomList,roomType);
+				
+				String roomID = Menu.readString("Please enter the room ID: ");
+				
+				
 				String pax = Menu.readString("Please enter the number of pax staying: ");
 	
 				roomIndex = roomIDSearch(roomList,roomID);
                
+				//setting room status 
 				roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
 				roomList.get(roomIndex).setCheckInDate(checkIn);
 				roomList.get(roomIndex).setCheckOutDate(checkOut);
 				roomList.get(roomIndex).setPax(pax);
 				roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.RESERVED);
 				Random random = new Random( System.currentTimeMillis() );
-				int id = 10000+random.nextInt(20000);
-				Reservation reservation = new Reservation(id, roomID, guestList.get(index).getName(), 
+				int reservationID = 10000+random.nextInt(20000);
+				
+				//adding reservation
+				Reservation reservation = new Reservation(reservationID, roomID, guestList.get(index).getName(), 
                					guestList.get(index).getCreditDetails(), checkIn, checkOut, pax, 
                					Reservation.ReservationStatus.CONFIRMED,guestList.get(index).getIc());
 				reservationList.add(reservation);
+				
+				
+				
 				System.out.println("Room with room ID: " + roomID + " reserved!");
-				System.out.println("Reservation ID: " + id);
+				System.out.println("Reservation ID: " + reservationID);
 				System.out.println("Please present this ID during check in !");					
 			}
        }	        

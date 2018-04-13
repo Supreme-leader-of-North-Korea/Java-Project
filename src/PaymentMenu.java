@@ -1,9 +1,18 @@
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PaymentMenu extends Menu{
 	
-	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
+	public static void paymentMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
 			ArrayList<Payment>paymentList) throws FileNotFoundException{
 		
@@ -41,7 +50,7 @@ public class PaymentMenu extends Menu{
         System.out.println(" *                 Payment                 *");
         System.out.println(" ===========================================");
         System.out.println(" * 1. Update Price & Promotion Rates       *");
-        System.out.println(" * 2. Print Rates					       *");
+        System.out.println(" * 2. Print Rates                          *");
         System.out.println(" * 3. Previous                             *");
         System.out.println(" * 4. Quit                                 *");
     }
@@ -86,7 +95,8 @@ public class PaymentMenu extends Menu{
 
 	public static void printRates(ArrayList<Payment>paymentList) {
 		 int index = 0; //there will be one row in paymentList for now as we do not keep history  	
-		 
+
+		 double fineRate = paymentList.get(index).getOverStayingFine();
 		 double promo = paymentList.get(index).getPromo();
 		 double gst = paymentList.get(index).getTax();
 		 double wifiRates = paymentList.get(index).getWifiPrice();
@@ -106,8 +116,9 @@ public class PaymentMenu extends Menu{
 		 System.out.println(" Deluxe Room:						" + deluxeRoomRates + "/day");
 		 System.out.println(" VIP Room:							" + vipRoomRates + "/day");
 		 System.out.println(" ----------Additional Charges:--------- ");
-		 System.out.println(" Enabling Wifi:					 " + wifiRates +"/day");
-		 System.out.println(" Cabled Television					 " + tvRates +"/day");
+		 System.out.println(" Delayed Checkout Fine:			" + fineRate );
+		 System.out.println(" Enabling Wifi:					" + wifiRates +"/day");
+		 System.out.println(" Cabled Television					" + tvRates +"/day");
 	}
 	
 	
@@ -115,9 +126,8 @@ public class PaymentMenu extends Menu{
 	public static void printInvoice(ArrayList<Payment>paymentList, ArrayList<RoomService>serviceList, ArrayList<Room>roomList, int roomIndex) {
 			
 			int index = 0;		
-			double WDrates;
-			boolean wifiEnable = false;
-			
+
+			double fineRate = paymentList.get(index).getOverStayingFine();
 			double promo = paymentList.get(index).getPromo();
 			double tax = paymentList.get(index).getTax();
 			double wifiRates = paymentList.get(index).getWifiPrice();
@@ -125,7 +135,8 @@ public class PaymentMenu extends Menu{
 			double WErates = paymentList.get(index).getWErates();
 			String roomId = roomList.get(roomIndex).getRoomId(); 
 			double rsTotal = rsTotal(serviceList, roomId);
-			
+			double WDrates;
+			boolean wifiEnable = false;
 			if (roomList.get(roomIndex) instanceof Room_single) {
 				WDrates = paymentList.get(index).getSingleRoomPrice();
 				//wifiEnable = Room_single.isWifiEnabled();
@@ -144,11 +155,34 @@ public class PaymentMenu extends Menu{
 			}
 			
 			// calculate no  of WeekDays and no WeekEnds and total of days stayed
-			int noWE=5;
-			int noWD=2;
 			
-			double wePrice = noWE * WErates;
-			double wdPrice = noWD * WDrates;
+			Date checkIn = roomList.get(index).getCheckInDate();
+			Date checkOut = roomList.get(index).getCheckOutDate();
+			Date today = new Date();
+			int []nodays = getWorkingDaysBetweenTwoDates(checkIn,checkOut);
+			int weekDays = nodays[0];
+			int weekEnds = nodays[1];
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("hh"); 
+			String overstaycheck = dateFormat.format(today);
+			
+			int []latecheckout = getWorkingDaysBetweenTwoDates(today,checkOut);
+			boolean overStayFine = false;
+			
+			//guest will be evacuated if they stayed after 6pm and charged with delayed checkout fine
+			//therefore, there is no need to check if they stay after the checkout date
+			//Any early checkout will be charge with the same amount as normal checkout
+			if((latecheckout[0] + latecheckout[1]) == 0) {
+				if(Integer.parseInt(overstaycheck) >= 14) {
+					overStayFine = true;
+				}else {
+					overStayFine = false;
+				}
+			}
+			
+			
+			double wePrice = weekEnds * WErates;
+			double wdPrice = weekDays * WDrates;
 			double subtotal = wePrice + wdPrice + rsTotal;
 			double promotion = promo/100*subtotal;
 			double gst = tax/100*(subtotal-promotion);
@@ -157,16 +191,52 @@ public class PaymentMenu extends Menu{
 	        System.out.println(" =======================================");
 	        System.out.println(" *               Invoice               *");
 	        System.out.println(" =======================================");
-	        System.out.println(" No of days stayed:                    	" + (noWD+noWE));
-	        System.out.println(" 	Weekdays("+ WDrates +"/days):			" + noWD);
-	        System.out.println(" 	Weekends("+ WErates +"/days):			" + noWE);
-	        System.out.println(" Room Service Total                  	" + rsTotal);
+	        System.out.println(" No of days stayed:					" + (weekDays+weekEnds));
+	        System.out.println(" 	Weekdays("+ WDrates +"/days):	" + weekDays);
+	        System.out.println(" 	Weekends("+ WErates +"/days):	" + weekEnds);
+	        if (overStayFine) {
+	        	System.out.println(" 	Delayed Check Out Fine:			" + fineRate);
+	        }
+	        System.out.println(" Room Service Total                 " + rsTotal);
 	        System.out.println(" ---------------------------------------");
-	        System.out.println(" Sub-total:                             " + subtotal);
-	        System.out.println(" GST("+ tax +"%)		                   	    " + gst);
-	        System.out.println(" Promotion(if any):                	    " + promotion );
+	        System.out.println(" Sub-total:							" + subtotal);
+	        System.out.println(" GST("+ tax +"%)					" + gst);
+	        System.out.println(" Promotion(if any):					" + promotion );
 	        System.out.println(" =======================================");
-	        System.out.println(" Grand Total:	                	    " + total);
+	        System.out.println(" Grand Total:						" + total);
 	} 
+	
+		public static int[] getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
+		    Calendar startCal = Calendar.getInstance();
+		    startCal.setTime(startDate);        
+	
+		    Calendar endCal = Calendar.getInstance();
+		    endCal.setTime(endDate);
+		    int weekDays = 0;
+		    int weekEnds = 0;
+		    
+		    int []totalDays = {weekDays,weekEnds};
+			
+		    //Return 0 if start and end are the same
+		    if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
+		        return totalDays;
+		    }
+	
+		    if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
+		        startCal.setTime(endDate);
+		        endCal.setTime(startDate);
+		    }
+	
+		    do {
+		       //excluding start date
+		        startCal.add(Calendar.DAY_OF_MONTH, 1);
+		        if (startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && startCal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+		            ++weekDays;
+		        }else {
+		        	++weekEnds;
+		        }
+		    } while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
+	
+		    return totalDays;
+		}
 }
-

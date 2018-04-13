@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,27 +75,31 @@ public class RoomMenu extends Menu {
 		
 		public static void searchRoomByName(ArrayList<Room>roomList,ArrayList<Guest>guestList) {
 			//Ask for guest name as primary key
-			String identifier = Menu.readString("Please enter the guest name you would like to search: ");
-			String IC =	Menu.guestNameSearch(guestList, identifier);
+			String identifier = readString("Please enter the guest name you would like to search: ");
+			String IC =	guestNameSearch(guestList, identifier);
 			
 			if (IC != null) {
 				int index = roomICSearch(roomList, IC);
-				System.out.println(" -------------------------------------------");
-				System.out.println("Room No: " + roomList.get(index).getRoomId() +
-			                        "\nBed Type: " + roomList.get(index).getBedType() +
-			                        "\nRoom Status: " + roomList.get(index).getRoomStatus() +
-			                        "\nCustomer Name: " + roomList.get(index).getCustomerName() +
-			                        "\nCheck In: " + roomList.get(index).getCheckInDate() +
-			                        "\nCheck Out: " + roomList.get(index).getCheckOutDate() +
-			                        "\nNumber of pax staying: " + roomList.get(index).getPax());
-				System.out.println(" -------------------------------------------");
-				
+				if (index != -1){
+					System.out.println("Guest is not assigned to any room");
+				} else {
+					System.out.println(" -------------------------------------------");
+					System.out.println("Room No: " + roomList.get(index).getRoomId() +
+				                        "\nBed Type: " + roomList.get(index).getBedType() +
+				                        "\nRoom Status: " + roomList.get(index).getRoomStatus() +
+				                        "\nCustomer Name: " + roomList.get(index).getCustomerName() +
+				                        "\nCheck In: " + roomList.get(index).getCheckInDate() +
+				                        "\nCheck Out: " + roomList.get(index).getCheckOutDate() +
+				                        "\nNumber of pax staying: " + roomList.get(index).getPax());
+					System.out.println(" -------------------------------------------");
+				}
 			}
-		}
+			}
+
 	        
 	    public static void searchRoomByNo(ArrayList<Room>roomList) {
 			//Ask for guest name as primary key
-			String identifier = Menu.readString("Please enter the room number you would like to search: ");
+			String identifier = readString("Please enter the room number you would like to search: ");
 			int index = roomIDSearch(roomList, identifier);
 			if (index == -1) {
 				System.out.println("Room with room ID: " + identifier + " not found!");
@@ -130,7 +135,7 @@ public class RoomMenu extends Menu {
 				System.out.println("Please enter new room details ('Enter' key to skip)");
 				
 				do {
-					String type = Menu.readString("Enter new bed type: ");
+					String type = Menu.readString("Enter new bed type: [(S)ingle/(D)ouble/(K)ing] ");
 					switch(type.toUpperCase()) {
 	            	case "S": roomList.get(index).setBedType(Room.BedType.SINGLE_SIZE);
 	            			  input = true;
@@ -143,7 +148,7 @@ public class RoomMenu extends Menu {
 			                  break;
 	                case "":  input = true;
 	                		  break;
-	                default:  System.out.println("Please enter (S)ingle/(D)ouble/(K)ing");
+	                default:  System.out.println("Please enter [(S)ingle/(D)ouble/(K)ing]");
 	                   		  System.out.println(" Please try again with the correct input !"); 
 	                   		  input = false; 
 	                   		  break;
@@ -206,16 +211,17 @@ public class RoomMenu extends Menu {
 	        			System.out.println("Incorrect room ID !");
 	        		} else {
 	        			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
-	                		String checkOut = Menu.readString("Please enter the check out date [DD/MM/YYYY]: ");
-	                		Date checkOutdate = Menu.readDate(checkOut);
+	                		Date checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
 	                	  	String pax = Menu.readString("Please enter the number of pax staying: ");
 		                    
 		                    Date date = new Date();
-		                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	                	  	
+		                    SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+		                    date = dateConvert(ft.format(date));
+
+		                    roomList.get(roomIndex).setGuestIC(guestList.get(index).getIc());
 		                    roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
-		                    roomList.get(roomIndex).setCheckInDate(readDate(dateFormat.format(date)));
-		                    roomList.get(roomIndex).setCheckOutDate(checkOutdate);
+		                    roomList.get(roomIndex).setCheckInDate(date);
+		                    roomList.get(roomIndex).setCheckOutDate(checkOut);
 		                    roomList.get(roomIndex).setPax(pax);
 		                    roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 		                    System.out.println("Guest " + guestList.get(index).getName() + " have successfully checked in room " + roomID);
@@ -252,13 +258,13 @@ public class RoomMenu extends Menu {
 	    
 	    public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
 	    							ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList) {
-	            String identifier = Menu.readString("Please enter the room ID: ");
+	            String identifier = readString("Please enter the room ID: ");
 
 	            int index = roomIDSearch(roomList, identifier);
 				if (index == -1) {
 					System.out.println("Room with ID: " + identifier + " not found!");
 				} else {
-	               if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
+	               if (roomOccupancyCheck(roomList, identifier)) {
 	                    System.out.println("Room with ID: " + identifier + " found!");
 	                    
 	                    int reservationIndex = reservationSearch(reservationList,identifier);

@@ -1,10 +1,6 @@
-import java.io.FileNotFoundException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Menu {
 	
@@ -16,19 +12,19 @@ public class Menu {
         System.out.println(" * 2. About Room                           *");
         System.out.println(" * 3. About Reservation                    *");
         System.out.println(" * 4. About Room Service                   *");
-        System.out.println(" * 5. Quit                                 *");
+        System.out.println(" * 5. About Payment                        *");
+        System.out.println(" * 6. Quit                                 *");
     } 
-	
+	//Guest Search
 	public static String guestNameSearch(ArrayList<Guest>guestList, String identifier) {
 		ArrayList<Guest>guestList2 = new ArrayList<Guest>();
 
 		int index = 0;
-		int i = 0, number = 1;
+		int number = 1;
 		String IC = null;
 		for (Guest g: guestList) {
 			if (g.getName().toLowerCase().contains(identifier.toLowerCase())) {
 				guestList2.add(guestList.get(index));
-				i++;
 			}
 			index++;
 		} 
@@ -71,7 +67,7 @@ public class Menu {
 			return -1;
 	}
 	
-
+	//Room Search
 	public static int roomICSearch(ArrayList<Room>roomList, String identifier) {
 		boolean found = false;
 		int index = 0;
@@ -87,7 +83,6 @@ public class Menu {
 		else 
 			return -1;
 	}
-	
 	
 	public static int roomIDSearch(ArrayList<Room>roomList, String identifier) {
 		boolean found = false;
@@ -105,7 +100,69 @@ public class Menu {
 			return -1;
 	}
 	
+	public static void searchRoomType(ArrayList<Room>roomList, String identifier) {
+		int index = 0;
+		String roomNo;
+		for (Room r: roomList) {
+			roomNo = r.getRoomId(); 
+			if (r instanceof Room_single && identifier.equals("SINGLE")){ 	
+				
+				if (roomList.get(index).getCheckInDate().equals(null) && roomList.get(index).getCheckOutDate().equals(null))
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() + "!");
+				else 
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() 
+							+ " from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+			}
+			if(r instanceof Room_double && identifier.equals("DOUBLE")){ 
+				if (roomList.get(index).getCheckInDate().equals(null) && roomList.get(index).getCheckOutDate().equals(null))
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() + "!");
+				else 
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() 
+							+ " from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+			}
+			if(r instanceof Room_deluxe && identifier.equals("DELUXE")){ 
+				if (roomList.get(index).getCheckInDate().equals(null) && roomList.get(index).getCheckOutDate().equals(null))
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() + "!");
+				else 
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() 
+							+ " from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+			}
+			if(r instanceof Room_vip && identifier.equals("VIP")){ 
+				if (roomList.get(index).getCheckInDate().equals(null) && roomList.get(index).getCheckOutDate().equals(null))
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() + "!");
+				else 
+					System.out.println(" Room No: " + roomNo + " is " + roomList.get(index).getRoomStatus() + 
+							" from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+			}
+			
+		index++;
+		}
+	}
 	
+	public static boolean roomOccupancyCheck(ArrayList<Room>roomList,String roomNo) {
+		boolean found = false;
+		int index = 0;
+		for (Room r: roomList) {
+			if (roomNo.equals(r.getRoomId())) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		if(found) {
+			if(roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)){
+				return true;
+			}else {
+				System.out.println("Room No: " + roomNo + " is currently not occupied!");
+				return false;
+			}
+		}else {
+			System.out.println("Room No: " + roomNo + " does not exist!");
+			return false;
+		}
+	}
+	
+	// Reservation Search
 	public static int reservationSearch(ArrayList<Reservation>reservationList, String identifier) {
 		boolean found = false;
 		int index = 0;
@@ -121,7 +178,7 @@ public class Menu {
 		else 
 			return -1;
 	}
-	//method overriding
+		//method overriding
 	public static int reservationSearch(ArrayList<Reservation>reservationList, int identifier) {
 		boolean found = false;
 		int index = 0;
@@ -153,6 +210,8 @@ public class Menu {
 		else 
 			return -1;
 	}
+	
+	//Menu Search
 	public static int menuNameSearch(ArrayList<MenuItem>menuList, String identifier) {
 		boolean found = false;
 		int index = 0;
@@ -171,29 +230,8 @@ public class Menu {
 			return -1;
 	}
 	
-	public static boolean roomOccupancyCheck(ArrayList<Room>roomList,String roomNo) {
-		boolean found = false;
-		int index = 0;
-		for (Room r: roomList) {
-			if (roomNo.equals(r.getRoomId())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		if(found) {
-			if(roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)){
-				return true;
-			}else {
-				System.out.println("Room No: " + roomNo + " is currently not occupied!");
-				return false;
-			}
-		}else {
-			System.out.println("Room No: " + roomNo + " does not exist!");
-			return false;
-		}
-	}
 	
+	//Service Search
 	public static double rsTotal(ArrayList<RoomService>serviceList, String identifier) {
 		double total = 0;
 		for (RoomService rs: serviceList) {
@@ -249,15 +287,24 @@ public class Menu {
 		}
 		return input;
 	}
+	
 	public static Date readDate(String prompt) {
-		SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy"); 
-	    Date t = null;
-	    try {
-	       t = ft.parse(prompt); 
-	    } catch (ParseException e) { 
-	       System.out.println("Unparseable using " + ft); 
-	    }
-		return t;
+	    String result = readNonEmptyString(prompt);
+	    return dateConvert(result);
 	}
 	
+	public static Date dateConvert(String date) {
+		if(date != null && !date.equals("null")) {
+			SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+			Date t = new Date();
+			try {
+			       t = ft.parse(date); 
+			    } catch (ParseException e) { 
+			       System.out.println("Unparseable using " + ft); 
+			    }
+			return t;
+		}
+		return null;
+		
+	}
 }

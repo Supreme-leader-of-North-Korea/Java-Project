@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -37,19 +39,18 @@ public class RoomFileIO extends FileIO<Room>{
 			String[] arr = str.split("\\|");
 			
 			Room temp;
-			
+
 			switch (arr[7]) {
-				case "single": 	temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
-							   	break;
-				case "double": 	temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "single":	temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 								break;
-				case "deluxe": 	temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+				case "double":	temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
 								break;
-				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
-				   				break;
+				case "deluxe":	temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				default:		temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);			   				
+								break;
 			}
-			
-			rlist.add(temp);
+				rlist.add(temp);
 		}
 		} else {
 			//If data list is empty, generate empty rooms
@@ -85,8 +86,9 @@ public class RoomFileIO extends FileIO<Room>{
 						default: temp = new Room_vip (roomNumber, Room.strToBedType(bedType), Room.RoomStatus.VACANT) ;
 								 break;
 					}
-					
-					rlist.add(temp);
+
+					if (temp != null)
+						rlist.add(temp);
 				}
 			}
 		}
@@ -98,14 +100,15 @@ public class RoomFileIO extends FileIO<Room>{
 			Room temp;
 			
 			switch (arr[7]) {
-				case "single": temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
-							   break;
-				case "double": temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
-							   break;
-				case "deluxe": temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
-							   break;
-				default: temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.readDate(arr[3]), Menu.readDate(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
-						 break;
+				case "single":	temp = new Room_single (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				case "double":	temp = new Room_double (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				case "deluxe":	temp = new Room_deluxe (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				default:		temp = new Room_vip (arr[0], arr[1], Room.strToBedType(arr[2]), Menu.dateConvert(arr[3]), Menu.dateConvert(arr[4]), arr[5], Room.strToRoomStatus(arr[6]), arr[7]);
+								break;
+				
 			}
 			
 			rlist.add(temp);

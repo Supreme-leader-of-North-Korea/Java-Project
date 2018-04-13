@@ -49,7 +49,9 @@ public class HRPSApp {
 						break;
 				case 4: RoomServiceMenu.roomServiceMenu(serviceList, menuList, roomList);		
 						break;
-				case 5: System.out.println("Exiting. Goodbye!");
+				case 5: PaymentMenu.paymentMenu(guestList, roomList, reservationList, serviceList, paymentList);		
+						break;
+				case 6: System.out.println("Exiting. Goodbye!");
 						gfio.exportAll(guestList);
                         rfio.exportAll(roomList);
                         sfio.exportAll(serviceList);
@@ -59,6 +61,6 @@ public class HRPSApp {
 						break;
             }
        
-        } while (choice != 5);
+        } while (choice != 6);
     }
 }
