@@ -1,0 +1,130 @@
+1) Incorrect prompt text
+- About Guest -> Search Guest Details -> Please enter name of guest to update: 
+
+
+2) Did not validate data when updating guest
+- After creating new guest -> Update Guest Details -> Able to key in guest gender as "Did you just assume my gender?"
+- Also able to update all fields with a blank space " " so the guest would have empty fields.
+
+
+3) Unhandled exception when checking room status for new guest
+- After creating new guest -> About Room -> Check Room Status by Guest Name -> Exception occurs
+Exception in thread "main" java.lang.IndexOutOfBoundsException: Index -1 out-of-bounds for length 48
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+	at java.base/java.util.Objects.checkIndex(Objects.java:372)
+	at java.base/java.util.ArrayList.get(ArrayList.java:440)
+	at RoomMenu.searchRoomByName(RoomMenu.java:87)
+	at RoomMenu.roomMenu(RoomMenu.java:28)
+	at HRPSApp.main(HRPSApp.java:46)
+- Another thing is I am also able to key in the guest ID to check room status? Or is it meant to be able to check room status by both guest name and ID?
+
+
+4) Improper handling of incorrect input when updating room details
+- About Room -> Update Room Details -> After keying in room ID 0201 and "K" -> Incorrect input for new room status results in infinite while loop
+
+
+5) Unvalidated input for room check in
+- Able to enter "when I get chased out" as a date and something other than a number for no. of pax staying.
+
+
+6) After guest "Alex" checks into room 0201, able to update room details to vacant but checking room status still retains "Alex"'s data. 
+
+
+7) Checking out from room gives me IndexOutOfBoundsException.
+- Room Check out -> "0201" ->
+  Room with ID: 0201 found!
+  Reservation with ID: 0201 and check out date: Sun Apr 15 00:00:00 SRET 2018 not found!
+Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 out-of-bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+	at java.base/java.util.Objects.checkIndex(Objects.java:372)
+	at java.base/java.util.ArrayList.get(ArrayList.java:440)
+	at PaymentMenu.printInvoice(PaymentMenu.java:130)
+	at RoomMenu.checkOut(RoomMenu.java:277)
+	at RoomMenu.roomMenu(RoomMenu.java:39)
+	at HRPSApp.main(HRPSApp.java:46)
+- Am I supposed to use some already created data from you or is this a bug?
+
+
+8) Unable to access functions under "Reservation"
+- About Reservation -> Selecting option 2,3,4 returns me the prompt "Wrong Input. Please input from 1 - 6."
+- Is this because there have been no reservations made yet? Or is this another bug?
+
+9) NULLPOINTEREXCEPTIONNNNNNNNNNNNNNNN
+Make Reservation ->
+-> Please enter the guest IC Number: a
+-> Guest with IC: a found!
+-> Please enter the check in date [DD/MM/YYYY]: a
+Unparseable using java.text.SimpleDateFormat@d936eac0
+-> Please enter the check out date [DD/MM/YYYY]: b
+Unparseable using java.text.SimpleDateFormat@d936eac0
+-> Please Enter the type of room you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]v
+-> Please Enter the correct type of room you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]V
+ Room No: 0201 is VACANT from Sat Apr 14 03:31:55 SRET 2018 to Sat Apr 14 03:31:55 SRET 2018
+Exception in thread "main" java.lang.NullPointerException
+	at Menu.searchRoomType(Menu.java:131)
+	at ReservationMenu.makeReservation(ReservationMenu.java:100)
+	at ReservationMenu.reservationMenu(ReservationMenu.java:25)
+	at HRPSApp.main(HRPSApp.java:48)
+
+
+10) Okay I'm getting lazy to type out what the errors are already so I'm just going to copy and paste the output.
+ ===========================================
+ *              Room Service               *
+ ===========================================
+ * 1. New Room Service Menu Item           *
+ * 2. Update Room Service Menu Item        *
+ * 3. Remove Room Service Menu Item        *
+ * 4. Create Room Service Order	           *
+ * 5. Previous          			       *
+ * 6. Quit                                 *
+ -------------------------------------------
+ Please enter your choice: 2
+Updating menu details...
+1 | jinquan | skin then boil then grill | -999.0
+Please enter the index of menu item to be updated: 
+*** Please enter an integer ***
+Please enter the index of menu item to be updated: 0
+Exception in thread "main" java.lang.IndexOutOfBoundsException: Index -1 out-of-bounds for length 1
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+	at java.base/java.util.Objects.checkIndex(Objects.java:372)
+	at java.base/java.util.ArrayList.get(ArrayList.java:440)
+	at RoomServiceMenu.updateMenu(RoomServiceMenu.java:75)
+	at RoomServiceMenu.roomServiceMenu(RoomServiceMenu.java:27)
+	at HRPSApp.main(HRPSApp.java:50)
+
+
+11) Prompts which are as weird as your ass.
+ ===========================================
+ *         Hotel Management System         *
+ ===========================================
+ * 1. About Guest                          *
+ * 2. About Room                           *
+ * 3. About Reservation                    *
+ * 4. About Room Service                   *
+ * 5. About Payment                        *
+ * 6. Quit                                 *
+ -------------------------------------------
+ Please enter your choice: 0
+Wrong Input. Please input from 1 - 5.  <---------------- naniiii? 1-5 but 6 options?
+
+ ===========================================
+ *              Room Service               *
+ ===========================================
+ * 1. New Room Service Menu Item           *
+ * 2. Update Room Service Menu Item        *
+ * 3. Remove Room Service Menu Item        *
+ * 4. Create Room Service Order	           *
+ * 5. Previous          			       * <--------- why this star sticking out here like your perky ass?
+ * 6. Quit                                 *
+ -------------------------------------------
+ Please enter your choice: 0
+Wrong Input. Please input from 1 - 5. <--------------- Sorry I OCD.
+
+
+Anyway you said payment functions not implemented yet so I didn't test it. Must treat me to a good meal hor. NOT CHICKEN RICE.
