@@ -1,2 +1,2 @@
 # Java-Project
-Please download Payment.txt for the codes to run properly 
+Please download PaymentRates.txt for the codes to run properly 
