@@ -203,8 +203,6 @@ public class RoomMenu extends Menu {
 		if (index == -1) {
 			System.out.println("Guest with IC: " + identifier + " not found!");
 		} else {
-			System.out.println("Guest with IC: " + identifier + " found!");
-			System.out.println("Please enter the room type!");
 			String roomID = readNonEmptyString("Please enter the room ID: ");
 			int roomIndex = roomIDSearch(roomList, roomID);
 			if (roomIndex == -1) {
@@ -237,8 +235,6 @@ public class RoomMenu extends Menu {
 					roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 					System.out.println("Guest " + guestList.get(index).getName() + " have successfully checked in room " + roomID);
 
-
-
 				} else {
 					System.out.println("Room is currently" + roomList.get(roomIndex).getRoomStatus());
 				}
@@ -250,7 +246,6 @@ public class RoomMenu extends Menu {
 
 	public static void reservationCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
 		int resIdentifier = readInt(" Please enter the reservation number: ");
-
 		int index = reservationSearch(reservationList, resIdentifier);
 		if (index == -1) {
 			System.out.println("Reservation number: " + resIdentifier + " not found!");
@@ -260,7 +255,6 @@ public class RoomMenu extends Menu {
 			if (roomIndex == -1) {
 				System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " not found!");
 			} else {
-				System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " found!");
 				roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 				roomList.get(roomIndex).setCustomerName(reservationList.get(index).getGuestName());
 				roomList.get(roomIndex).setCheckInDate(reservationList.get(index).getCheckInDate());
@@ -270,30 +264,6 @@ public class RoomMenu extends Menu {
 			}
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -308,7 +278,6 @@ public class RoomMenu extends Menu {
 		} else {
 			if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 				System.out.println("Room with ID: " + identifier + " found!");
-
 				int reservationIndex = reservationSearch(reservationList,identifier);
 				if (reservationIndex == -1) {
 					System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOutDate() + " not found!");

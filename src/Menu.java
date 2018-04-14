@@ -117,34 +117,39 @@ public class Menu {
 			return -1;
 	}
 
-	public static void searchRoomType(ArrayList<Room>roomList, String identifier) {
+	public static void searchRoomType(ArrayList<Room>roomList, String identifier, Date checkIn, Date checkOut) {
 		int index = 0;
 		String roomNo;
 		for (Room r: roomList) {
 			roomNo = r.getRoomId(); 
 			if (r instanceof Room_single && identifier.equals("SINGLE")){ 	
-				statusCheck (r, index, roomNo);
+				statusCheck (r, index, roomNo, checkIn, checkOut);
 			}
-			if(r instanceof Room_double && identifier.equals("DOUBLE")){ 
-				statusCheck (r, index, roomNo);
+			if(r instanceof Room_double && identifier.equals("DOUBLE")){ 	
+				statusCheck (r, index, roomNo, checkIn, checkOut);
 			}
-			if(r instanceof Room_deluxe && identifier.equals("DELUXE")){ 
-				statusCheck (r, index, roomNo);
+			if(r instanceof Room_deluxe && identifier.equals("DELUXE")){ 	
+				statusCheck (r, index, roomNo, checkIn, checkOut);
 			}
-			if(r instanceof Room_vip && identifier.equals("VIP")){ 
-				statusCheck (r, index, roomNo);
+			if(r instanceof Room_vip && identifier.equals("VIP")){ 	
+				statusCheck (r, index, roomNo, checkIn, checkOut);
 			}
 
 			index++;
 		}
 	}
 
-	public static void statusCheck (Room r, int index, String roomNo) {
+	public static void statusCheck (Room r, int index, String roomNo, Date checkIn, Date CheckOut) {
 		if (r.getCheckInDate() == null && r.getCheckOutDate() == null)
 			System.out.println(" Room No: " + roomNo + " is " + r.getRoomStatus() + "!");
-		else 
-			System.out.println(" Room No: " + roomNo + " is " + r.getRoomStatus() 
-			+ " from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+		else {
+			if(checkIn.after(r.getCheckOutDate()) || CheckOut.before(r.getCheckInDate())) {
+				System.out.println(" Room No: " + roomNo + " is available!");
+			
+				System.out.println("It is " + r.getRoomStatus() 
+				+ " from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+			}
+		}	
 	}
 
 	// Reservation Search
