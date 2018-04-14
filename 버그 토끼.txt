@@ -1,12 +1,14 @@
+Fixed
 1) Incorrect prompt text
 - About Guest -> Search Guest Details -> Please enter name of guest to update: 
-
 
 2) Did not validate data when updating guest
 - After creating new guest -> Update Guest Details -> Able to key in guest gender as "Did you just assume my gender?"
 - Also able to update all fields with a blank space " " so the guest would have empty fields.
 
 
+
+Require fixing
 3) Unhandled exception when checking room status for new guest
 - After creating new guest -> About Room -> Check Room Status by Guest Name -> Exception occurs
 Exception in thread "main" java.lang.IndexOutOfBoundsException: Index -1 out-of-bounds for length 48
@@ -99,32 +101,3 @@ Exception in thread "main" java.lang.IndexOutOfBoundsException: Index -1 out-of-
 	at HRPSApp.main(HRPSApp.java:50)
 
 
-11) Prompts which are as weird as your ass.
- ===========================================
- *         Hotel Management System         *
- ===========================================
- * 1. About Guest                          *
- * 2. About Room                           *
- * 3. About Reservation                    *
- * 4. About Room Service                   *
- * 5. About Payment                        *
- * 6. Quit                                 *
- -------------------------------------------
- Please enter your choice: 0
-Wrong Input. Please input from 1 - 5.  <---------------- naniiii? 1-5 but 6 options?
-
- ===========================================
- *              Room Service               *
- ===========================================
- * 1. New Room Service Menu Item           *
- * 2. Update Room Service Menu Item        *
- * 3. Remove Room Service Menu Item        *
- * 4. Create Room Service Order	           *
- * 5. Previous          			       * <--------- why this star sticking out here like your perky ass?
- * 6. Quit                                 *
- -------------------------------------------
- Please enter your choice: 0
-Wrong Input. Please input from 1 - 5. <--------------- Sorry I OCD.
-
-
-Anyway you said payment functions not implemented yet so I didn't test it. Must treat me to a good meal hor. NOT CHICKEN RICE.
