@@ -141,7 +141,7 @@ public class PaymentMenu extends Menu{
 			WDrates = paymentList.get(index).getDoubleRoomPrice();
 		}else if(roomList.get(roomIndex) instanceof Room_deluxe) {
 			WDrates = paymentList.get(index).getDeluxeRoomPrice();
-		}else { //room is VIP
+		}else {
 			WDrates = paymentList.get(index).getVipRoomPrice();
 
 		}
@@ -175,7 +175,7 @@ public class PaymentMenu extends Menu{
 		}
 
 
-		double wePrice = weekEnds * WErates;
+		double wePrice = weekEnds * WErates * WDrates;
 		double wdPrice = weekDays * WDrates;
 		double subtotal = wePrice + wdPrice + rsTotal;
 		double promotion = promo/100*subtotal;
