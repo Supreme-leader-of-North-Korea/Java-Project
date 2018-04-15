@@ -15,6 +15,7 @@ public class ReservationMenu extends Menu {
 			printReservationMenu();
 			RoomFileIO rfio = new RoomFileIO();
 			ReservationFileIO refio = new ReservationFileIO();
+                        GuestFileIO gfio = new GuestFileIO();
 			//Get user's choice
 			System.out.println(" -------------------------------------------");
 			choice = readInt(" Please enter your choice: ");
@@ -23,20 +24,24 @@ public class ReservationMenu extends Menu {
 			case 1: makeReservation(guestList,roomList,reservationList);
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
+                                        gfio.exportAll(guestList);
 					break;
 			case 2: searchReservation(reservationList);
 					break;
 			case 3: updateReservation(guestList, roomList, reservationList);
+                                        refio.exportAll(reservationList);
 					break;
 			case 4: printReservation(reservationList);
 					break;
 			case 5: System.out.println("Returning to main menu...");
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
+                                        gfio.exportAll(guestList);
 					break;
 			case 6: System.out.println("Exiting...");
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
+                                        gfio.exportAll(guestList);
 					System.exit(0);
 					break;				
 			default:System.out.println("Wrong Input. Please input from 1 - 6.");

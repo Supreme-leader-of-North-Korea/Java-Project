@@ -110,6 +110,7 @@ public class GuestMenu extends Menu {
 			String contact 	= readNonEmptyString("Enter guest contact number: "						);
 			Guest g = new Guest(name, addr, country, gender, nat, identity, ic, ccd, contact);
 			guestList.add(g);
+                        System.out.println("Guest " + name + " is successfully created !");
 		} else {
 			System.out.println("Guest with identity: " + ic + " has already existed");
 		}
