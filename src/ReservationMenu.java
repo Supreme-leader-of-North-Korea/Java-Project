@@ -61,9 +61,6 @@ public class ReservationMenu extends Menu {
 	public static void makeReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
 		String identifier = Menu.readString("Please enter the guest IC Number: ");
 
-		int roomIndex = 0;	         
-		boolean input = false;
-
 		int gindex = guestICSearch(guestList, identifier);
 		int resIndex = reservationICSearch(reservationList, identifier);
 		
@@ -82,37 +79,34 @@ public class ReservationMenu extends Menu {
 				checkIn = Menu.readDate("Please enter the check in date [DD/MM/YYYY]: ");
 				checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
 			}while(checkIn.after(checkOut) || checkIn.before(today));
-			String roomType = Menu.readNonEmptyString("Please Enter the type of room "
-					+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+			
+			//This method display all room types according to what the user choose 
+			//and return the list of room id that are available
+			String []roomIdarr = searchRoomType(roomList, checkIn, checkOut);
+
+			String roomID;
+			int roomIndex;	         
+			boolean input = false;
 			do {
-				switch (roomType.charAt(0)) {
-					case 'S':	roomType = "SINGLE";
-								input = true;
-								break;
-					case 'O':	roomType = "DOUBLE";
-								input = true;
-								break;
-					case 'E':	roomType = "DELUXE";
-								input = true;
-								break;
-					case 'V':	roomType = "VIP";
-								input = true;
-								break;
-					default:	roomType = Menu.readNonEmptyString("Please Enter the correct type of room "
-							+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
-								input = false;
-								break;
+				//check if there is such a room
+				do {
+					roomID = Menu.readNonEmptyString("Please enter the room ID: ");
+					roomIndex = roomIDSearch(roomList,roomID);
+				}while(roomIndex == -1);
+				
+				//check if this room is in the list of rooms that are available 
+				for(int i = 0; roomIdarr.length<= i ;i++) {
+					if (roomID.equals(roomIdarr[i])) {
+						input = true;
+						break;
+					}
 				}
-			}while(!input);
-			System.out.println(roomType + ":");
-			searchRoomType(roomList, roomType, checkIn, checkOut);
+			} while(!input);
 
-			String roomID = Menu.readString("Please enter the room ID: ");
-
+			
 			int paxInt = Menu.readInt("Please enter the number of pax staying: ");
 			String pax = Integer.toString(paxInt);
 			
-			roomIndex = roomIDSearch(roomList,roomID);
 
 			//setting room status 
 			roomList.get(roomIndex).setCustomerName(guestList.get(gindex).getName());
@@ -128,8 +122,6 @@ public class ReservationMenu extends Menu {
 					guestList.get(gindex).getCreditDetails(), checkIn, checkOut, pax, 
 					Reservation.ReservationStatus.CONFIRMED,guestList.get(gindex).getIc());
 			reservationList.add(reservation);
-
-
 
 			System.out.println("Room with room ID: " + roomID + " reserved!");
 			System.out.println("Reservation ID: " + reservationID);

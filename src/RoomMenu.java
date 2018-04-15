@@ -203,16 +203,38 @@ public class RoomMenu extends Menu {
 		if (index == -1) {
 			System.out.println("Guest with IC: " + identifier + " not found!");
 		} else {
-			String roomID = readNonEmptyString("Please enter the room ID: ");
-			int roomIndex = roomIDSearch(roomList, roomID);
-			if (roomIndex == -1) {
-				System.out.println("Incorrect room ID !");
-			} else {
-				if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED) || 
-						roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
 
-					Date checkOut = readDate("Please enter the check out date [DD/MM/YYYY]: ");
+			Date checkIn = new Date();
+			Date checkOut;
+			do {
+				checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
+			}while(checkIn.after(checkOut));
+			
+			//This method display all room types according to what the user choose 
+			String []roomIdarr = searchRoomType(roomList, checkIn, checkOut);
 
+			String roomID;
+			int roomIndex;
+			boolean input = false;
+			do {
+				//check if there is such a room
+				do {
+					roomID = Menu.readNonEmptyString("Please enter the room ID: ");
+					roomIndex = roomIDSearch(roomList,roomID);
+				}while(roomIndex == -1);
+				
+				//check if this room is in the list of rooms that are available 
+				for(int i = 0; roomIdarr.length<= i ;i++) {
+					if (roomID.equals(roomIdarr[i])) {
+						input = true;
+						break;
+					}
+				}
+			} while(!input);
+/*			
+			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED) || 
+				roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
+	
 					if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED)){
 						int reservationIndex = reservationSearch(reservationList, roomID);
 						if(checkOut.before(reservationList.get(reservationIndex).getCheckInDate())){
@@ -222,26 +244,18 @@ public class RoomMenu extends Menu {
 							System.out.println("Please select another room!");
 						}
 					}
-
+*/
 					int pax = readInt("Please enter the number of pax staying: ");
-
-					Date date = new Date();
 
 					roomList.get(roomIndex).setGuestIC(guestList.get(index).getIc());
 					roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
-					roomList.get(roomIndex).setCheckInDate(date);
+					roomList.get(roomIndex).setCheckInDate(checkIn);
 					roomList.get(roomIndex).setCheckOutDate(checkOut);
 					roomList.get(roomIndex).setPax(Integer.toString(pax));
 					roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 					System.out.println("Guest " + guestList.get(index).getName() + " have successfully checked in room " + roomID);
 
-				} else {
-					System.out.println("Room is currently" + roomList.get(roomIndex).getRoomStatus());
 				}
-
-
-			}
-		}
 	}
 
 	public static void reservationCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {

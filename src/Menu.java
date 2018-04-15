@@ -117,39 +117,91 @@ public class Menu {
 			return -1;
 	}
 
-	public static void searchRoomType(ArrayList<Room>roomList, String identifier, Date checkIn, Date checkOut) {
+	public static String[] searchRoomType(ArrayList<Room>roomList, Date checkIn, Date checkOut) {
 		int index = 0;
 		String roomNo;
+		boolean input = false;
+		String [] roomarr = {};
+		int i = 0;
+		String roomType = Menu.readNonEmptyString("Please Enter the type of room "
+				+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+		do {
+			switch (roomType.charAt(0)) {
+				case 'S':	roomType = "SINGLE";
+							input = true;
+							break;
+				case 'O':	roomType = "DOUBLE";
+							input = true;
+							break;
+				case 'E':	roomType = "DELUXE";
+							input = true;
+							break;
+				case 'V':	roomType = "VIP";
+							input = true;
+							break;
+				default:	roomType = Menu.readNonEmptyString("Please Enter the correct type of room "
+						+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+							input = false;
+							break;
+			}
+		}while(!input);
+		
 		for (Room r: roomList) {
 			roomNo = r.getRoomId(); 
-			if (r instanceof Room_single && identifier.equals("SINGLE")){ 	
-				statusCheck (r, index, roomNo, checkIn, checkOut);
+			if (r instanceof Room_single && roomType.equals("SINGLE")){ 	
+				input = statusCheck (r, index, roomNo, checkIn, checkOut);
+				if (input) {
+					roomarr[i] = roomNo;
+					i++;
+				}
 			}
-			if(r instanceof Room_double && identifier.equals("DOUBLE")){ 	
-				statusCheck (r, index, roomNo, checkIn, checkOut);
+			if(r instanceof Room_double && roomType.equals("DOUBLE")){ 	
+				input = statusCheck (r, index, roomNo, checkIn, checkOut);
+				if (input) {
+					roomarr[i] = roomNo;
+					i++;
+				}
 			}
-			if(r instanceof Room_deluxe && identifier.equals("DELUXE")){ 	
-				statusCheck (r, index, roomNo, checkIn, checkOut);
+			if(r instanceof Room_deluxe && roomType.equals("DELUXE")){ 	
+				input = statusCheck (r, index, roomNo, checkIn, checkOut);
+				if (input) {
+					roomarr[i] = roomNo;
+					i++;
+				}
 			}
-			if(r instanceof Room_vip && identifier.equals("VIP")){ 	
-				statusCheck (r, index, roomNo, checkIn, checkOut);
+			if(r instanceof Room_vip && roomType.equals("VIP")){ 	
+				input = statusCheck (r, index, roomNo, checkIn, checkOut);
+				if (input) {
+					roomarr[i] = roomNo;
+					i++;
+				}
 			}
 
 			index++;
 		}
+		return roomarr;
 	}
+	
 
-	public static void statusCheck (Room r, int index, String roomNo, Date checkIn, Date CheckOut) {
-		if (r.getCheckInDate() == null && r.getCheckOutDate() == null)
-			System.out.println(" Room No: " + roomNo + " is " + r.getRoomStatus() + "!");
-		else {
+	public static boolean statusCheck (Room r, int index, String roomNo, Date checkIn, Date CheckOut) {
+		if (strConvertDate(r.getCheckInDate()).equals("null") && 
+				strConvertDate(r.getCheckOutDate()).equals("null")) {
+			if (r.getRoomStatus().equals(Room.RoomStatus.VACANT)) {
+				System.out.println(" Room No: " + roomNo + " is " + r.getRoomStatus() + "!");
+				return true;
+			}
+		} else {
 			if(checkIn.after(r.getCheckOutDate()) || CheckOut.before(r.getCheckInDate())) {
 				System.out.println(" Room No: " + roomNo + " is available!");
-			
+				// might not want to print this
 				System.out.println("It is " + r.getRoomStatus() 
 				+ " from "+ r.getCheckInDate() + " to " + r.getCheckOutDate());
+				
+				return true;
 			}
-		}	
+		}
+		return false;
+		
 	}
 
 	// Reservation Search
