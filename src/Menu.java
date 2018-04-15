@@ -39,9 +39,9 @@ public class Menu {
 			}
 			System.out.println(number + ":Quit");
 
-			int guestNo = Menu.readInt("Please select a guest to see more information.");
+			int guestNo = readInt("Please select a guest to see more information.");
 			while(guestNo > number || guestNo <= 0){
-				guestNo = Menu.readInt("Please select a valid number.");			
+				guestNo = readInt("Please select a valid number.");			
 			}
 			if(guestNo != number) {
 				System.out.println(guestNo + ":" + guestList2.get(guestNo-1).getName() +" has been selected!");
@@ -124,7 +124,7 @@ public class Menu {
 		int size = 48;
 		String [] roomarr = new String[size];
 		int i = 0;
-		String roomType = Menu.readNonEmptyString("Please Enter the type of room "
+		String roomType = readNonEmptyString("Please Enter the type of room "
 				+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
 		do {
 			switch (roomType.charAt(0)) {
@@ -140,7 +140,7 @@ public class Menu {
 				case 'V':	roomType = "VIP";
 							input = true;
 							break;
-				default:	roomType = Menu.readNonEmptyString("Please Enter the correct type of room "
+				default:	roomType = readNonEmptyString("Please Enter the correct type of room "
 						+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
 							input = false;
 							break;

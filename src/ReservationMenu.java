@@ -17,7 +17,7 @@ public class ReservationMenu extends Menu {
 			ReservationFileIO refio = new ReservationFileIO();
 			//Get user's choice
 			System.out.println(" -------------------------------------------");
-			choice = Menu.readInt(" Please enter your choice: ");
+			choice = readInt(" Please enter your choice: ");
 
 			switch(choice) {
 			case 1: makeReservation(guestList,roomList,reservationList);
@@ -59,7 +59,7 @@ public class ReservationMenu extends Menu {
 	}
 
 	public static void makeReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
-		String identifier = Menu.readString("Please enter the guest IC Number: ");
+		String identifier = readString("Please enter the guest IC Number: ");
 
 		int gindex = guestICSearch(guestList, identifier);
 		int resIndex = reservationICSearch(reservationList, identifier);
@@ -76,8 +76,8 @@ public class ReservationMenu extends Menu {
 			Date checkOut;
 			Date today = new Date();
 			do {
-				checkIn = Menu.readDate("Please enter the check in date [DD/MM/YYYY]: ");
-				checkOut = Menu.readDate("Please enter the check out date [DD/MM/YYYY]: ");
+				checkIn = readDate("Please enter the check in date [DD/MM/YYYY]: ");
+				checkOut = readDate("Please enter the check out date [DD/MM/YYYY]: ");
 			}while(checkIn.after(checkOut) || checkIn.before(today));
 			
 			//This method display all room types according to what the user choose 
@@ -90,12 +90,12 @@ public class ReservationMenu extends Menu {
 			do {
 				//check if there is such a room
 				do {
-					roomID = Menu.readNonEmptyString("Please enter the room ID: ");
+					roomID = readNonEmptyString("Please enter the room ID: ");
 					roomIndex = roomIDSearch(roomList,roomID);
 				}while(roomIndex == -1);
 				
 				//check if this room is in the list of rooms that are available 
-				for(int i = 0; roomIdarr.length<= i ;i++) {
+				for(int i = 0; roomIdarr.length >= i ;i++) {
 					if (roomID.equals(roomIdarr[i])) {
 						input = true;
 						break;
@@ -104,7 +104,7 @@ public class ReservationMenu extends Menu {
 			} while(!input);
 
 			
-			int paxInt = Menu.readInt("Please enter the number of pax staying: ");
+			int paxInt = readInt("Please enter the number of pax staying: ");
 			String pax = Integer.toString(paxInt);
 			
 
@@ -130,7 +130,7 @@ public class ReservationMenu extends Menu {
 	}	        
 
 	public static void searchReservation(ArrayList<Reservation>reservationList) {
-		int identifier = Menu.readInt("Please enter the reservation ID you would like to search: ");
+		int identifier = readInt("Please enter the reservation ID you would like to search: ");
 		int index = reservationSearch(reservationList, identifier);
 
 		if (index == -1) {
@@ -153,7 +153,7 @@ public class ReservationMenu extends Menu {
 	}
 
 	public static void updateReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
-		int identifier = Menu.readInt("Please enter the reservation ID you would like to update: ");
+		int identifier = readInt("Please enter the reservation ID you would like to update: ");
 		int roomIndex = 0;
 		int index = reservationSearch(reservationList, identifier);
 
@@ -165,7 +165,7 @@ public class ReservationMenu extends Menu {
 			System.out.println(" -------------------------------------------");
 			System.out.println("Please enter new reservation details ('Enter' key to skip)");
 
-			String name = Menu.readString("Enter new guest name: ");
+			String name = readString("Enter new guest name: ");
 			String IC;
 			boolean found=false;
 			if (!name.equals("")) {
@@ -182,17 +182,17 @@ public class ReservationMenu extends Menu {
 			}
 			if (found) {
 				roomList.get(roomIndex).setCustomerName(name);
-				Date in = Menu.readDate("Enter new Check In Date: ");
+				Date in = readDate("Enter new Check In Date: ");
 				if (in != null) {
 					reservationList.get(index).setCheckInDate(in);
 					roomList.get(roomIndex).setCheckInDate(in);
 				}
-				Date out = Menu.readDate("Enter new Check Out Date: ");
+				Date out = readDate("Enter new Check Out Date: ");
 				if (out != null) {
 					reservationList.get(index).setCheckOutDate(out);
 					roomList.get(roomIndex).setCheckOutDate(out);
 				}
-				int paxInt = Menu.readInt("Enter new number of pax staying: ");
+				int paxInt = readInt("Enter new number of pax staying: ");
 				String pax = Integer.toString(paxInt);
 				if (!pax.equals("")) {
 					reservationList.get(index).setPax(pax);

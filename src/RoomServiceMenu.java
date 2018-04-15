@@ -17,7 +17,7 @@ public class RoomServiceMenu extends Menu {
 
 			//Get user's choice
 			System.out.println(" -------------------------------------------");
-			choice = Menu.readInt(" Please enter your choice: ");
+			choice = readInt(" Please enter your choice: ");
 
 			switch(choice) {
 				case 1: System.out.println("Creating new menu item...");
@@ -61,9 +61,9 @@ public class RoomServiceMenu extends Menu {
 
 	public static void createNewMenu(ArrayList<MenuItem>menuList) {
 
-		String name = Menu.readNonEmptyString("Enter menu name: ");
-                String desc = Menu.readNonEmptyString("Preparation method: ");
-                double price = Menu.readDouble("Enter the item price: ");
+		String name = readNonEmptyString("Enter menu name: ");
+                String desc = readNonEmptyString("Preparation method: ");
+                double price = readDouble("Enter the item price: ");
 
                 MenuItem m = new MenuItem(name, desc, price);
                 menuList.add(m);
@@ -78,7 +78,7 @@ public class RoomServiceMenu extends Menu {
                     for (MenuItem m: menuList) { //To get the number of menu items in the list for guest to choose from
                         noOfMenu++;
                     }
-                    int index = Menu.readInt("Please enter the index of menu item to be updated: ");
+                    int index = readInt("Please enter the index of menu item to be updated: ");
                     if (index > 0 && index <= noOfMenu) {
                         String identifier = menuList.get(index-1).getName();
                         int menuIndex = menuNameSearch(menuList,identifier);
@@ -91,15 +91,15 @@ public class RoomServiceMenu extends Menu {
                             System.out.println(" -------------------------------------------");
                             System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
 
-                            String name = Menu.readString("Enter new menu name: ");
+                            String name = readString("Enter new menu name: ");
                             if (!name.equals("")) 
                                 menuList.get(menuIndex).setName(name);
 
-                            String desc = Menu.readString("Enter new menu preparation method: ");
+                            String desc = readString("Enter new menu preparation method: ");
                             if (!desc.equals("")) 
                                 menuList.get(menuIndex).setDescription(desc);
 
-                            double price = Menu.readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
+                            double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
                             if (price != 0) 
                                 menuList.get(menuIndex).setPrice(price);
                             System.out.println(" -------------------------------------------");
@@ -115,7 +115,7 @@ public class RoomServiceMenu extends Menu {
 
 	public static void removeMenu(ArrayList<MenuItem>menuList) {
 		if(printMenu(menuList)) {
-			int index = Menu.readInt("Please enter the index of menu item to be removed ");
+			int index = readInt("Please enter the index of menu item to be removed ");
 			String identifier = menuList.get(index-1).getName();
 			int menuIndex = menuNameSearch(menuList,identifier);
 
@@ -133,17 +133,17 @@ public class RoomServiceMenu extends Menu {
 
 	public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 
-		String roomNo = Menu.readString("Enter your room no: ");
+		String roomNo = readString("Enter your room no: ");
 
-		int roomIndex = Menu.roomIDSearch(roomList, roomNo);        
+		int roomIndex = roomIDSearch(roomList, roomNo);        
 		if(roomIndex == -1) {
 			System.out.println("room number: " + roomNo + " does not exist");
 		}else {
 			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 				if(printMenu(menuList)) {
-					int orderNo = Menu.readInt("Enter your option: ");
-					int quantity = Menu.readInt("How many would you like to order ?: ");
-					String remark = Menu.readString("Any remark(s) for your order ? ('Enter' key to skip)");
+					int orderNo = readInt("Enter your option: ");
+					int quantity = readInt("How many would you like to order ?: ");
+					String remark = readString("Any remark(s) for your order ? ('Enter' key to skip)");
 
 					if (remark.equals(""))
 						remark = "-";

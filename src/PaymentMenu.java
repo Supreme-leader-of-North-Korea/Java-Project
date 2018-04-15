@@ -20,7 +20,7 @@ public class PaymentMenu extends Menu{
 
 			//Get user's choice
 			System.out.println(" -------------------------------------------");
-			choice = Menu.readInt(" Please enter your choice: ");
+			choice = readInt(" Please enter your choice: ");
 
 			switch(choice) {
 			case 1: updatePaymentRates(paymentList);
