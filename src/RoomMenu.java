@@ -224,7 +224,7 @@ public class RoomMenu extends Menu {
 				}while(roomIndex == -1);
 				
 				//check if this room is in the list of rooms that are available 
-				for(int i = 0; roomIdarr.length<= i ;i++) {
+				for(int i = 0; roomIdarr.length>= i ;i++) {
 					if (roomID.equals(roomIdarr[i])) {
 						input = true;
 						break;

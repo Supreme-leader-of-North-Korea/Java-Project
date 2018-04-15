@@ -55,7 +55,7 @@ public class RoomServiceMenu extends Menu {
 		System.out.println(" * 2. Update Room Service Menu Item        *");
 		System.out.println(" * 3. Remove Room Service Menu Item        *");
 		System.out.println(" * 4. Create Room Service Order	           *");
-		System.out.println(" * 5. Previous          			       *");
+		System.out.println(" * 5. Previous                             *");
 		System.out.println(" * 6. Quit                                 *");
 	}
 

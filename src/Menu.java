@@ -121,7 +121,8 @@ public class Menu {
 		int index = 0;
 		String roomNo;
 		boolean input = false;
-		String [] roomarr = {};
+		int size = 48;
+		String [] roomarr = new String[size];
 		int i = 0;
 		String roomType = Menu.readNonEmptyString("Please Enter the type of room "
 				+ "you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
