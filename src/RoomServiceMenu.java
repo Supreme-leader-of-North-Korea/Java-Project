@@ -22,6 +22,7 @@ public class RoomServiceMenu extends Menu {
 	            switch(choice) {
 	                case 1: System.out.println("Creating new menu item...");
 	                        createNewMenu(menuList);
+				    mfio.exportAll(menuList);
 	                        break;
 	                case 2: System.out.println("Updating menu details...");
 		                	updateMenu(menuList);
