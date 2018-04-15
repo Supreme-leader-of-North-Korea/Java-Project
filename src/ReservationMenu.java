@@ -168,7 +168,7 @@ public class ReservationMenu extends Menu {
 			String name = readString("Enter new guest name: ");
 			String IC;
 			boolean found=false;
-			roomIndex = roomIDSearch(roomList, reservationList.get(index).getRoomId());
+                        roomIndex = roomIDSearch(roomList, reservationList.get(index).getRoomId());
 			if (!name.equals("")) {
 				IC = guestNameSearch(guestList, name);
 				if(IC != null) { 
@@ -207,17 +207,20 @@ public class ReservationMenu extends Menu {
 
 	public static void printReservation(ArrayList<Reservation>reservationList) {
 		int index = 0;
-		if(!reservationList.get(index).getReserveStatus().equals(Reservation.ReservationStatus.EXPIRED)) {
-			System.out.println("Guest Name: " + reservationList.get(index).getGuestName() + 
-					"\nRoom ID: " + reservationList.get(index).getRoomId() + 
-					"\nCredit Card: " + reservationList.get(index).getCreditCard() + 
-					"\nCheck In Date: " + reservationList.get(index).getCheckInDate() + 
-					"\nCheck Out Date: " + reservationList.get(index).getCheckOutDate() + 
-					"\nPax:" + reservationList.get(index).getPax() +
-					"\nReservation Status: " + reservationList.get(index).getReserveStatus() +
-					"\nGuest IC: " + reservationList.get(index).getGuestIC() +
-					"\nReservation ID: " + reservationList.get(index).getReserveStatus());
-			System.out.println(" -------------------------------------------");	
-		}
+                if (!reservationList.isEmpty()) {
+                    if(!reservationList.get(index).getReserveStatus().equals(Reservation.ReservationStatus.EXPIRED)) {
+                            System.out.println("Guest Name: " + reservationList.get(index).getGuestName() + 
+                                            "\nRoom ID: " + reservationList.get(index).getRoomId() + 
+                                            "\nCredit Card: " + reservationList.get(index).getCreditCard() + 
+                                            "\nCheck In Date: " + reservationList.get(index).getCheckInDate() + 
+                                            "\nCheck Out Date: " + reservationList.get(index).getCheckOutDate() + 
+                                            "\nPax:" + reservationList.get(index).getPax() +
+                                            "\nReservation Status: " + reservationList.get(index).getReserveStatus() +
+                                            "\nGuest IC: " + reservationList.get(index).getGuestIC() +
+                                            "\nReservation ID: " + reservationList.get(index).getReserveStatus());
+                            System.out.println(" -------------------------------------------");	
+                    }
+                } else 
+                    System.out.println("There is no reservation at the moment. ");
 	}
 }
