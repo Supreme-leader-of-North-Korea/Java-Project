@@ -150,24 +150,26 @@ public class RoomMenu extends Menu {
 				}
 			}while(!input);
 
-			String status = readString("Enter new room status: [(V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance]");
+			String status = readString("Enter new room status: [(V)acant/(U)nder Maintenance]");
 			do {
 				switch(status.toUpperCase()) {
 					case "V":	roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
-								input = true;
-								break;
-					case "O":	roomList.get(index).setRoomStatus(Room.RoomStatus.OCCUPIED);
-								input = true;
-								break;
-					case "R":	roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
-								input = true;
-								break;
+                                                        roomList.get(index).setCustomerName("-");
+                                                        roomList.get(index).setCheckInDate(null);
+                                                        roomList.get(index).setCheckOutDate(null);
+                                                        roomList.get(index).setPax("-");
+                                                        input = true;
+							break;
 					case "U":	roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
-								input = true;
-								break;
+                                                        roomList.get(index).setCustomerName("-");
+                                                        roomList.get(index).setCheckInDate(null);
+                                                        roomList.get(index).setCheckOutDate(null);
+                                                        roomList.get(index).setPax("-");
+							input = true;
+							break;
 					case "":	input = true;
 								break;
-					default:	System.out.println("Please enter (V)acant/(O)ccupied/(R)eserved/(U)nder Maintenance");
+					default:	System.out.println("Please enter (V)acant/(U)nder Maintenance");
 								System.out.println("Please try again with the correct input !"); 
 								input = false; 
 								break;
