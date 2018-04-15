@@ -294,18 +294,27 @@ public class RoomMenu extends Menu {
 				System.out.println("Room with ID: " + identifier + " found!");
 				int reservationIndex = reservationSearch(reservationList,identifier);
 				if (reservationIndex == -1) {
-					System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOutDate() + " not found!");
+					System.out.println("Reservation with ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " not found!");
 				} else {
-					System.out.println("Reservation with ID: " + identifier + " and check out date: " + roomList.get(index).getCheckOutDate() + " found!");
+                                    if (roomList.get(index).getCheckOutDate().compareTo(reservationList.get(reservationIndex).getCheckOutDate()) == 0) {
+					System.out.println("Reservation with ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
 					reservationList.remove(reservationIndex);
+                                        roomList.get(index).setCustomerName("-");
+                                        roomList.get(index).setCheckInDate(null);
+                                        roomList.get(index).setCheckOutDate(null);
+                                        roomList.get(index).setPax("-");
+                                        roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+                                    } else {
+                                        roomList.get(index).setCustomerName(reservationList.get(reservationIndex).getGuestName());
+                                        roomList.get(index).setCheckInDate(reservationList.get(reservationIndex).getCheckInDate());
+                                        roomList.get(index).setCheckOutDate(reservationList.get(reservationIndex).getCheckOutDate());
+                                        roomList.get(index).setPax(reservationList.get(reservationIndex).getPax());
+                                        roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
+                                    }
 				}
 				PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
 
-				roomList.get(index).setCustomerName("-");
-				roomList.get(index).setCheckInDate(null);
-				roomList.get(index).setCheckOutDate(null);
-				roomList.get(index).setPax("-");
-				roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+				
 			} else 
 				System.out.println("Room is not occupied.");
 		}
