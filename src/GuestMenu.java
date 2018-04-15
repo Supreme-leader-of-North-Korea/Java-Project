@@ -106,8 +106,8 @@ public class GuestMenu extends Menu {
 				}
 			}while(!input);
 			
-			String ccd 		= readNonEmptyString("Enter guest credit card detail: "					);
-			String contact 	= readNonEmptyString("Enter guest contact number: "						);
+			String ccd		= String.valueOf(readInt("Enter guest credit card detail: "					));
+			String contact 	= String.valueOf(readInt("Enter guest contact number: "						));
 			Guest g = new Guest(name, addr, country, gender, nat, identity, ic, ccd, contact);
 			guestList.add(g);
                         System.out.println("Guest " + name + " is successfully created !");
