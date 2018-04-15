@@ -306,7 +306,10 @@ public class Menu {
 		while (!valid) {
 			try {
 				input = Integer.parseInt(readString(prompt));
-				valid = true;
+                                if (input > 0)
+                                    valid = true;
+                                else 
+                                    System.out.println("*** Please enter a positive number ***");
 			} catch (NumberFormatException e) {
 				System.out.println("*** Please enter an integer ***");
 			}
@@ -321,14 +324,18 @@ public class Menu {
 		while (!valid) {
 			try {
 				input = Double.parseDouble(readString(prompt));
-				valid = true;
+                                if (input > 0)
+                                    valid = true;
+                                else 
+                                    System.out.println("*** Please enter a positive number ***");
 			} catch (NumberFormatException e) {
 				System.out.println("*** Please enter a double ***");
 			}
 		}
 		return input;
 	}
-
+        
+        
 	public static Date readDate(String prompt) {
 		String result = readNonEmptyString(prompt);
 		return dateConvert(result);

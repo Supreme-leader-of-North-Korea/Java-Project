@@ -62,42 +62,54 @@ public class RoomServiceMenu extends Menu {
 	public static void createNewMenu(ArrayList<MenuItem>menuList) {
 
 		String name = Menu.readNonEmptyString("Enter menu name: ");
-		String desc = Menu.readNonEmptyString("Preparation method: ");
-		double price = Menu.readDouble("Enter the item price: ");
+                String desc = Menu.readNonEmptyString("Preparation method: ");
+                double price = Menu.readDouble("Enter the item price: ");
 
-		MenuItem m = new MenuItem(name, desc, price);
-		menuList.add(m);
+                MenuItem m = new MenuItem(name, desc, price);
+                menuList.add(m);
+                System.out.println(" -------------------------------------------");
+                System.out.println(" Menu item created!");                      
+		
 	}
 
 	public static void updateMenu(ArrayList<MenuItem>menuList) {
 		if(printMenu(menuList)) {
-			int index = Menu.readInt("Please enter the index of menu item to be updated: ");
-			String identifier = menuList.get(index-1).getName();
-			int menuIndex = menuNameSearch(menuList,identifier);
+                    int noOfMenu = 0;
+                    for (MenuItem m: menuList) { //To get the number of menu items in the list for guest to choose from
+                        noOfMenu++;
+                    }
+                    int index = Menu.readInt("Please enter the index of menu item to be updated: ");
+                    if (index > 0 && index <= noOfMenu) {
+                        String identifier = menuList.get(index-1).getName();
+                        int menuIndex = menuNameSearch(menuList,identifier);
 
-			if (menuIndex == -1) {
-				System.out.println("Menu with name: " + identifier + " not found!");
-			} else {
-				System.out.println("Menu with name: " + identifier + " found!");
+                        if (menuIndex == -1) {
+                            System.out.println("Menu with name: " + identifier + " not found!");
+                        } else {
+                            System.out.println("Menu with name: " + identifier + " found!");
 
-				System.out.println(" -------------------------------------------");
-				System.out.println("Please enter new menu details ('Enter' key to skip)");
+                            System.out.println(" -------------------------------------------");
+                            System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
 
-				String name = Menu.readString("Enter new menu name: ");
-				if (!name.equals("")) 
-					menuList.get(menuIndex).setName(name);
+                            String name = Menu.readString("Enter new menu name: ");
+                            if (!name.equals("")) 
+                                menuList.get(menuIndex).setName(name);
 
-				String desc = Menu.readString("Enter new menu preparation method: ");
-				if (!desc.equals("")) 
-					menuList.get(menuIndex).setDescription(desc);
+                            String desc = Menu.readString("Enter new menu preparation method: ");
+                            if (!desc.equals("")) 
+                                menuList.get(menuIndex).setDescription(desc);
 
-				double price = Menu.readDouble("Enter new menu price: ");
-				if (price != 0) 
-					menuList.get(menuIndex).setPrice(price);
-
-				System.out.println(" -------------------------------------------");
-				System.out.println(" Menu item updated!");
-			}
+                            double price = Menu.readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
+                            if (price != 0) 
+                                menuList.get(menuIndex).setPrice(price);
+                            System.out.println(" -------------------------------------------");
+                            System.out.println(" Menu item updated!");
+                                   
+                            
+                            
+                        }
+                    } else 
+                        System.out.println(" Invalid input ! Please enter from 1 to " + noOfMenu);
 		}
 	}
 
