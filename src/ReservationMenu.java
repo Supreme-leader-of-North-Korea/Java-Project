@@ -217,7 +217,7 @@ public class ReservationMenu extends Menu {
                                             "\nPax:" + reservationList.get(index).getPax() +
                                             "\nReservation Status: " + reservationList.get(index).getReserveStatus() +
                                             "\nGuest IC: " + reservationList.get(index).getGuestIC() +
-                                            "\nReservation ID: " + reservationList.get(index).getReserveStatus());
+                                            "\nReservation ID: " + reservationList.get(index).getReservationId());
                             System.out.println(" -------------------------------------------");	
                     }
                 } else 
