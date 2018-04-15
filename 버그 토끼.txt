@@ -26,6 +26,23 @@ Exception in thread "main" java.lang.IndexOutOfBoundsException: Index -1 out-of-
 - About Reservation -> Selecting option 2,3,4 returns me the prompt "Wrong Input. Please input from 1 - 6."
 - Is this because there have been no reservations made yet? Or is this another bug?
 
+4) NULLPOINTEREXCEPTIONNNNNNNNNNNNNNNN
+Make Reservation ->
+-> Please enter the guest IC Number: a
+-> Guest with IC: a found!
+-> Please enter the check in date [DD/MM/YYYY]: a
+Unparseable using java.text.SimpleDateFormat@d936eac0
+-> Please enter the check out date [DD/MM/YYYY]: b
+Unparseable using java.text.SimpleDateFormat@d936eac0
+-> Please Enter the type of room you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]v
+-> Please Enter the correct type of room you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]V
+ Room No: 0201 is VACANT from Sat Apr 14 03:31:55 SRET 2018 to Sat Apr 14 03:31:55 SRET 2018
+Exception in thread "main" java.lang.NullPointerException
+	at Menu.searchRoomType(Menu.java:131)
+	at ReservationMenu.makeReservation(ReservationMenu.java:100)
+	at ReservationMenu.reservationMenu(ReservationMenu.java:25)
+	at HRPSApp.main(HRPSApp.java:48)
+
 
 10) Okay I'm getting lazy to type out what the errors are already so I'm just going to copy and paste the output.
  ===========================================
@@ -54,14 +71,7 @@ Exception in thread "main" java.lang.IndexOutOfBoundsException: Index -1 out-of-
 	at RoomServiceMenu.roomServiceMenu(RoomServiceMenu.java:27)
 	at HRPSApp.main(HRPSApp.java:50)
 
-Require fixing
-5) Unvalidated input for room check in
-- Able to enter "when I get chased out" as a date
-
-
-6) After guest "Alex" checks into room 0201, able to update room details to vacant but checking room status still retains "Alex"'s data. 
-
-7) Checking out from room gives me IndexOutOfBoundsException.
+3) Checking out from room gives me IndexOutOfBoundsException.
 - Room Check out -> "0201" ->
   Room with ID: 0201 found!
   Reservation with ID: 0201 and check out date: Sun Apr 15 00:00:00 SRET 2018 not found!
@@ -77,22 +87,13 @@ Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 out-of-b
 	at HRPSApp.main(HRPSApp.java:46)
 - Am I supposed to use some already created data from you or is this a bug?
 
-9) NULLPOINTEREXCEPTIONNNNNNNNNNNNNNNN
-Make Reservation ->
--> Please enter the guest IC Number: a
--> Guest with IC: a found!
--> Please enter the check in date [DD/MM/YYYY]: a
-Unparseable using java.text.SimpleDateFormat@d936eac0
--> Please enter the check out date [DD/MM/YYYY]: b
-Unparseable using java.text.SimpleDateFormat@d936eac0
--> Please Enter the type of room you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]v
--> Please Enter the correct type of room you would like to reserve [(S)ingle / d(O)uble / d(E)luxe / (V)ip]V
- Room No: 0201 is VACANT from Sat Apr 14 03:31:55 SRET 2018 to Sat Apr 14 03:31:55 SRET 2018
-Exception in thread "main" java.lang.NullPointerException
-	at Menu.searchRoomType(Menu.java:131)
-	at ReservationMenu.makeReservation(ReservationMenu.java:100)
-	at ReservationMenu.reservationMenu(ReservationMenu.java:25)
-	at HRPSApp.main(HRPSApp.java:48)
+Require fixing
+1) Unvalidated input for room check in
+- Able to enter "when I get chased out" as a date
+
+
+2) After guest "Alex" checks into room 0201, able to update room details to vacant but checking room status still retains "Alex"'s data. 
+
 
 
 
