@@ -168,6 +168,7 @@ public class ReservationMenu extends Menu {
 			String name = readString("Enter new guest name: ");
 			String IC;
 			boolean found=false;
+			roomIndex = roomIDSearch(roomList, reservationList.get(index).getRoomId());
 			if (!name.equals("")) {
 				IC = guestNameSearch(guestList, name);
 				if(IC != null) { 
