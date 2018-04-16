@@ -29,6 +29,7 @@ public class PaymentMenu extends Menu{
 					break;
 			case 3: System.out.println("Returning to main menu...");
 					pfio.exportAll(paymentList);
+					break;
 			case 4: System.out.println("Exiting...");
 					pfio.exportAll(paymentList);
 					System.exit(0);
@@ -37,7 +38,7 @@ public class PaymentMenu extends Menu{
 					break;
 			}
 
-		} while (choice != 7);  
+		} while (choice != 3);  
 	}
 
 	public static void printPaymentMenu() {
