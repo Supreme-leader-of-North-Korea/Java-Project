@@ -29,7 +29,7 @@ public class ReservationFileIO extends FileIO<Reservation>{
 			String[] arr = str.split("\\|");
 
 			Reservation temp = new Reservation(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], 
-					Menu.dateConvert(arr[4]), Menu.dateConvert(arr[5]), arr[6], Reservation.strToReservationStatus(arr[7]), arr[7]);
+					Menu.strToDate(arr[4]), Menu.strToDate(arr[5]), arr[6], Reservation.strToReservationStatus(arr[7]), arr[7]);
 			rlist.add(temp);
 		}
 

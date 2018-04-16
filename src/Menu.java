@@ -341,24 +341,40 @@ public class Menu {
         
         
 	public static Date readDate(String prompt) {
-		String result = readNonEmptyString(prompt);
-		return dateConvert(result);
+            boolean input = false;
+            Date t = null;
+            do {
+		String result = readNonEmptyString(prompt);		
+		SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+                    t = new Date();
+                    try {
+			t = ft.parse(result);
+			input = true;
+                    } catch (ParseException e) { 
+			System.out.println("Please enter a valid date");
+                    }	
+            }while (!input);  
+		return t;
 	}
-	//convert into proper date format dd/MM/yyyy
-	public static Date dateConvert(String date) {
+
+        public static Date strToDate(String date) {
+		boolean input = false;
 		if(!date.equals("null")) {		
-			SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
-			Date t = new Date();
-			try {
-				t = ft.parse(date); 
-			} catch (ParseException e) { 
-				System.out.println("Unparseable using " + ft); 
-			}
+                    SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+                    Date t = new Date();
+                    try {
+			t = ft.parse(date);
+			input = true;
+                    } catch (ParseException e) { 
+                    	System.out.println("Please enter a valid date");
+			input = false;
+                    }
+                    if(input)
 			return t;
 		}
 		return null;
 	}
-
+        
 	public static String strConvertDate(Date date) {
 		try
 		{
