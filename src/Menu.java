@@ -287,7 +287,21 @@ public class Menu {
 		}		
 		return total;
 	}
-
+        
+        public static int[] rsRemove(ArrayList<RoomService>serviceList, String identifier) {
+		int[] index = null;
+                int serviceIndex = 0;
+                int indexCount = 0;
+		for (RoomService rs: serviceList) {
+			if (identifier.equals(rs.getRoomId())) {
+				index[indexCount] = serviceIndex;
+                                indexCount++;
+			}
+                        serviceIndex++;
+		}		
+		return index;
+	}
+        
 	//misc methods
 	@SuppressWarnings("resource")
 	public static String readString(String prompt) {

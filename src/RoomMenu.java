@@ -319,8 +319,11 @@ public class RoomMenu extends Menu {
                                         roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
                                     }
 				}
-				
-
+				int[] rsIndex = rsRemove(serviceList, identifier);
+                                int i;
+                                for (i = 0; i < rsIndex.length; i++) {
+                                    serviceList.remove(rsIndex[i]);
+                                }
 				
 			} else 
 				System.out.println("Room is not occupied.");
