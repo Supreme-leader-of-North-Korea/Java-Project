@@ -295,11 +295,16 @@ public class RoomMenu extends Menu {
 			if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 				System.out.println("Room with ID: " + identifier + " found!");
 				int reservationIndex = reservationSearch(reservationList,identifier);
-				if (reservationIndex == -1) {
-					System.out.println("Reservation with ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " not found!");
+                                PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
+				if (reservationIndex == -1) {					
+                                        roomList.get(index).setCustomerName("-");
+                                        roomList.get(index).setCheckInDate(null);
+                                        roomList.get(index).setCheckOutDate(null);
+                                        roomList.get(index).setPax("-");
+                                        roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
 				} else {
                                     if (roomList.get(index).getCheckOutDate().compareTo(reservationList.get(reservationIndex).getCheckOutDate()) == 0) {
-					System.out.println("Reservation with ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
+					System.out.println("Reservation with room ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
 					reservationList.remove(reservationIndex);
                                         roomList.get(index).setCustomerName("-");
                                         roomList.get(index).setCheckInDate(null);
@@ -314,7 +319,7 @@ public class RoomMenu extends Menu {
                                         roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
                                     }
 				}
-				PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
+				
 
 				
 			} else 
