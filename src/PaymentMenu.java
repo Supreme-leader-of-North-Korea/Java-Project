@@ -233,7 +233,8 @@ public class PaymentMenu extends Menu{
 				++weekEnds;
 			}
 		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
-
+		totalDays[0] = weekDays;
+                totalDays[1] = weekEnds;
 		return totalDays;
 	}
 }
