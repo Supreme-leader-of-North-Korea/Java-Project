@@ -58,7 +58,7 @@ public class ReservationMenu extends Menu {
 		System.out.println(" * 1. Make Reservation                     *");
 		System.out.println(" * 2. Check Reservation Details            *");
 		System.out.println(" * 3. Update Reservation Details           *");
-		System.out.println(" * 4. Print Reservation                    *");
+		System.out.println(" * 4. Print All Reservation                *");
 		System.out.println(" * 5. Previous                             *");
 		System.out.println(" * 6. Quit                                 *");
 	}
@@ -214,7 +214,8 @@ public class ReservationMenu extends Menu {
 		int index = 0;
                 if (!reservationList.isEmpty()) {
                     if(!reservationList.get(index).getReserveStatus().equals(Reservation.ReservationStatus.EXPIRED)) {
-                            System.out.println("Guest Name: " + reservationList.get(index).getGuestName() + 
+                            for (Reservation re: reservationList) {
+                                System.out.println("Guest Name: " + reservationList.get(index).getGuestName() + 
                                             "\nRoom ID: " + reservationList.get(index).getRoomId() + 
                                             "\nCredit Card: " + reservationList.get(index).getCreditCard() + 
                                             "\nCheck In Date: " + reservationList.get(index).getCheckInDate() + 
@@ -223,7 +224,9 @@ public class ReservationMenu extends Menu {
                                             "\nReservation Status: " + reservationList.get(index).getReserveStatus() +
                                             "\nGuest IC: " + reservationList.get(index).getGuestIC() +
                                             "\nReservation ID: " + reservationList.get(index).getReservationId());
-                            System.out.println(" -------------------------------------------");	
+                                System.out.println(" -------------------------------------------");	
+                                index++;
+                            }
                     }
                 } else 
                     System.out.println("There is no reservation at the moment. ");
