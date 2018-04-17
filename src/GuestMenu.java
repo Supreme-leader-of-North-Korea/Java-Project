@@ -109,7 +109,7 @@ public class GuestMenu extends Menu {
 					}
 				}while(!input);
 
-				String ccd		= String.valueOf(readInt("Enter guest credit card detail: "					));
+				String ccd		= String.valueOf(readLong("Enter guest credit card detail: "					));
 				String contact 	= String.valueOf(readInt("Enter guest contact number: "						));
 				Guest g = new Guest(name, addr, country, gender, nat, identity, ic, ccd, contact);
 				guestList.add(g);
@@ -180,7 +180,7 @@ public class GuestMenu extends Menu {
 				if (!nat.equals("")) 
 					guestList.get(index).setNationality(nat);
 
-				String ccd = readString("Enter new guest credit card detail: ");
+				String ccd = String.valueOf(readLong("Enter new guest credit card detail: "));
 				if (!ccd.equals("")) 
 					guestList.get(index).setCreditDetails(ccd);
 

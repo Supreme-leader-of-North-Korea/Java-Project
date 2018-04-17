@@ -245,6 +245,24 @@ public class Menu {
 		return input;
 	}
 
+	public static long readLong(String prompt) {
+		long input = 0;
+		boolean valid = false;
+
+		while (!valid) {
+			try {
+				input = Long.parseLong(readString(prompt));
+				if (input > 0)
+					valid = true;
+				else 
+					System.out.println("*** Please enter a positive number ***");
+			} catch (NumberFormatException e) {
+				System.out.println("*** Please enter an integer ***");
+			}
+		}
+		return input;
+	}
+	
 	public static double readDouble(String prompt) {
 		double input = 0;
 		boolean valid = false;
