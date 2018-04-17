@@ -83,10 +83,21 @@ public class ReservationMenu extends Menu {
 				Date checkIn;
 				Date checkOut;
 				Date today = new Date();
+				boolean inputCheck = true;
+				
 				do {
+					if (!inputCheck)
+						System.out.println("Please enter a valid date");
 					checkIn = readDate("Please enter the check in date [DD/MM/YYYY]: ");
+				}while(!checkIn.before(today));
+				
+				inputCheck = true;
+				
+				do {
+					if (!inputCheck)
+						System.out.println("Please enter a valid date");
 					checkOut = readDate("Please enter the check out date [DD/MM/YYYY]: ");
-				}while(checkIn.after(checkOut) || checkIn.before(today));
+				}while(!(checkIn.after(checkOut) && checkIn.before(today)));
 
 				//This method display all room types according to what the user choose 
 				//and return the list of room id that are available

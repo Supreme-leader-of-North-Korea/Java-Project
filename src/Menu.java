@@ -58,14 +58,26 @@ public class Menu {
 		int index = 0;
 		//Class<?>[] paramType = {String.class};
 		boolean found = false;
+		
 		for (Object o: list) {
 			Method method = o.getClass().getMethod(methodName);
-			String comparator = (String) method.invoke(o);
-			if (identifier.equals(comparator)) {
-				found = true;
-				break;
+			if(methodName == "getReservationId") {
+				int comparator = (int) method.invoke(o);
+				if (Integer.parseInt(identifier) == comparator) {
+					found = true;
+					break;
+				}
+				index++;
+			} else {
+				String comparator = (String) method.invoke(o);
+				if (identifier.equals(comparator)) {
+					found = true;
+					break;
+				}
+				index++;
 			}
-			index++;
+			
+			
 		}
 		if (found == true)
 			return index;
@@ -222,10 +234,10 @@ public class Menu {
 		while (!valid) {
 			try {
 				input = Integer.parseInt(readString(prompt));
-                                if (input > 0)
-                                    valid = true;
-                                else 
-                                    System.out.println("*** Please enter a positive number ***");
+				if (input > 0)
+					valid = true;
+				else 
+					System.out.println("*** Please enter a positive number ***");
 			} catch (NumberFormatException e) {
 				System.out.println("*** Please enter an integer ***");
 			}
@@ -240,10 +252,10 @@ public class Menu {
 		while (!valid) {
 			try {
 				input = Double.parseDouble(readString(prompt));
-                                if (input > 0)
-                                    valid = true;
-                                else 
-                                    System.out.println("*** Please enter a positive number ***");
+				if (input > 0)
+					valid = true;
+				else 
+					System.out.println("*** Please enter a positive number ***");
 			} catch (NumberFormatException e) {
 				System.out.println("*** Please enter a double ***");
 			}

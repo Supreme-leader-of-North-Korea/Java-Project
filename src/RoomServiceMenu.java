@@ -128,11 +128,7 @@ public class RoomServiceMenu extends Menu {
 		try {
 			if(printMenu(menuList)) {
 				int index = readInt("Please enter the index of menu item to be removed ");
-				int menuNo = 1;
-				for (MenuItem m: menuList) {
-					menuNo++;
-				}
-				if (index > menuNo) {
+				if (menuList.size() >= index) {
 					String identifier = menuList.get(index-1).getName();
 					int menuIndex;				
 					menuIndex = genericSearch("getName",identifier,menuList);
@@ -146,7 +142,7 @@ public class RoomServiceMenu extends Menu {
 
 					}
 				} else 
-					System.out.println("Please enter from 1 to " + (menuNo-1) + " !");
+					System.out.println("Please enter from 1 to " + menuList.size() + " !");
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| NoSuchMethodException | SecurityException | IllegalArgumentException
@@ -159,7 +155,7 @@ public class RoomServiceMenu extends Menu {
 	public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 		String roomNo = readString("Enter your room no: ");
 
-		int roomIndex;
+		int roomIndex , orderNo;
 		try {
 			roomIndex = genericSearch("getRoomId", roomNo, roomList);
 
@@ -168,15 +164,18 @@ public class RoomServiceMenu extends Menu {
 			}else {
 				if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 					if(printMenu(menuList)) {
-						int orderNo = readInt("Enter your option: ");
-						int quantity = readInt("How many would you like to order ?: ");
-						String remark = readString("Any remark(s) for your order ? ('Enter' key to skip)");
+						orderNo = readInt("Enter your option: ");
+						if (menuList.size() >= orderNo) {
+							int quantity = readInt("How many would you like to order ?: ");
+							String remark = readString("Any remark(s) for your order ? ('Enter' key to skip)");
 
-						if (remark.equals(""))
-							remark = "-";
+							if (remark.equals(""))
+								remark = "-";
 
-						RoomService rs = new RoomService(roomNo, orderNo, quantity, remark, menuList.get(orderNo-1).getPrice(), RoomService.Status.CONFIRMED);
-						serviceList.add(rs); 
+							RoomService rs = new RoomService(roomNo, orderNo, quantity, remark, menuList.get(orderNo-1).getPrice(), RoomService.Status.CONFIRMED);
+							serviceList.add(rs); 
+						} else 
+							System.out.println("Please enter 1 to " + menuList.size());
 					} 
 				} else {
 					System.out.println("Room no: " + roomNo + " is currently unoccupied");
@@ -239,7 +238,8 @@ public class RoomServiceMenu extends Menu {
 					case "D": 	items.get(itemNo).setStatus(RoomService.Status.DELIVERED);
 								break;
 					}
-				}
+				} else 
+					System.out.println("Please enter from 1 to " + items.size());
 				serviceList.addAll(items);
 			} else {
 				System.out.println("Please Enter a valid choice");
