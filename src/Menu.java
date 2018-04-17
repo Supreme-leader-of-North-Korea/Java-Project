@@ -1,3 +1,5 @@
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +53,28 @@ public class Menu {
 		return IC;
 	}
 
+	
+	public static int genericSearch(String methodName, String className, String identifier, ArrayList<Guest>guestList) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
+		Class<?> guestClass = Class.forName(className);
+		int index = 0;
+		//Class<?>[] paramType = {String.class};
+		boolean found = false;
+		for (Guest g: guestList) {
+			Method method = g.getClass().getMethod(methodName);
+			String IC = (String) method.invoke(g);
+			if (identifier.equals(IC)) {
+				found = true;
+				break;
+			}
+			index++;
+		}
+		if (found == true)
+			return index;
+		else
+			return -1;
+	}
+	
+	
 	public static int guestICSearch(ArrayList<Guest>guestList, String identifier) {
 
 		boolean found = false;
@@ -69,22 +93,7 @@ public class Menu {
 	}
 
 	//Room Search by guest IC
-	public static int roomSearch(ArrayList<Room>roomList, String identifier, String comparator) {
-		boolean found = false;
-		int index = 0;
-		for (Room r: roomList) {
-			if (identifier.equals(comparator)) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-
+	
 	public static int roomICSearch(ArrayList<Room>roomList, String identifier) {
 		boolean found = false;
 		int index = 0;
@@ -287,6 +296,7 @@ public class Menu {
 		}		
 		return total;
 	}
+	
 	public static ArrayList<RoomService> roomServiceSearch(ArrayList<RoomService>serviceList, ArrayList<MenuItem>menuList, ArrayList<Room>roomList, String roomNo){
 
 		ArrayList<RoomService> itemsOrdered = new ArrayList<RoomService>();
@@ -295,7 +305,7 @@ public class Menu {
 		if (roomIndex != -1 ) {
 			for (RoomService s: serviceList) {
 				temp.add(s);
-				if (roomNo.equals(s.getRoomId())) {
+				if (roomNo.equals(s.getRoomId()) && !s.getStatus().equals(RoomService.Status.DELIVERED)) {
 					itemsOrdered.add(s);
 				}
 			}

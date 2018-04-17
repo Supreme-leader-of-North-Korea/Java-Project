@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class GuestMenu extends Menu {
@@ -66,53 +67,60 @@ public class GuestMenu extends Menu {
 		boolean input = false;
 		System.out.println("All fields are mandatory");
 		String ic 		= readNonEmptyString("Enter IC Number: "									);
+		int index;
+		try {
+			index = genericSearch("getIc","Guest",ic,guestList);
 
-		int index = guestICSearch(guestList, ic);
-		//Ensure that no guest with the input IC is already in the system
-		if (index == -1) {
-			String name 	= readNonEmptyString("Enter guest name: "									);
-			String addr 	= readNonEmptyString("Enter guest address: "								);
-			String country 	= readNonEmptyString("Enter guest country: "								);
-			String nat 		= readNonEmptyString("Enter guest nationality: "							);
-			String gender;
-			do {
-				gender 	= readNonEmptyString("Enter guest gender[(M)ale/(F)emale]:"			);		
-				switch(gender.toUpperCase()) {
-				case "M": gender = "Male";
-				input = true;
-				break;
-				case "F": gender = "Female";
-				input = true;
-				break;
-				default:  System.out.println(" Please try again with the correct input !"); 
-				input = false; 
-				break;
-				}
-			}while(!input);
+			//Ensure that no guest with the input IC is already in the system
+			if (index == -1) {
+				String name 	= readNonEmptyString("Enter guest name: "									);
+				String addr 	= readNonEmptyString("Enter guest address: "								);
+				String country 	= readNonEmptyString("Enter guest country: "								);
+				String nat 		= readNonEmptyString("Enter guest nationality: "							);
+				String gender;
+				do {
+					gender 	= readNonEmptyString("Enter guest gender[(M)ale/(F)emale]:"			);		
+					switch(gender.toUpperCase()) {
+					case "M": gender = "Male";
+					input = true;
+					break;
+					case "F": gender = "Female";
+					input = true;
+					break;
+					default:  System.out.println(" Please try again with the correct input !"); 
+					input = false; 
+					break;
+					}
+				}while(!input);
 
-			String identity;
-			do {
-				identity = readNonEmptyString("Enter guest identity[(D)riving License/(P)assport]: ");
-				switch(identity.toUpperCase()) {
+				String identity;
+				do {
+					identity = readNonEmptyString("Enter guest identity[(D)riving License/(P)assport]: ");
+					switch(identity.toUpperCase()) {
 					case "D":	identity = "Driving License";
-								input = true;
-								break;
+					input = true;
+					break;
 					case "P":	identity = "Passport";
-								input = true;
-								break;
+					input = true;
+					break;
 					default:  	System.out.println(" Please try again with the correct input !"); 
-								input = false; 
-								break;
-				}
-			}while(!input);
-			
-			String ccd		= String.valueOf(readInt("Enter guest credit card detail: "					));
-			String contact 	= String.valueOf(readInt("Enter guest contact number: "						));
-			Guest g = new Guest(name, addr, country, gender, nat, identity, ic, ccd, contact);
-			guestList.add(g);
-                        System.out.println("Guest " + name + " is successfully created !");
-		} else {
-			System.out.println("Guest with identity: " + ic + " has already existed");
+					input = false; 
+					break;
+					}
+				}while(!input);
+
+				String ccd		= String.valueOf(readInt("Enter guest credit card detail: "					));
+				String contact 	= String.valueOf(readInt("Enter guest contact number: "						));
+				Guest g = new Guest(name, addr, country, gender, nat, identity, ic, ccd, contact);
+				guestList.add(g);
+				System.out.println("Guest " + name + " is successfully created !");
+			} else {
+				System.out.println("Guest with identity: " + ic + " has already existed");
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
