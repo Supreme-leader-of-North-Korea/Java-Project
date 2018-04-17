@@ -3,7 +3,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class GuestMenu extends Menu {
-	//Guest Menu
+	// Guest Menu
 	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList) throws FileNotFoundException {
 		int choice = 0;
@@ -28,7 +28,7 @@ public class GuestMenu extends Menu {
 			case 2: System.out.println("Updating guest details");
 					updateGuest(guestList,roomList,reservationList);
 					gfio.exportAll(guestList);
-					rfio.exportAll(roomList);;
+					rfio.exportAll(roomList);
 					refio.exportAll(reservationList);
 					break;
 			case 3: System.out.println("Searching guest details");
@@ -37,10 +37,12 @@ public class GuestMenu extends Menu {
 			case 4: System.out.println("Returning to main menu...");
 					gfio.exportAll(guestList);
 					rfio.exportAll(roomList);
+					refio.exportAll(reservationList);
 					break;
 			case 5: System.out.println("Exiting...");
 					gfio.exportAll(guestList);
 					rfio.exportAll(roomList);
+					refio.exportAll(reservationList);
 					System.exit(0);
 					break;		
 			default:System.out.println("Wrong Input. Please input from 1 - 5.");
@@ -50,7 +52,7 @@ public class GuestMenu extends Menu {
 		} while (choice != 4);  
 	}
 
-	//Printing Guest Menu
+	// Printing Guest Menu
 	public static void printGuestMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                  Guest                  *");
@@ -62,7 +64,7 @@ public class GuestMenu extends Menu {
 		System.out.println(" * 5. Quit                                 *");
 	}
 
-	//Creating a new Guest
+	// Creating a new Guest
 	public static void createNewGuest(ArrayList<Guest>guestList) {
 		boolean input = false;
 		System.out.println("All fields are mandatory");
@@ -124,7 +126,7 @@ public class GuestMenu extends Menu {
 		}
 	}
 
-	//Updating a existing Guest
+	// Updating a existing Guest
 	public static void updateGuest(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		//Ask for guest identity(IC) to update guest
 

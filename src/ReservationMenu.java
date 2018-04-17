@@ -25,24 +25,24 @@ public class ReservationMenu extends Menu {
 			case 1: makeReservation(guestList,roomList,reservationList);
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
-                                        gfio.exportAll(guestList);
 					break;
 			case 2: searchReservation(reservationList);
 					break;
 			case 3: updateReservation(guestList, roomList, reservationList);
-                                        refio.exportAll(reservationList);
+					refio.exportAll(reservationList);
+					rfio.exportAll(roomList);
 					break;
 			case 4: printReservation(reservationList);
 					break;
 			case 5: System.out.println("Returning to main menu...");
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
-                                        gfio.exportAll(guestList);
+					gfio.exportAll(guestList);
 					break;
 			case 6: System.out.println("Exiting...");
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
-                                        gfio.exportAll(guestList);
+					gfio.exportAll(guestList);
 					System.exit(0);
 					break;				
 			default:System.out.println("Wrong Input. Please input from 1 - 6.");
@@ -75,7 +75,6 @@ public class ReservationMenu extends Menu {
 			if (gindex == -1) {
 				System.out.println("Guest with IC: " + IC + " not found!");
 				System.out.println("Please create guest first");
-				GuestMenu.createNewGuest(guestList);
 			} else if (resIndex != -1) {
 				System.out.println("Guest : " + guestList.get(gindex).getName() + " has already made a reservation!");
 			} else {	

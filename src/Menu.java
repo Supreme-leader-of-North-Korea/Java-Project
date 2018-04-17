@@ -18,7 +18,7 @@ public class Menu {
 		System.out.println(" * 5. About Payment                        *");
 		System.out.println(" * 6. Quit                                 *");
 	} 
-	//Guest Search
+	// Guest Search based on guest name.
 	public static String guestNameSearch(ArrayList<Guest>guestList, String identifier) {
 		ArrayList<Guest>guestList2 = new ArrayList<Guest>();
 
@@ -53,7 +53,10 @@ public class Menu {
 		return IC;
 	}
 
-	
+	// General search method for all classes
+	// methodName - take in the method name which user wants to call
+	// identifier - search term to search against
+	// ArrayList - take in ArrayList 
 	public static int genericSearch(String methodName, String identifier, ArrayList<?>list) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 		int index = 0;
 		//Class<?>[] paramType = {String.class};
@@ -155,8 +158,8 @@ public class Menu {
 	
 
 	public static boolean statusCheck (Room r, int index, String roomNo, Date checkIn, Date CheckOut) {
-		if (strConvertDate(r.getCheckInDate()).equals("null") && 
-				strConvertDate(r.getCheckOutDate()).equals("null")) {
+		if (dateToStr(r.getCheckInDate()).equals("null") && 
+				dateToStr(r.getCheckOutDate()).equals("null")) {
 			if (r.getRoomStatus().equals(Room.RoomStatus.VACANT)) {
 				System.out.println(" Room No: " + roomNo + " is " + r.getRoomStatus() + "!");
 				return true;
@@ -212,11 +215,12 @@ public class Menu {
 	}
 	//misc methods
 	@SuppressWarnings("resource")
+	// Method to read user input and output it to a string
 	public static String readString(String prompt) {
 		System.out.print(prompt);
 		return new java.util.Scanner(System.in).nextLine().trim();
 	}
-
+	// Method to read user input and output it to a string, not allowing empty field as an input
 	public static String readNonEmptyString(String prompt) {
 		String check;
 		do {
@@ -224,7 +228,7 @@ public class Menu {
 		}while (check.equals(""));
 		return check;
 	}
-
+	// Method to read user input and output it to a integer
 	public static int readInt(String prompt) {
 		int input = 0;
 		boolean valid = false;
@@ -242,7 +246,7 @@ public class Menu {
 		}
 		return input;
 	}
-
+	// Method to read user input and output it to a long 
 	public static long readLong(String prompt) {
 		long input = 0;
 		boolean valid = false;
@@ -260,7 +264,7 @@ public class Menu {
 		}
 		return input;
 	}
-	
+	// Method to read user input and output it to a double 
 	public static double readDouble(String prompt) {
 		double input = 0;
 		boolean valid = false;
@@ -278,7 +282,7 @@ public class Menu {
 		}
 		return input;
 	}
-            
+    // Method to read user input and output it to a Date
 	public static Date readDate(String prompt) {
             boolean input = false;
             Date t = null;
@@ -295,7 +299,7 @@ public class Menu {
             }while (!input);  
 		return t;
 	}
-
+	// Method to convert String to Date
 	public static Date strToDate(String date) {
 		boolean input = false;
 		if(!date.equals("null")) {		
@@ -313,8 +317,8 @@ public class Menu {
 		}
 		return null;
 	}
-        
-	public static String strConvertDate(Date date) {
+    // Method to convert Date to String
+	public static String dateToStr(Date date) {
 		try
 		{
 			SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");

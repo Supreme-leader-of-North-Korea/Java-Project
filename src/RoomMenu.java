@@ -154,46 +154,46 @@ public class RoomMenu extends Menu {
 					String type = readString("Enter new bed type [(S)ingle/(D)ouble/(K)ing]:  ");
 					switch(type.toUpperCase()) {
 					case "S":	roomList.get(index).setBedType(Room.BedType.SINGLE_SIZE);
-					input = true;
-					break;
+								input = true;
+								break;
 					case "D": 	roomList.get(index).setBedType(Room.BedType.DOUBLE_SIZE);
-					input = true;
-					break;
+								input = true;
+								break;
 					case "K": 	roomList.get(index).setBedType(Room.BedType.KING_SIZE);
-					input = true;		  
-					break;
-					case "":  	input = true;
-					break;
+								input = true;		  
+								break;
+								case "":  	input = true;
+								break;
 					default:	System.out.println("Please enter [(S)ingle/(D)ouble/(K)ing]");
-					System.out.println(" Please try again with the correct input !"); 
-					input = false; 
-					break;
+								System.out.println(" Please try again with the correct input !"); 
+								input = false; 
+								break;
 					}
 				}while(!input);
 
-				String status = readString("Enter new room status: [(V)acant/(U)nder Maintenance]");
 				do {
+					String status = readString("Enter new room status: [(V)acant/(U)nder Maintenance]");
 					switch(status.toUpperCase()) {
 					case "V":	roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
-					roomList.get(index).setCustomerName("-");
-					roomList.get(index).setCheckInDate(null);
-					roomList.get(index).setCheckOutDate(null);
-					roomList.get(index).setPax("-");
-					input = true;
-					break;
+								roomList.get(index).setCustomerName("-");
+								roomList.get(index).setCheckInDate(null);
+								roomList.get(index).setCheckOutDate(null);
+								roomList.get(index).setPax("-");
+								input = true;
+								break;
 					case "U":	roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
-					roomList.get(index).setCustomerName("-");
-					roomList.get(index).setCheckInDate(null);
-					roomList.get(index).setCheckOutDate(null);
-					roomList.get(index).setPax("-");
-					input = true;
-					break;
+								roomList.get(index).setCustomerName("-");
+								roomList.get(index).setCheckInDate(null);
+								roomList.get(index).setCheckOutDate(null);
+								roomList.get(index).setPax("-");
+								input = true;
+								break;
 					case "":	input = true;
-					break;
+								break;
 					default:	System.out.println("Please enter (V)acant/(U)nder Maintenance");
-					System.out.println("Please try again with the correct input !"); 
-					input = false; 
-					break;
+								System.out.println("Please try again with the correct input !"); 
+								input = false; 
+								break;
 					}
 				}while(!input);   
 				System.out.println("-------------------------------------------");
