@@ -24,14 +24,12 @@ public class PaymentMenu extends Menu{
 
 			switch(choice) {
 			case 1: updatePaymentRates(paymentList);
-                                pfio.exportAll(paymentList);
 					break;
 			case 2: printRates(paymentList);
-                                pfio.exportAll(paymentList);
 					break;
 			case 3: System.out.println("Returning to main menu...");
-				pfio.exportAll(paymentList);
-                                break;
+					pfio.exportAll(paymentList);
+					break;
 			case 4: System.out.println("Exiting...");
 					pfio.exportAll(paymentList);
 					System.exit(0);
@@ -153,12 +151,13 @@ public class PaymentMenu extends Menu{
 		}
 
 		// calculate no  of WeekDays and no WeekEnds and total of days stayed
-		Date checkIn = roomList.get(roomIndex).getCheckInDate();
-		Date checkOut = roomList.get(roomIndex).getCheckOutDate();
+		Date checkIn = roomList.get(index).getCheckInDate();
+		Date checkOut = roomList.get(index).getCheckOutDate();
 		Date today = new Date();
 		int []nodays = getWorkingDaysBetweenTwoDates(checkIn,checkOut);
 		int weekDays = nodays[0];
 		int weekEnds = nodays[1];
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("hh"); 
 		String overstaycheck = dateFormat.format(today);
 
@@ -191,8 +190,8 @@ public class PaymentMenu extends Menu{
 		System.out.println(" *               Invoice               *");
 		System.out.println(" =======================================");
 		System.out.println(" No of days stayed:                 " + (weekDays+weekEnds));
-		System.out.println("    Weekdays($"+ WDrates +"/days):  " + weekDays);
-		System.out.println("    Weekends($"+ WErates +"/days):  " + weekEnds);
+		System.out.println(weekDays +" Weekdays($"+ WDrates +"/days):  " + wdPrice);
+		System.out.println(weekEnds +" Weekends($"+ WErates * WDrates +"/days):  " + wePrice);
 		if (overStayFine) {
 			System.out.println(" 	Delayed Check Out Fine:        $" + df.format(fineRate));
 		}
@@ -220,7 +219,7 @@ public class PaymentMenu extends Menu{
 		if (startCal.getTimeInMillis() == endCal.getTimeInMillis()) {
 			return totalDays;
 		}
-                
+
 		if (startCal.getTimeInMillis() > endCal.getTimeInMillis()) {
 			startCal.setTime(endDate);
 			endCal.setTime(startDate);
@@ -235,7 +234,7 @@ public class PaymentMenu extends Menu{
 				++weekEnds;
 			}
 		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
-                totalDays[0] = weekDays;
+		totalDays[0] = weekDays;
                 totalDays[1] = weekEnds;
 		return totalDays;
 	}

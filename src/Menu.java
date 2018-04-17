@@ -287,21 +287,24 @@ public class Menu {
 		}		
 		return total;
 	}
-        
-        public static int[] rsRemove(ArrayList<RoomService>serviceList, String identifier) {
-		int[] index = null;
-                int serviceIndex = 0;
-                int indexCount = 0;
-		for (RoomService rs: serviceList) {
-			if (identifier.equals(rs.getRoomId())) {
-				index[indexCount] = serviceIndex;
-                                indexCount++;
+	public static ArrayList<RoomService> roomServiceSearch(ArrayList<RoomService>serviceList, ArrayList<MenuItem>menuList, ArrayList<Room>roomList, String roomNo){
+
+		ArrayList<RoomService> itemsOrdered = new ArrayList<RoomService>();
+		ArrayList<RoomService> temp = new ArrayList<RoomService>();
+		int roomIndex = roomIDSearch(roomList, roomNo);
+		if (roomIndex != -1 ) {
+			for (RoomService s: serviceList) {
+				temp.add(s);
+				if (roomNo.equals(s.getRoomId()) && !s.getStatus().equals(RoomService.Status.DELIVERED)) {
+					itemsOrdered.add(s);
+				}
 			}
-                        serviceIndex++;
-		}		
-		return index;
+			serviceList.removeAll(itemsOrdered);
+		} else {
+			System.out.println("Room does not exist");
+		}
+		return itemsOrdered;
 	}
-        
 	//misc methods
 	@SuppressWarnings("resource")
 	public static String readString(String prompt) {
@@ -352,8 +355,7 @@ public class Menu {
 		}
 		return input;
 	}
-        
-        
+            
 	public static Date readDate(String prompt) {
             boolean input = false;
             Date t = null;
@@ -371,20 +373,20 @@ public class Menu {
 		return t;
 	}
 
-        public static Date strToDate(String date) {
+	public static Date strToDate(String date) {
 		boolean input = false;
 		if(!date.equals("null")) {		
-                    SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
-                    Date t = new Date();
-                    try {
-			t = ft.parse(date);
-			input = true;
-                    } catch (ParseException e) { 
-                    	System.out.println("Please enter a valid date");
-			input = false;
-                    }
-                    if(input)
-			return t;
+			SimpleDateFormat ft = new SimpleDateFormat ("dd/MM/yyyy");
+			Date t = new Date();
+			try {
+				t = ft.parse(date);
+				input = true;
+			} catch (ParseException e) { 
+				System.out.println("Please enter a valid date");
+				input = false;
+			}
+			if(input)
+				return t;
 		}
 		return null;
 	}

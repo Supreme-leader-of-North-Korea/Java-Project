@@ -22,6 +22,7 @@ public class RoomServiceMenu extends Menu {
 			switch(choice) {
 				case 1: System.out.println("Creating new menu item...");
 						createNewMenu(menuList);
+						mfio.exportAll(menuList);
 						break;
 				case 2: System.out.println("Updating menu details...");
 						updateMenu(menuList);
@@ -31,20 +32,24 @@ public class RoomServiceMenu extends Menu {
 						removeMenu(menuList);
 						mfio.exportAll(menuList);
 						break;
-				case 4: createNewRS(menuList, serviceList,roomList);
+				case 4: createNewRS(menuList, serviceList, roomList);
 						sfio.exportAll(serviceList);
 						break;
-				case 5: System.out.println("Returning to main menu...");
-						mfio.exportAll(menuList);
+				case 5: updateRS(menuList, serviceList, roomList);
+						sfio.exportAll(serviceList);
 						break;
-				case 6: System.out.println("Exiting...");
+				case 6: System.out.println("Returning to main menu...");
+						mfio.exportAll(menuList);
+						sfio.exportAll(serviceList);
+						break;
+				case 7: System.out.println("Exiting...");
 						mfio.exportAll(menuList);
 						System.exit(0);
 						break;				
-				default:System.out.println("Wrong Input. Please input from 1 - 6.");
+				default:System.out.println("Wrong Input. Please input from 1 - 7.");
 						break;
 			}
-		} while (choice != 5);
+		} while (choice != 6);
 	}
 
 	public static void printRoomServiceMenu() {
@@ -55,61 +60,58 @@ public class RoomServiceMenu extends Menu {
 		System.out.println(" * 2. Update Room Service Menu Item        *");
 		System.out.println(" * 3. Remove Room Service Menu Item        *");
 		System.out.println(" * 4. Create Room Service Order	           *");
-		System.out.println(" * 5. Previous                             *");
-		System.out.println(" * 6. Quit                                 *");
+		System.out.println(" * 5. Update Room Service Order	           *");
+		System.out.println(" * 6. Previous                             *");
+		System.out.println(" * 7. Quit                                 *");
 	}
 
 	public static void createNewMenu(ArrayList<MenuItem>menuList) {
-
 		String name = readNonEmptyString("Enter menu name: ");
-                String desc = readNonEmptyString("Preparation method: ");
-                double price = readDouble("Enter the item price: ");
-
-                MenuItem m = new MenuItem(name, desc, price);
-                menuList.add(m);
-                System.out.println(" -------------------------------------------");
-                System.out.println(" Menu item created!");                      
+		String desc = readNonEmptyString("Preparation method: ");
+		double price = readDouble("Enter the item price: ");
+		MenuItem m = new MenuItem(name, desc, price);
+		menuList.add(m);
+		System.out.println(" -------------------------------------------");
+		System.out.println(" Menu item created!");                      
 		
 	}
 
 	public static void updateMenu(ArrayList<MenuItem>menuList) {
 		if(printMenu(menuList)) {
-                    int noOfMenu = 0;
-                    for (MenuItem m: menuList) { //To get the number of menu items in the list for guest to choose from
-                        noOfMenu++;
-                    }
-                    int index = readInt("Please enter the index of menu item to be updated: ");
-                    if (index > 0 && index <= noOfMenu) {
-                        String identifier = menuList.get(index-1).getName();
-                        int menuIndex = menuNameSearch(menuList,identifier);
+			int noOfMenu = 0;
+			for (MenuItem m: menuList) { //To get the number of menu items in the list for guest to choose from
+				noOfMenu++;
+			}
+			int index = readInt("Please enter the index of menu item to be updated: ");
+			if (index > 0 && index <= noOfMenu) {
+				String identifier = menuList.get(index-1).getName();
+				int menuIndex = menuNameSearch(menuList,identifier);
 
-                        if (menuIndex == -1) {
-                            System.out.println("Menu with name: " + identifier + " not found!");
-                        } else {
-                            System.out.println("Menu with name: " + identifier + " found!");
+				if (menuIndex == -1) {
+					System.out.println("Menu with name: " + identifier + " not found!");
+				} else {
+					System.out.println("Menu with name: " + identifier + " found!");
 
-                            System.out.println(" -------------------------------------------");
-                            System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
+					System.out.println(" -------------------------------------------");
+					System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
 
-                            String name = readString("Enter new menu name: ");
-                            if (!name.equals("")) 
-                                menuList.get(menuIndex).setName(name);
+					String name = readString("Enter new menu name: ");
+					if (!name.equals("")) 
+						menuList.get(menuIndex).setName(name);
 
-                            String desc = readString("Enter new menu preparation method: ");
-                            if (!desc.equals("")) 
-                                menuList.get(menuIndex).setDescription(desc);
+					String desc = readString("Enter new menu preparation method: ");
+					if (!desc.equals("")) 
+						menuList.get(menuIndex).setDescription(desc);
 
-                            double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
-                            if (price != 0) 
-                                menuList.get(menuIndex).setPrice(price);
-                            System.out.println(" -------------------------------------------");
-                            System.out.println(" Menu item updated!");
-                                   
-                            
-                            
-                        }
-                    } else 
-                        System.out.println(" Invalid input ! Please enter from 1 to " + noOfMenu);
+					double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
+					if (price != 0) 
+						menuList.get(menuIndex).setPrice(price);
+					System.out.println(" -------------------------------------------");
+					System.out.println(" Menu item updated!");
+				}
+			} else {
+				System.out.println(" Invalid input ! Please enter from 1 to " + noOfMenu);
+			}
 		}
 	}
 
@@ -118,7 +120,6 @@ public class RoomServiceMenu extends Menu {
 			int index = readInt("Please enter the index of menu item to be removed ");
 			String identifier = menuList.get(index-1).getName();
 			int menuIndex = menuNameSearch(menuList,identifier);
-
 			if (menuIndex == -1) {
 				System.out.println("Menu with name: " + identifier + " not found!");
 			} else {
@@ -132,7 +133,6 @@ public class RoomServiceMenu extends Menu {
 	}
 
 	public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
-
 		String roomNo = readString("Enter your room no: ");
 
 		int roomIndex = roomIDSearch(roomList, roomNo);        
@@ -148,9 +148,11 @@ public class RoomServiceMenu extends Menu {
 					if (remark.equals(""))
 						remark = "-";
 
-					RoomService rs = new RoomService(roomNo, orderNo, quantity, remark, menuList.get(orderNo-1).getPrice(), RoomService.Status.PREPARING);
+					RoomService rs = new RoomService(roomNo, orderNo, quantity, remark, menuList.get(orderNo-1).getPrice(), RoomService.Status.CONFIRMED);
 					serviceList.add(rs); 
-				}
+				} 
+			} else {
+				System.out.println("Room no: " + roomNo + " is currently unoccupied");
 			}
 		}
 	}
@@ -173,4 +175,42 @@ public class RoomServiceMenu extends Menu {
 
 	}
 
+	public static void updateRS(ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
+		String roomNo = readNonEmptyString("Please Enter the room ID: ");
+		//roomServiceSearch returns array of int which contains the index of the menuItem which is place by the room no
+		ArrayList<RoomService> items = roomServiceSearch(serviceList, menuList,roomList, roomNo);
+		boolean found = false;
+		int i = 0;
+		if (items.size() != 0) {
+			for(RoomService rs: items) {
+				int menuNo = rs.getMenuItemNo();
+				System.out.println((i+1) + ":" +
+						"\nStatus : " + rs.getStatus() +
+						"\nItem : " + menuList.get(menuNo-1).getName());
+				found = true;
+				i++;
+			}
+			if (found) {
+				int itemNo = readInt("Which item would you like to update: "); 
+				itemNo = itemNo - 1;
+				if (itemNo < items.size()){
+					String choice = readNonEmptyString("Please enter the new Status (P)reparing/(D)elivered: ");
+					switch(choice.toUpperCase()) {
+					case "P": 	items.get(itemNo).setStatus(RoomService.Status.PREPARING);
+								break;
+					case "D": 	items.get(itemNo).setStatus(RoomService.Status.DELIVERED);
+								break;
+					}
+				}
+				serviceList.addAll(items);
+			} else {
+				System.out.println("Please Enter a valid choice");
+			}
+		} else {
+			System.out.println("There are no pending orders");
+		}
+	}
+
+	
+	
 }

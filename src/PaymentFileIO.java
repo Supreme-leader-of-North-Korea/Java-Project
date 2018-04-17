@@ -43,7 +43,7 @@ public class PaymentFileIO extends FileIO<Payment>{
 		fout.print(p.getSingleRoomPrice() + "|");
 		fout.print(p.getDoubleRoomPrice() + "|");
 		fout.print(p.getDeluxeRoomPrice() + "|");
-		fout.println(p.getVipRoomPrice() + "|");
+		fout.print(p.getVipRoomPrice() + "|");
 		fout.println(p.getOverStayingFine());
 	}
 

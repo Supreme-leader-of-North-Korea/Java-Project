@@ -7,11 +7,13 @@ public class RoomMenu extends Menu {
 
 	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
-			ArrayList<Payment>paymentList) throws FileNotFoundException{
+			ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) throws FileNotFoundException{
 
 		int choice = 0;
 		ReservationFileIO refio = new ReservationFileIO();
 		RoomFileIO rfio = new RoomFileIO();
+		PaymentFileIO pfio = new PaymentFileIO();
+		ServiceFileIO sfio = new ServiceFileIO();
 		//Select menu
 		do {
 			//Print room menu
@@ -32,9 +34,11 @@ public class RoomMenu extends Menu {
 					rfio.exportAll(roomList);
 					refio.exportAll(reservationList);
 					break;
-			case 5: checkOut(guestList,roomList,reservationList, serviceList,paymentList);
+			case 5: checkOut(guestList ,roomList ,reservationList ,serviceList ,paymentList, menuList );
 					rfio.exportAll(roomList);
 					refio.exportAll(reservationList);
+					pfio.exportAll(paymentList);
+					sfio.exportAll(serviceList);
 					break;
 			case 6: System.out.println("Printing Room Status statistic report");
 					printRoomReport(roomList);
@@ -285,7 +289,7 @@ public class RoomMenu extends Menu {
 
 
 	public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
-			ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList) {
+			ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) {
 		String identifier = readString("Please enter the room ID: ");
 
 		int index = roomIDSearch(roomList, identifier);
@@ -295,36 +299,31 @@ public class RoomMenu extends Menu {
 			if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
 				System.out.println("Room with ID: " + identifier + " found!");
 				int reservationIndex = reservationSearch(reservationList,identifier);
-                                PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
+				PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
 				if (reservationIndex == -1) {					
-                                        roomList.get(index).setCustomerName("-");
-                                        roomList.get(index).setCheckInDate(null);
-                                        roomList.get(index).setCheckOutDate(null);
-                                        roomList.get(index).setPax("-");
-                                        roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+					roomList.get(index).setCustomerName("-");
+					roomList.get(index).setCheckInDate(null);
+					roomList.get(index).setCheckOutDate(null);
+					roomList.get(index).setPax("-");
+					roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
 				} else {
-                                    if (roomList.get(index).getCheckOutDate().compareTo(reservationList.get(reservationIndex).getCheckOutDate()) == 0) {
-					System.out.println("Reservation with room ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
-					reservationList.remove(reservationIndex);
-                                        roomList.get(index).setCustomerName("-");
-                                        roomList.get(index).setCheckInDate(null);
-                                        roomList.get(index).setCheckOutDate(null);
-                                        roomList.get(index).setPax("-");
-                                        roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
-                                    } else {
-                                        roomList.get(index).setCustomerName(reservationList.get(reservationIndex).getGuestName());
-                                        roomList.get(index).setCheckInDate(reservationList.get(reservationIndex).getCheckInDate());
-                                        roomList.get(index).setCheckOutDate(reservationList.get(reservationIndex).getCheckOutDate());
-                                        roomList.get(index).setPax(reservationList.get(reservationIndex).getPax());
-                                        roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
-                                    }
+					if (roomList.get(index).getCheckOutDate().compareTo(reservationList.get(reservationIndex).getCheckOutDate()) == 0) {
+						System.out.println("Reservation with room ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
+						reservationList.remove(reservationIndex);
+						roomList.get(index).setCustomerName("-");
+						roomList.get(index).setCheckInDate(null);
+						roomList.get(index).setCheckOutDate(null);
+						roomList.get(index).setPax("-");
+						roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+					} else {
+						roomList.get(index).setCustomerName(reservationList.get(reservationIndex).getGuestName());
+						roomList.get(index).setCheckInDate(reservationList.get(reservationIndex).getCheckInDate());
+						roomList.get(index).setCheckOutDate(reservationList.get(reservationIndex).getCheckOutDate());
+						roomList.get(index).setPax(reservationList.get(reservationIndex).getPax());
+						roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
+					}	
 				}
-				int[] rsIndex = rsRemove(serviceList, identifier);
-                                int i;
-                                for (i = 0; i < rsIndex.length; i++) {
-                                    serviceList.remove(rsIndex[i]);
-                                }
-				
+				ArrayList<RoomService>items = roomServiceSearch(serviceList, menuList, roomList, identifier);
 			} else 
 				System.out.println("Room is not occupied.");
 		}

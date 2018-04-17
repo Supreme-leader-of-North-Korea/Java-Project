@@ -41,7 +41,7 @@ public class HRPSApp {
 			switch(choice) {
 			case 1: GuestMenu.guestMenu(guestList, roomList, reservationList);
 					break;
-			case 2: RoomMenu.roomMenu(guestList, roomList, reservationList, serviceList, paymentList);		
+			case 2: RoomMenu.roomMenu(guestList, roomList, reservationList, serviceList, paymentList, menuList);		
 					break;
 			case 3: ReservationMenu.reservationMenu(guestList, roomList, reservationList);	
 					break;
