@@ -95,28 +95,26 @@ public class Menu {
 		String roomType = readNonEmptyString("Please Enter the type of room "
 				+ "you would like to enquiry [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
 		do {
-			if (roomType.length() == 1) {
-                            switch (roomType.charAt(0)) {
-                                    case 'S':	roomType = "SINGLE";
-                                                            input = true;
-                                                            break;
-                                    case 'O':	roomType = "DOUBLE";
-                                                            input = true;
-                                                            break;
-                                    case 'E':	roomType = "DELUXE";
-                                                            input = true;
-                                                            break;
-                                    case 'V':	roomType = "VIP";
-                                                            input = true;
-                                                            break;
-                                    default:	roomType = readNonEmptyString("Please Enter the correct type of room "
-                                                    + "you would like to enquiry [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
-                                                            input = false;
-                                                            break;
-                            }
-                        } else 
-                            roomType = readNonEmptyString("Please Enter the correct type of room "
-                                                    + "you would like to enquiry [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+
+			switch (roomType.toUpperCase()) {
+			case "S":	roomType = "SINGLE";
+						input = true;
+						break;
+			case "O":	roomType = "DOUBLE";
+						input = true;
+						break;
+			case "E":	roomType = "DELUXE";
+						input = true;
+						break;
+			case "V":	roomType = "VIP";
+						input = true;
+						break;
+			default:	roomType = readNonEmptyString("Please Enter the correct type of room "
+							+ "you would like to enquiry [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
+						input = false;
+						break;
+			}
+                       
 		}while(!input);
 		
 		for (Room r: roomList) {
