@@ -15,3 +15,16 @@ boolean inputCheck = true;
 					checkOut = readDate("Please enter the check out date [DD/MM/YYYY]: ");
 					inputCheck = false;
 				}while(!checkOut.after(checkIn));
+				
+				
+				
+				
+				
+				
+				boolean overStayFine = false;
+		Date today2 = new Date();
+		if (Integer.parseInt(today2.toString().substring(11,13)) >=14) {
+			overStayFine = true;
+		}else {
+			overStayFine = false;
+		}
