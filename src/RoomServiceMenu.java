@@ -179,9 +179,15 @@ public class RoomServiceMenu extends Menu {
 		String roomNo = readNonEmptyString("Please Enter the room ID: ");
 		//roomServiceSearch returns array of int which contains the index of the menuItem which is place by the room no
 		ArrayList<RoomService> items = roomServiceSearch(serviceList, menuList,roomList, roomNo);
+		ArrayList<RoomService> temp = roomServiceSearch(serviceList, menuList,roomList, roomNo);
 		boolean found = false;
 		int i = 0;
 		if (items.size() != 0) {
+			for(RoomService rs: items) {
+				if(rs.getStatus().equals(RoomService.Status.DELIVERED))
+					temp.add(rs);
+			}
+			items.removeAll(temp);
 			for(RoomService rs: items) {
 				int menuNo = rs.getMenuItemNo();
 				System.out.println((i+1) + ":" +

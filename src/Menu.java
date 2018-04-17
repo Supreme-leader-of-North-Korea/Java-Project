@@ -295,7 +295,7 @@ public class Menu {
 		if (roomIndex != -1 ) {
 			for (RoomService s: serviceList) {
 				temp.add(s);
-				if (roomNo.equals(s.getRoomId()) && !s.getStatus().equals(RoomService.Status.DELIVERED)) {
+				if (roomNo.equals(s.getRoomId())) {
 					itemsOrdered.add(s);
 				}
 			}
