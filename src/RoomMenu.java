@@ -91,8 +91,8 @@ public class RoomMenu extends Menu {
 							"\nBed Type: " + roomList.get(index).getBedType() +
 							"\nRoom Status: " + roomList.get(index).getRoomStatus() +
 							"\nCustomer Name: " + roomList.get(index).getCustomerName() +
-							"\nCheck In: " + roomList.get(index).getCheckInDate() +
-							"\nCheck Out: " + roomList.get(index).getCheckOutDate() +
+							"\nCheck In: " + dateToStr(roomList.get(index).getCheckInDate()) +
+							"\nCheck Out: " + dateToStr(roomList.get(index).getCheckOutDate()) +
 							"\nNumber of pax staying: " + roomList.get(index).getPax());
 					System.out.println(" -------------------------------------------");
 				}

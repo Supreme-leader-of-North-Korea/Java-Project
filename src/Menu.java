@@ -79,8 +79,6 @@ public class Menu {
 				}
 				index++;
 			}
-			
-			
 		}
 		if (found == true)
 			return index;
