@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class RoomServiceMenu extends Menu {
@@ -79,82 +80,113 @@ public class RoomServiceMenu extends Menu {
 	public static void updateMenu(ArrayList<MenuItem>menuList) {
 		if(printMenu(menuList)) {
 			int noOfMenu = 0;
-			for (MenuItem m: menuList) { //To get the number of menu items in the list for guest to choose from
-				noOfMenu++;
-			}
-			int index = readInt("Please enter the index of menu item to be updated: ");
-			if (index > 0 && index <= noOfMenu) {
-				String identifier = menuList.get(index-1).getName();
-				int menuIndex = menuNameSearch(menuList,identifier);
-
-				if (menuIndex == -1) {
-					System.out.println("Menu with name: " + identifier + " not found!");
-				} else {
-					System.out.println("Menu with name: " + identifier + " found!");
-
-					System.out.println(" -------------------------------------------");
-					System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
-
-					String name = readString("Enter new menu name: ");
-					if (!name.equals("")) 
-						menuList.get(menuIndex).setName(name);
-
-					String desc = readString("Enter new menu preparation method: ");
-					if (!desc.equals("")) 
-						menuList.get(menuIndex).setDescription(desc);
-
-					double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
-					if (price != 0) 
-						menuList.get(menuIndex).setPrice(price);
-					System.out.println(" -------------------------------------------");
-					System.out.println(" Menu item updated!");
+			try {
+				for (MenuItem m: menuList) { //To get the number of menu items in the list for guest to choose from
+					noOfMenu++;
 				}
-			} else {
-				System.out.println(" Invalid input ! Please enter from 1 to " + noOfMenu);
+				int index = readInt("Please enter the index of menu item to be updated: ");
+				if (index > 0 && index <= noOfMenu) {
+					String identifier = menuList.get(index-1).getName(); 
+					int menuIndex = genericSearch("getName",identifier,menuList);
+
+					if (menuIndex == -1) {
+						System.out.println("Menu with name: " + identifier + " not found!");
+					} else {
+						System.out.println("Menu with name: " + identifier + " found!");
+
+						System.out.println(" -------------------------------------------");
+						System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
+
+						String name = readString("Enter new menu name: ");
+						if (!name.equals("")) 
+							menuList.get(menuIndex).setName(name);
+
+						String desc = readString("Enter new menu preparation method: ");
+						if (!desc.equals("")) 
+							menuList.get(menuIndex).setDescription(desc);
+
+						double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
+						if (price != 0) 
+							menuList.get(menuIndex).setPrice(price);
+						System.out.println(" -------------------------------------------");
+						System.out.println(" Menu item updated!");
+					}
+				} else {
+					System.out.println(" Invalid input ! Please enter from 1 to " + noOfMenu);
+				}
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| NoSuchMethodException | SecurityException | IllegalArgumentException
+					| InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		
 	}
 
 	public static void removeMenu(ArrayList<MenuItem>menuList) {
-		if(printMenu(menuList)) {
-			int index = readInt("Please enter the index of menu item to be removed ");
-			String identifier = menuList.get(index-1).getName();
-			int menuIndex = menuNameSearch(menuList,identifier);
-			if (menuIndex == -1) {
-				System.out.println("Menu with name: " + identifier + " not found!");
-			} else {
-				System.out.println("Menu with name: " + identifier + " found!");
-				System.out.println(" -------------------------------------------");
-				menuList.remove(menuIndex);
-				System.out.println(" -------------------------------------------");
+		try {
+			if(printMenu(menuList)) {
+				int index = readInt("Please enter the index of menu item to be removed ");
+				int menuNo = 1;
+				for (MenuItem m: menuList) {
+					menuNo++;
+				}
+				if (index > menuNo) {
+					String identifier = menuList.get(index-1).getName();
+					int menuIndex;				
+					menuIndex = genericSearch("getName",identifier,menuList);
+					if (menuIndex == -1) {
+						System.out.println("Menu with name: " + identifier + " not found!");
+					} else {
+						System.out.println("Menu with name: " + identifier + " found!");
+						System.out.println(" -------------------------------------------");
+						menuList.remove(menuIndex);
+						System.out.println(" -------------------------------------------");
 
+					}
+				} else 
+					System.out.println("Please enter from 1 to " + (menuNo-1) + " !");
 			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| NoSuchMethodException | SecurityException | IllegalArgumentException
+				| InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 		String roomNo = readString("Enter your room no: ");
 
-		int roomIndex = roomIDSearch(roomList, roomNo);        
-		if(roomIndex == -1) {
-			System.out.println("room number: " + roomNo + " does not exist");
-		}else {
-			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
-				if(printMenu(menuList)) {
-					int orderNo = readInt("Enter your option: ");
-					int quantity = readInt("How many would you like to order ?: ");
-					String remark = readString("Any remark(s) for your order ? ('Enter' key to skip)");
+		int roomIndex;
+		try {
+			roomIndex = genericSearch("getRoomId", roomNo, roomList);
 
-					if (remark.equals(""))
-						remark = "-";
+			if(roomIndex == -1) {
+				System.out.println("room number: " + roomNo + " does not exist");
+			}else {
+				if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
+					if(printMenu(menuList)) {
+						int orderNo = readInt("Enter your option: ");
+						int quantity = readInt("How many would you like to order ?: ");
+						String remark = readString("Any remark(s) for your order ? ('Enter' key to skip)");
 
-					RoomService rs = new RoomService(roomNo, orderNo, quantity, remark, menuList.get(orderNo-1).getPrice(), RoomService.Status.CONFIRMED);
-					serviceList.add(rs); 
-				} 
-			} else {
-				System.out.println("Room no: " + roomNo + " is currently unoccupied");
+						if (remark.equals(""))
+							remark = "-";
+
+						RoomService rs = new RoomService(roomNo, orderNo, quantity, remark, menuList.get(orderNo-1).getPrice(), RoomService.Status.CONFIRMED);
+						serviceList.add(rs); 
+					} 
+				} else {
+					System.out.println("Room no: " + roomNo + " is currently unoccupied");
+				}
 			}
-		}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}      
 	}
 
 	public static boolean printMenu(ArrayList<MenuItem>menuList) {

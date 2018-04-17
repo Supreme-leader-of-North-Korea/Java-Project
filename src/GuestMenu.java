@@ -69,7 +69,7 @@ public class GuestMenu extends Menu {
 		String ic 		= readNonEmptyString("Enter IC Number: "									);
 		int index;
 		try {
-			index = genericSearch("getIc","Guest",ic,guestList);
+			index = genericSearch("getIc",ic,guestList);
 
 			//Ensure that no guest with the input IC is already in the system
 			if (index == -1) {
@@ -131,82 +131,88 @@ public class GuestMenu extends Menu {
 		/*Assumption: identity(IC) and (Passport/Driving License) 
 		 cannot be changed as they will be verify upon Guest creation*/
 
-		String ic = readString("Please enter identity of guest to update: ");
-		int index = guestICSearch(guestList, ic);
-		boolean input = false;
+		String IC = readString("Please enter identity of guest to update: ");
+		try {
+			int index = genericSearch("getIc",IC,guestList);
+			boolean input = false;
 
-		//index = -1 if no such guest with the input IC exist in the system
-		if (index == -1) {
-			System.out.println("Guest with identity: " + ic + " not found!");
-		} else {
-			System.out.println("Guest with identity: " + ic + " found!");
+			//index = -1 if no such guest with the input IC exist in the system
+			if (index == -1) {
+				System.out.println("Guest with identity: " + IC + " not found!");
+			} else {
+				System.out.println("Guest with identity: " + IC + " found!");
 
-			System.out.println(" -------------------------------------------");
-			System.out.println("Please enter new guest details ('Enter' key to skip)");
+				System.out.println(" -------------------------------------------");
+				System.out.println("Please enter new guest details ('Enter' key to skip)");
 
-			String name = readString("Enter new guest name: ");
-			if (!name.equals("")) 
-				guestList.get(index).setName(name);
+				String name = readString("Enter new guest name: ");
+				if (!name.equals("")) 
+					guestList.get(index).setName(name);
 
-			String addr = readString("Enter new guest address: ");
-			if (!addr.equals("")) 
-				guestList.get(index).setAddress(addr);
+				String addr = readString("Enter new guest address: ");
+				if (!addr.equals("")) 
+					guestList.get(index).setAddress(addr);
 
-			String country = readString("Enter new guest country: ");
-			if (!country.equals("")) 
-				guestList.get(index).setCountry(country);
+				String country = readString("Enter new guest country: ");
+				if (!country.equals("")) 
+					guestList.get(index).setCountry(country);
 
-			String gender = readString("Enter new guest gender: ");
-			if (!gender.equals("")) { 
-				do {
-					gender 	= readNonEmptyString("Enter guest gender[(M)ale/(F)emale]:"			);		
-					switch(gender.toUpperCase()) {
+				String gender = readString("Enter new guest gender: ");
+				if (!gender.equals("")) { 
+					do {
+						gender 	= readNonEmptyString("Enter guest gender[(M)ale/(F)emale]:"			);		
+						switch(gender.toUpperCase()) {
 						case "M": 	gender = "Male";
-									input = true;
-									break;
+						input = true;
+						break;
 						case "F":	gender = "Female";
-									input = true;
-									break;
+						input = true;
+						break;
 						default:	System.out.println(" Please try again with the correct input !"); 
-									input = false; 
-									break;
-					}
-				}while(!input);
-				guestList.get(index).setGender(gender);
+						input = false; 
+						break;
+						}
+					}while(!input);
+					guestList.get(index).setGender(gender);
+				}
+
+				String nat = readString("Enter new guest nationality: ");
+				if (!nat.equals("")) 
+					guestList.get(index).setNationality(nat);
+
+				String ccd = readString("Enter new guest credit card detail: ");
+				if (!ccd.equals("")) 
+					guestList.get(index).setCreditDetails(ccd);
+
+
+				String contact = readString("Enter new guest contact number: ");
+				if (!contact.equals("")) 
+					guestList.get(index).setContact(contact);
+
+
+				//Update reservation and room accordingly
+				int roomIndex = genericSearch("getGuestIC",IC,roomList);
+				//Guest is currently staying in a room
+				if(roomIndex != -1) {
+					if (!name.equals("")) 
+						roomList.get(roomIndex).setCustomerName(name);
+				}
+				int reservationIndex = genericSearch("getGuestIC",IC,reservationList);
+				//Guest has a reservation
+				if (reservationIndex != -1) {
+					if (!name.equals("")) 
+						reservationList.get(reservationIndex).setGuestName(name);
+					if (!ccd.equals(""))
+						reservationList.get(reservationIndex).setCreditCard(ccd);
+				}
+
+				System.out.println(" -------------------------------------------");
+				System.out.println(" Guest updated!");
 			}
-
-			String nat = readString("Enter new guest nationality: ");
-			if (!nat.equals("")) 
-				guestList.get(index).setNationality(nat);
-
-			String ccd = readString("Enter new guest credit card detail: ");
-			if (!ccd.equals("")) 
-				guestList.get(index).setCreditDetails(ccd);
-
-
-			String contact = readString("Enter new guest contact number: ");
-			if (!contact.equals("")) 
-				guestList.get(index).setContact(contact);
-
-
-			//Update reservation and room accordingly
-			int roomIndex = roomICSearch(roomList,ic);
-			//Guest is currently staying in a room
-			if(roomIndex != -1) {
-				if (!name.equals("")) 
-					roomList.get(roomIndex).setCustomerName(name);
-			}
-			int reservationIndex = reservationICSearch(reservationList,ic);
-			//Guest has a reservation
-			if (reservationIndex != -1) {
-				if (!name.equals("")) 
-					reservationList.get(reservationIndex).setGuestName(name);
-				if (!ccd.equals(""))
-					reservationList.get(reservationIndex).setCreditCard(ccd);
-			}
-
-			System.out.println(" -------------------------------------------");
-			System.out.println(" Guest updated!");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -217,18 +223,25 @@ public class GuestMenu extends Menu {
 
 		String IC = guestNameSearch(guestList, identifier);
 		if (!IC.equals("")) {
-			int index = guestICSearch(guestList, IC);
-			System.out.println(" -------------------------------------------");
-			System.out.println("Name: " + guestList.get(index).getName() + 
-					"\nAddress: " + guestList.get(index).getAddress() + 
-					"\nCountry: " + guestList.get(index).getCountry() + 
-					"\nGender: " + guestList.get(index).getGender() + 
-					"\nNationality: " + guestList.get(index).getNationality() + 
-					"\nIC:" + guestList.get(index).getIc() +
-					"\nIdentity Type: " + guestList.get(index).getIdentity() +
-					"\nCredit Card Details: " + guestList.get(index).getCreditDetails() +
-					"\nContact: " + guestList.get(index).getContact());
-			System.out.println(" -------------------------------------------");
+			int index;
+			try {
+				index = genericSearch("getIc",IC,guestList);
+				System.out.println(" -------------------------------------------");
+				System.out.println("Name: " + guestList.get(index).getName() + 
+						"\nAddress: " + guestList.get(index).getAddress() + 
+						"\nCountry: " + guestList.get(index).getCountry() + 
+						"\nGender: " + guestList.get(index).getGender() + 
+						"\nNationality: " + guestList.get(index).getNationality() + 
+						"\nIC:" + guestList.get(index).getIc() +
+						"\nIdentity Type: " + guestList.get(index).getIdentity() +
+						"\nCredit Card Details: " + guestList.get(index).getCreditDetails() +
+						"\nContact: " + guestList.get(index).getContact());
+				System.out.println(" -------------------------------------------");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+					| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -54,15 +54,14 @@ public class Menu {
 	}
 
 	
-	public static int genericSearch(String methodName, String className, String identifier, ArrayList<Guest>guestList) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
-		Class<?> guestClass = Class.forName(className);
+	public static int genericSearch(String methodName, String identifier, ArrayList<?>list) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, SecurityException, IllegalArgumentException, InvocationTargetException {
 		int index = 0;
 		//Class<?>[] paramType = {String.class};
 		boolean found = false;
-		for (Guest g: guestList) {
-			Method method = g.getClass().getMethod(methodName);
-			String IC = (String) method.invoke(g);
-			if (identifier.equals(IC)) {
+		for (Object o: list) {
+			Method method = o.getClass().getMethod(methodName);
+			String comparator = (String) method.invoke(o);
+			if (identifier.equals(comparator)) {
 				found = true;
 				break;
 			}
@@ -71,58 +70,6 @@ public class Menu {
 		if (found == true)
 			return index;
 		else
-			return -1;
-	}
-	
-	
-	public static int guestICSearch(ArrayList<Guest>guestList, String identifier) {
-
-		boolean found = false;
-		int index = 0;
-		for (Guest g: guestList) {
-			if (identifier.equals(g.getIc())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-
-	//Room Search by guest IC
-	
-	public static int roomICSearch(ArrayList<Room>roomList, String identifier) {
-		boolean found = false;
-		int index = 0;
-		for (Room r: roomList) {
-			if (identifier.equals(r.getGuestIC())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-
-	public static int roomIDSearch(ArrayList<Room>roomList, String identifier) {
-		boolean found = false;
-		int index = 0;
-		for (Room r: roomList) {
-			if (identifier.equals(r.getRoomId())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		if(found == true) 
-			return index;
-		else 
 			return -1;
 	}
 
@@ -218,74 +165,6 @@ public class Menu {
 		
 	}
 
-	// Reservation Search
-	public static int reservationSearch(ArrayList<Reservation>reservationList, String identifier) {
-		boolean found = false;
-		int index = 0;
-		for (Reservation re: reservationList) {
-			if (identifier.equals(re.getRoomId())) {
-				found = true;
-				break;
-			}
-			index++;
-		}		
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-	//method overriding
-	public static int reservationSearch(ArrayList<Reservation>reservationList, int identifier) {
-		boolean found = false;
-		int index = 0;
-		for (Reservation re: reservationList) {
-			if (identifier==re.getReservationId()) {
-				found = true;
-				break;
-			}
-			index++;
-		}		
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-
-	public static int reservationICSearch(ArrayList<Reservation>reservationList, String identifier) {
-		boolean found = false;
-		int index = 0;
-		for (Reservation re: reservationList) {
-			if (identifier.equals(re.getGuestIC())) {
-				found = true;
-				break;
-			}
-			index++;
-		}		
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-
-	//Menu Search
-	public static int menuNameSearch(ArrayList<MenuItem>menuList, String identifier) {
-		boolean found = false;
-		int index = 0;
-
-		for (MenuItem m: menuList) {
-			System.out.println(m.getName());
-			if (identifier.equals(m.getName())) {
-				found = true;
-				break;
-			}
-			index++;
-		}
-		if(found == true) 
-			return index;
-		else 
-			return -1;
-	}
-
 	//Service Search
 	public static double rsTotal(ArrayList<RoomService>serviceList, String identifier) {
 		double total = 0;
@@ -298,20 +177,26 @@ public class Menu {
 	}
 	
 	public static ArrayList<RoomService> roomServiceSearch(ArrayList<RoomService>serviceList, ArrayList<MenuItem>menuList, ArrayList<Room>roomList, String roomNo){
-
 		ArrayList<RoomService> itemsOrdered = new ArrayList<RoomService>();
 		ArrayList<RoomService> temp = new ArrayList<RoomService>();
-		int roomIndex = roomIDSearch(roomList, roomNo);
-		if (roomIndex != -1 ) {
-			for (RoomService s: serviceList) {
-				temp.add(s);
-				if (roomNo.equals(s.getRoomId()) && !s.getStatus().equals(RoomService.Status.DELIVERED)) {
-					itemsOrdered.add(s);
+		try {
+			int roomIndex = genericSearch("getRoomId",roomNo,roomList);
+			if (roomIndex != -1 ) {
+				for (RoomService s: serviceList) {
+					temp.add(s);
+					if (roomNo.equals(s.getRoomId()) && !s.getStatus().equals(RoomService.Status.DELIVERED)) {
+						itemsOrdered.add(s);
+					}
 				}
+				serviceList.removeAll(itemsOrdered);
+			} else {
+				System.out.println("Room does not exist");
 			}
-			serviceList.removeAll(itemsOrdered);
-		} else {
-			System.out.println("Room does not exist");
+
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return itemsOrdered;
 	}

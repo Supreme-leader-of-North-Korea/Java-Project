@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -76,14 +77,48 @@ public class RoomMenu extends Menu {
 	//Print details of room base on guest names
 	public static void searchRoomByName(ArrayList<Room>roomList,ArrayList<Guest>guestList) {
 		//Ask for guest name as primary key, IC is being return as the identifier
-		String identifier = readString("Please enter the guest name you would like to search ('Enter' key to display all result): ");
-		String IC =	guestNameSearch(guestList, identifier);
+		try {
+			String identifier = readString("Please enter the guest name you would like to search ('Enter' key to display all result): ");
+			String IC =	guestNameSearch(guestList, identifier);
 
-		if (!IC.equals("")) {
-			int index = roomICSearch(roomList, IC);
-			if (index == -1){
-				System.out.println("Guest is not assigned to any room");
+			if (!IC.equals("")) {
+				int index = genericSearch("getGuestIC",IC,roomList);
+				if (index == -1){
+					System.out.println("Guest is not assigned to any room");
+				} else {
+					System.out.println(" -------------------------------------------");
+					System.out.println("Room No: " + roomList.get(index).getRoomId() +
+							"\nBed Type: " + roomList.get(index).getBedType() +
+							"\nRoom Status: " + roomList.get(index).getRoomStatus() +
+							"\nCustomer Name: " + roomList.get(index).getCustomerName() +
+							"\nCheck In: " + roomList.get(index).getCheckInDate() +
+							"\nCheck Out: " + roomList.get(index).getCheckOutDate() +
+							"\nNumber of pax staying: " + roomList.get(index).getPax());
+					System.out.println(" -------------------------------------------");
+				}
 			} else {
+				System.out.println("Guest is not register in the System!");
+				System.out.println("Please create a new guest!");
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}	
+
+	//Print details of room base on room ID
+	public static void searchRoomByNo(ArrayList<Room>roomList) {
+		//Ask for room ID
+		String roomID = readString("Please enter the room number you would like to search: ");
+		int index;
+		try {
+			index = genericSearch("getRoomId",roomID,roomList);
+			if (index == -1) {
+				System.out.println("Room with room ID: " + roomID + " not found!");
+			} else {
+				System.out.println("Room with room ID: " + roomID + " found!");
 				System.out.println(" -------------------------------------------");
 				System.out.println("Room No: " + roomList.get(index).getRoomId() +
 						"\nBed Type: " + roomList.get(index).getBedType() +
@@ -91,96 +126,83 @@ public class RoomMenu extends Menu {
 						"\nCustomer Name: " + roomList.get(index).getCustomerName() +
 						"\nCheck In: " + roomList.get(index).getCheckInDate() +
 						"\nCheck Out: " + roomList.get(index).getCheckOutDate() +
-						"\nNumber of pax staying: " + roomList.get(index).getPax());
+						"\nNumber of pax staying: " + roomList.get(index).getPax());            
 				System.out.println(" -------------------------------------------");
 			}
-		} else {
-			System.out.println("Guest is not register in the System!");
-			System.out.println("Please create a new guest!");
-		}
-	}	
-
-	//Print details of room base on room ID
-	public static void searchRoomByNo(ArrayList<Room>roomList) {
-		//Ask for room ID
-		String identifier = readString("Please enter the room number you would like to search: ");
-		int index = roomIDSearch(roomList, identifier);
-		if (index == -1) {
-			System.out.println("Room with room ID: " + identifier + " not found!");
-		} else {
-			System.out.println("Room with room ID: " + identifier + " found!");
-			System.out.println(" -------------------------------------------");
-			System.out.println("Room No: " + roomList.get(index).getRoomId() +
-					"\nBed Type: " + roomList.get(index).getBedType() +
-					"\nRoom Status: " + roomList.get(index).getRoomStatus() +
-					"\nCustomer Name: " + roomList.get(index).getCustomerName() +
-					"\nCheck In: " + roomList.get(index).getCheckInDate() +
-					"\nCheck Out: " + roomList.get(index).getCheckOutDate() +
-					"\nNumber of pax staying: " + roomList.get(index).getPax());            
-			System.out.println(" -------------------------------------------");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}        
 
 	//Update details of room 
 	public static void updateRoom(ArrayList<Room>roomList) {
 		//Ask for room ID
-		String identifier = readNonEmptyString("Please enter the room ID to update it's details: ");
+		String roomID = readNonEmptyString("Please enter the room ID to update it's details: ");
 		boolean input = false;
-		int index = roomIDSearch(roomList,identifier);
-		if (index == -1) {
-			System.out.println("Room with ID: " + identifier + " not found!");
-		} else {
-			System.out.println("Room with ID: " + identifier + " found!");
-			System.out.println(" -------------------------------------------");
-			System.out.println("Please enter new room details ('Enter' key to skip)");
-			do {
-				String type = readString("Enter new bed type [(S)ingle/(D)ouble/(K)ing]:  ");
-				switch(type.toUpperCase()) {
+		int index;
+		try {
+			index = genericSearch("getRoomId",roomID,roomList);
+			if (index == -1) {
+				System.out.println("Room with ID: " + roomID + " not found!");
+			} else {
+				System.out.println("Room with ID: " + roomID + " found!");
+				System.out.println(" -------------------------------------------");
+				System.out.println("Please enter new room details ('Enter' key to skip)");
+				do {
+					String type = readString("Enter new bed type [(S)ingle/(D)ouble/(K)ing]:  ");
+					switch(type.toUpperCase()) {
 					case "S":	roomList.get(index).setBedType(Room.BedType.SINGLE_SIZE);
-								input = true;
-								break;
+					input = true;
+					break;
 					case "D": 	roomList.get(index).setBedType(Room.BedType.DOUBLE_SIZE);
-								input = true;
-								break;
+					input = true;
+					break;
 					case "K": 	roomList.get(index).setBedType(Room.BedType.KING_SIZE);
-								input = true;		  
-								break;
+					input = true;		  
+					break;
 					case "":  	input = true;
-								break;
+					break;
 					default:	System.out.println("Please enter [(S)ingle/(D)ouble/(K)ing]");
-								System.out.println(" Please try again with the correct input !"); 
-								input = false; 
-								break;
-				}
-			}while(!input);
+					System.out.println(" Please try again with the correct input !"); 
+					input = false; 
+					break;
+					}
+				}while(!input);
 
-			String status = readString("Enter new room status: [(V)acant/(U)nder Maintenance]");
-			do {
-				switch(status.toUpperCase()) {
+				String status = readString("Enter new room status: [(V)acant/(U)nder Maintenance]");
+				do {
+					switch(status.toUpperCase()) {
 					case "V":	roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
-                                                        roomList.get(index).setCustomerName("-");
-                                                        roomList.get(index).setCheckInDate(null);
-                                                        roomList.get(index).setCheckOutDate(null);
-                                                        roomList.get(index).setPax("-");
-                                                        input = true;
-							break;
+					roomList.get(index).setCustomerName("-");
+					roomList.get(index).setCheckInDate(null);
+					roomList.get(index).setCheckOutDate(null);
+					roomList.get(index).setPax("-");
+					input = true;
+					break;
 					case "U":	roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
-                                                        roomList.get(index).setCustomerName("-");
-                                                        roomList.get(index).setCheckInDate(null);
-                                                        roomList.get(index).setCheckOutDate(null);
-                                                        roomList.get(index).setPax("-");
-							input = true;
-							break;
+					roomList.get(index).setCustomerName("-");
+					roomList.get(index).setCheckInDate(null);
+					roomList.get(index).setCheckOutDate(null);
+					roomList.get(index).setPax("-");
+					input = true;
+					break;
 					case "":	input = true;
-								break;
+					break;
 					default:	System.out.println("Please enter (V)acant/(U)nder Maintenance");
-								System.out.println("Please try again with the correct input !"); 
-								input = false; 
-								break;
-				}
-			}while(!input);   
-			System.out.println("-------------------------------------------");
-			System.out.println("Room updated!");                  
+					System.out.println("Please try again with the correct input !"); 
+					input = false; 
+					break;
+					}
+				}while(!input);   
+				System.out.println("-------------------------------------------");
+				System.out.println("Room updated!");                  
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}        
 
@@ -204,43 +226,45 @@ public class RoomMenu extends Menu {
 
 	public static void walkInCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
 		String identifier = readNonEmptyString("Please enter the guest IC Number: ");
-		int index = guestICSearch(guestList, identifier);
+		int index;
+		try {
+			index = genericSearch("getIc",identifier,guestList);
 
-		if (index == -1) {
-			System.out.println("Guest with IC: " + identifier + " not found!");
-		} else {
+			if (index == -1) {
+				System.out.println("Guest with IC: " + identifier + " not found!");
+			} else {
 
-			Date checkIn = new Date();
-			Date checkOut;
-			do {
-				checkOut = readDate("Please enter the check out date [DD/MM/YYYY]: ");
-			}while(checkIn.after(checkOut));
-			
-			//This method display all room types according to what the user choose 
-			String []roomIdarr = searchRoomType(roomList, checkIn, checkOut);
-
-			String roomID;
-			int roomIndex;
-			boolean input = false;
-			do {
-				//check if there is such a room
+				Date checkIn = new Date();
+				Date checkOut;
 				do {
-					roomID = readNonEmptyString("Please enter the room ID: ");
-					roomIndex = roomIDSearch(roomList,roomID);
-				}while(roomIndex == -1);
-				
-				//check if this room is in the list of rooms that are available 
-				for(int i = 0; roomIdarr.length >= i ;i++) {
-					if (roomID.equals(roomIdarr[i])) {
-						input = true;
-						break;
+					checkOut = readDate("Please enter the check out date [DD/MM/YYYY]: ");
+				}while(checkIn.after(checkOut));
+
+				//This method display all room types according to what the user choose 
+				String []roomIdarr = searchRoomType(roomList, checkIn, checkOut);
+
+				String roomID;
+				int roomIndex;
+				boolean input = false;
+				do {
+					//check if there is such a room
+					do {
+						roomID = readNonEmptyString("Please enter the room ID: ");
+						roomIndex = genericSearch("getRoomId",roomID,roomList);
+					}while(roomIndex == -1);
+
+					//check if this room is in the list of rooms that are available 
+					for(int i = 0; roomIdarr.length >= i ;i++) {
+						if (roomID.equals(roomIdarr[i])) {
+							input = true;
+							break;
+						}
 					}
-				}
-			} while(!input);
-/*			
+				} while(!input);
+				/*			
 			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED) || 
 				roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
-	
+
 					if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED)){
 						int reservationIndex = reservationSearch(reservationList, roomID);
 						if(checkOut.before(reservationList.get(reservationIndex).getCheckInDate())){
@@ -250,38 +274,51 @@ public class RoomMenu extends Menu {
 							System.out.println("Please select another room!");
 						}
 					}
-*/
-					int pax = readInt("Please enter the number of pax staying: ");
+				 */
+				int pax = readInt("Please enter the number of pax staying: ");
 
-					roomList.get(roomIndex).setGuestIC(guestList.get(index).getIc());
-					roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
-					roomList.get(roomIndex).setCheckInDate(checkIn);
-					roomList.get(roomIndex).setCheckOutDate(checkOut);
-					roomList.get(roomIndex).setPax(Integer.toString(pax));
-					roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
-					System.out.println("Guest " + guestList.get(index).getName() + " have successfully checked in room " + roomID);
+				roomList.get(roomIndex).setGuestIC(guestList.get(index).getIc());
+				roomList.get(roomIndex).setCustomerName(guestList.get(index).getName());
+				roomList.get(roomIndex).setCheckInDate(checkIn);
+				roomList.get(roomIndex).setCheckOutDate(checkOut);
+				roomList.get(roomIndex).setPax(Integer.toString(pax));
+				roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
+				System.out.println("Guest " + guestList.get(index).getName() + " have successfully checked in room " + roomID);
 
-				}
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void reservationCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
-		int resIdentifier = readInt(" Please enter the reservation number: ");
-		int index = reservationSearch(reservationList, resIdentifier);
-		if (index == -1) {
-			System.out.println("Reservation number: " + resIdentifier + " not found!");
-		} else {
-			System.out.println("Reservation number: " + resIdentifier + " found!");
-			int roomIndex = roomIDSearch(roomList, reservationList.get(index).getRoomId());
-			if (roomIndex == -1) {
-				System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " not found!");
+		int resID = readInt(" Please enter the reservation number: ");
+		int index;
+		try {
+			index = genericSearch("getReservationId",Integer.toString(resID),reservationList);
+			if (index == -1) {
+				System.out.println("Reservation number: " + resID + " not found!");
 			} else {
-				roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
-				roomList.get(roomIndex).setCustomerName(reservationList.get(index).getGuestName());
-				roomList.get(roomIndex).setCheckInDate(reservationList.get(index).getCheckInDate());
-				roomList.get(roomIndex).setCheckOutDate(reservationList.get(index).getCheckOutDate());
-				roomList.get(roomIndex).setPax(reservationList.get(index).getPax());
-				reservationList.get(index).setReserveStatus(Reservation.ReservationStatus.CHECKED_IN);
+				System.out.println("Reservation number: " + resID + " found!");
+				String roomID = reservationList.get(index).getRoomId();
+				int roomIndex = genericSearch("getRoomId",roomID,roomList);
+				if (roomIndex == -1) {
+					System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " not found!");
+				} else {
+					roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
+					roomList.get(roomIndex).setCustomerName(reservationList.get(index).getGuestName());
+					roomList.get(roomIndex).setCheckInDate(reservationList.get(index).getCheckInDate());
+					roomList.get(roomIndex).setCheckOutDate(reservationList.get(index).getCheckOutDate());
+					roomList.get(roomIndex).setPax(reservationList.get(index).getPax());
+					reservationList.get(index).setReserveStatus(Reservation.ReservationStatus.CHECKED_IN);
+				}
 			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -290,42 +327,50 @@ public class RoomMenu extends Menu {
 
 	public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
 			ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) {
-		String identifier = readString("Please enter the room ID: ");
+		String roomID = readString("Please enter the room ID: ");
 
-		int index = roomIDSearch(roomList, identifier);
-		if (index == -1) {
-			System.out.println("Room with ID: " + identifier + " not found!");
-		} else {
-			if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
-				System.out.println("Room with ID: " + identifier + " found!");
-				int reservationIndex = reservationSearch(reservationList,identifier);
-				PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
-				if (reservationIndex == -1) {					
-					roomList.get(index).setCustomerName("-");
-					roomList.get(index).setCheckInDate(null);
-					roomList.get(index).setCheckOutDate(null);
-					roomList.get(index).setPax("-");
-					roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
-				} else {
-					if (roomList.get(index).getCheckOutDate().compareTo(reservationList.get(reservationIndex).getCheckOutDate()) == 0) {
-						System.out.println("Reservation with room ID: " + identifier + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
-						reservationList.remove(reservationIndex);
+		int index;
+		try {
+			index = genericSearch("getRoomId",roomID,roomList);
+
+			if (index == -1) {
+				System.out.println("Room with ID: " + roomID + " not found!");
+			} else {
+				if (roomList.get(index).getRoomStatus().equals(Room.RoomStatus.OCCUPIED)) {
+					System.out.println("Room with ID: " + roomID + " found!");
+					int reservationIndex = genericSearch("getRoomId",roomID,reservationList);
+					PaymentMenu.printInvoice(paymentList, serviceList, roomList, index);
+					if (reservationIndex == -1) {					
 						roomList.get(index).setCustomerName("-");
 						roomList.get(index).setCheckInDate(null);
 						roomList.get(index).setCheckOutDate(null);
 						roomList.get(index).setPax("-");
 						roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
 					} else {
-						roomList.get(index).setCustomerName(reservationList.get(reservationIndex).getGuestName());
-						roomList.get(index).setCheckInDate(reservationList.get(reservationIndex).getCheckInDate());
-						roomList.get(index).setCheckOutDate(reservationList.get(reservationIndex).getCheckOutDate());
-						roomList.get(index).setPax(reservationList.get(reservationIndex).getPax());
-						roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
-					}	
-				}
-				ArrayList<RoomService>items = roomServiceSearch(serviceList, menuList, roomList, identifier);
-			} else 
-				System.out.println("Room is not occupied.");
+						if (roomList.get(index).getCheckOutDate().compareTo(reservationList.get(reservationIndex).getCheckOutDate()) == 0) {
+							System.out.println("Reservation with room ID: " + roomID + " and check out date: " + reservationList.get(reservationIndex).getCheckOutDate() + " found!");
+							reservationList.remove(reservationIndex);
+							roomList.get(index).setCustomerName("-");
+							roomList.get(index).setCheckInDate(null);
+							roomList.get(index).setCheckOutDate(null);
+							roomList.get(index).setPax("-");
+							roomList.get(index).setRoomStatus(Room.RoomStatus.VACANT);
+						} else {
+							roomList.get(index).setCustomerName(reservationList.get(reservationIndex).getGuestName());
+							roomList.get(index).setCheckInDate(reservationList.get(reservationIndex).getCheckInDate());
+							roomList.get(index).setCheckOutDate(reservationList.get(reservationIndex).getCheckOutDate());
+							roomList.get(index).setPax(reservationList.get(reservationIndex).getPax());
+							roomList.get(index).setRoomStatus(Room.RoomStatus.RESERVED);
+						}	
+					}
+					ArrayList<RoomService>items = roomServiceSearch(serviceList, menuList, roomList, roomID);
+				} else 
+					System.out.println("Room is not occupied.");
+			}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
+				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
