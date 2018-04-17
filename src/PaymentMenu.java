@@ -153,26 +153,26 @@ public class PaymentMenu extends Menu{
 		// calculate no  of WeekDays and no WeekEnds and total of days stayed
 		Date checkIn = roomList.get(index).getCheckInDate();
 		Date checkOut = roomList.get(index).getCheckOutDate();
-		Date today = new Date();
 		int []nodays = getWorkingDaysBetweenTwoDates(checkIn,checkOut);
 		int weekDays = nodays[0];
 		int weekEnds = nodays[1];
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("hh"); 
-		String overstaycheck = dateFormat.format(today);
-
-		int []latecheckout = getWorkingDaysBetweenTwoDates(today,checkOut);
-		boolean overStayFine = false;
+	
 
 		//guest will be evacuated if they stayed after 6pm and charged with delayed checkout fine
 		//therefore, there is no need to check if they stay after the checkout date
+		
 		//Any early checkout will be charge with the same amount as normal checkout
-		if((latecheckout[0] + latecheckout[1]) == 0) {
-			if(Integer.parseInt(overstaycheck) >= 14) {
-				overStayFine = true;
-			}else {
-				overStayFine = false;
-			}
+		
+		//When guest checkout, a new date will be created, the current hour will be taken
+		//if the hour taken exceed 14hours, they will be required to pay fine
+		
+		boolean overStayFine = false;
+		Date today = new Date();
+		if (Integer.parseInt(today.toString().substring(11,13)) >=14) {
+			overStayFine = true;
+		}else {
+			overStayFine = false;
 		}
 
 

@@ -42,6 +42,7 @@ public abstract class Room {
 		this.checkOutDate = null;
 		this.pax = "-";
 		this.roomStatus = roomStatus;
+		this.guestIC = "-";
 	}
 
 	//Methods

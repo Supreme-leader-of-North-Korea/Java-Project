@@ -312,6 +312,7 @@ public class RoomMenu extends Menu {
 					roomList.get(roomIndex).setCheckInDate(reservationList.get(index).getCheckInDate());
 					roomList.get(roomIndex).setCheckOutDate(reservationList.get(index).getCheckOutDate());
 					roomList.get(roomIndex).setPax(reservationList.get(index).getPax());
+					roomList.get(roomIndex).setGuestIC(reservationList.get(index).getGuestIC());
 					reservationList.get(index).setReserveStatus(Reservation.ReservationStatus.CHECKED_IN);
 				}
 			}

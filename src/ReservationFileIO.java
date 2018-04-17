@@ -29,7 +29,7 @@ public class ReservationFileIO extends FileIO<Reservation>{
 			String[] arr = str.split("\\|");
 
 			Reservation temp = new Reservation(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], 
-					Menu.strToDate(arr[4]), Menu.strToDate(arr[5]), arr[6], Reservation.strToReservationStatus(arr[7]), arr[7]);
+					Menu.strToDate(arr[4]), Menu.strToDate(arr[5]), arr[6], Reservation.strToReservationStatus(arr[7]), arr[8]);
 			rlist.add(temp);
 		}
 
@@ -41,10 +41,11 @@ public class ReservationFileIO extends FileIO<Reservation>{
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getGuestName() + "|");
 		fout.print(r.getCreditCard() + "|");
-		fout.print(Menu.strConvertDate(r.getCheckInDate()) + "|");
-		fout.print(Menu.strConvertDate(r.getCheckOutDate()) + "|");
+		fout.print(Menu.dateToStr(r.getCheckInDate()) + "|");
+		fout.print(Menu.dateToStr(r.getCheckOutDate()) + "|");
 		fout.print(r.getPax() + "|");
-		fout.println(r.getReserveStatus());
+		fout.print(r.getReserveStatus() + "|"); 
+		fout.println(r.getGuestIC());
 	}
 
 	public void exportAll (ArrayList<Reservation> rlist) throws FileNotFoundException {

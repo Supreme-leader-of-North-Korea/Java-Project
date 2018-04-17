@@ -118,19 +118,21 @@ public class RoomFileIO extends FileIO<Room>{
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getCustomerName() + "|");
 		fout.print(r.getBedType() + "|");
-		fout.print(Menu.strConvertDate(r.getCheckInDate()) + "|");
-		fout.print(Menu.strConvertDate(r.getCheckOutDate()) + "|");
+		fout.print(Menu.dateToStr(r.getCheckInDate()) + "|");
+		fout.print(Menu.dateToStr(r.getCheckOutDate()) + "|");
 		fout.print(r.getPax() + "|");
 		fout.print(r.getRoomStatus() + "|");
 
 		if (r instanceof Room_single)
-			fout.println("single");
+			fout.print("single");
 		else if (r instanceof Room_double)
-			fout.println("double");
+			fout.print("double");
 		else if (r instanceof Room_deluxe)
-			fout.println("deluxe");
+			fout.print("deluxe");
 		else
-			fout.println("vip");
+			fout.print("vip"); 
+
+		fout.println("|" + r.getGuestIC());
 	}
 
 	public void exportAll (ArrayList<Room> rlist) throws FileNotFoundException {
