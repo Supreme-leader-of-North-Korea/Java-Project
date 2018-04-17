@@ -303,10 +303,12 @@ public class RoomMenu extends Menu {
 			} else {
 				System.out.println("Reservation number: " + resID + " found!");
 				String roomID = reservationList.get(index).getRoomId();
+				Reservation.ReservationStatus res = reservationList.get(index).getReserveStatus();
 				int roomIndex = genericSearch("getRoomId",roomID,roomList);
 				if (roomIndex == -1) {
 					System.out.println("Room ID: " + reservationList.get(index).getRoomId() + " not found!");
-				} else {
+				//Make sure check in is only possible when reservation status is confirmed 
+				} else if (res.equals((Reservation.ReservationStatus.CONFIRMED))){
 					roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.OCCUPIED);
 					roomList.get(roomIndex).setCustomerName(reservationList.get(index).getGuestName());
 					roomList.get(roomIndex).setCheckInDate(reservationList.get(index).getCheckInDate());
@@ -314,7 +316,11 @@ public class RoomMenu extends Menu {
 					roomList.get(roomIndex).setPax(reservationList.get(index).getPax());
 					roomList.get(roomIndex).setGuestIC(reservationList.get(index).getGuestIC());
 					reservationList.get(index).setReserveStatus(Reservation.ReservationStatus.CHECKED_IN);
+					System.out.println("Successfully Check In to Room : " + reservationList.get(index).getRoomId());
+				}else if (!reservationList.get(index).getReserveStatus().equals((Reservation.ReservationStatus.CONFIRMED))){
+					System.out.println("Reservation Status: " + res);
 				}
+					
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
 				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
