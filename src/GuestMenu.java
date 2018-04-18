@@ -1,8 +1,21 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * 
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu,Kok Jia Hui
+ * @version 1.0
+ */
 public class GuestMenu extends Menu {
-	// Guest Menu
+
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 * @throws FileNotFoundException
+	 */
 	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList) throws FileNotFoundException {
 		int choice = 0;
@@ -51,7 +64,9 @@ public class GuestMenu extends Menu {
 		} while (choice != 4);  
 	}
 
-	// Printing Guest Menu
+	/**
+	 * This method prints the Guest Menu to inform the users of the options.
+	 */
 	public static void printGuestMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                  Guest                  *");
@@ -64,6 +79,10 @@ public class GuestMenu extends Menu {
 	}
 
 	// Creating a new Guest
+	/**
+	 * 
+	 * @param guestList
+	 */
 	public static void createNewGuest(ArrayList<Guest>guestList) {
 		boolean input = false;
 		System.out.println("All fields are mandatory");
@@ -124,6 +143,12 @@ public class GuestMenu extends Menu {
 	}
 
 	// Updating a existing Guest
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 */
 	public static void updateGuest(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		//Ask for guest identity(IC) to update guest
 
@@ -215,6 +240,10 @@ public class GuestMenu extends Menu {
 	}
 
 	//Searching Guest
+	/**
+	 * 
+	 * @param guestList
+	 */
 	public static void searchGuest(ArrayList<Guest>guestList) {
 		//Ask for guest name to search
 		String identifier = readString("Please enter name of guest to search: ");

@@ -12,6 +12,12 @@ public class ReservationFileIO extends FileIO<Reservation>{
 	final static File file = new File(fileName);
 
 	//Retrieve data from file
+
+	/**
+	 * 
+	 * @param rlist
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<Reservation> rlist) throws FileNotFoundException{
 
 		// to create file when it does not exist, else Exception will be thrown
@@ -36,6 +42,11 @@ public class ReservationFileIO extends FileIO<Reservation>{
 		myScanner.close();
 	}
 
+	/**
+	 * 
+	 * @param r
+	 * @param fout
+	 */
 	public void export (Reservation r, PrintWriter fout) {
 		fout.print(r.getReservationId() + "|");
 		fout.print(r.getRoomId() + "|");
@@ -48,6 +59,11 @@ public class ReservationFileIO extends FileIO<Reservation>{
 		fout.println(r.getGuestIC());
 	}
 
+	/**
+	 * 
+	 * @param rlist
+	 * @throws FileNotFoundException
+	 */
 	public void exportAll (ArrayList<Reservation> rlist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 

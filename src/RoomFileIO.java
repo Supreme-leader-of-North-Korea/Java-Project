@@ -13,6 +13,11 @@ public class RoomFileIO extends FileIO<Room>{
 	final static File file = new File(fileName);
 
 	//Retrieve data from file
+	/**
+	 * 
+	 * @param rlist
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<Room> rlist) throws FileNotFoundException{
 
 		// to create file when it does not exist, else Exception will be thrown
@@ -114,6 +119,11 @@ public class RoomFileIO extends FileIO<Room>{
 		myScanner.close();
 	}
 
+	/**
+	 * 
+	 * @param r
+	 * @param fout
+	 */
 	public void export (Room r, PrintWriter fout) {
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getCustomerName() + "|");
@@ -135,6 +145,11 @@ public class RoomFileIO extends FileIO<Room>{
 		fout.println("|" + r.getGuestIC());
 	}
 
+	/**
+	 * 
+	 * @param rlist
+	 * @throws FileNotFoundException
+	 */
 	public void exportAll (ArrayList<Room> rlist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 

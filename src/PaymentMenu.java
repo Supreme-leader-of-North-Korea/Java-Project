@@ -4,8 +4,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Payment Menu which allows the staff to update the payment rates 
+ * and print the current rates.
+ * 
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu,Kok Jia Hui
+ * @version 1.0
+ */
 public class PaymentMenu extends Menu{
 
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 * @param serviceList
+	 * @param paymentList 
+	 * @throws FileNotFoundException
+	 */
 	public static void paymentMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
 			ArrayList<Payment>paymentList) throws FileNotFoundException{
@@ -40,7 +56,10 @@ public class PaymentMenu extends Menu{
 
 		} while (choice != 3);  
 	}
-	// Print payment menu
+	
+	/**
+	 * This method print the payment menu to inform the users of the options.
+	 */
 	public static void printPaymentMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                 Payment                 *");
@@ -50,7 +69,12 @@ public class PaymentMenu extends Menu{
 		System.out.println(" * 3. Previous                             *");
 		System.out.println(" * 4. Quit                                 *");
 	}
+	
 	// Updating the payment rates
+	/**
+	 * 
+	 * @param paymentList
+	 */
 	public static void updatePaymentRates(ArrayList<Payment>paymentList) {
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 		System.out.println("Please enter new payment rates details ('Enter' key to skip)");
@@ -88,7 +112,12 @@ public class PaymentMenu extends Menu{
 		if (vipRoomRates != -1) 
 			p.setVipRoomPrice(vipRoomRates);		
 	}
+	
 	// Print payment rates
+	/**
+	 * 
+	 * @param paymentList
+	 */
 	public static void printRates(ArrayList<Payment>paymentList) {
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 		Payment p = paymentList.get(index);
@@ -120,8 +149,14 @@ public class PaymentMenu extends Menu{
 		System.out.println(" Cabled Television                   $" + df.format(tvRates) +"/day");
 	}
 
-
 	// Printing bill invoice, retrieving the total room service amount, and number of days stayed
+	/**
+	 * 
+	 * @param paymentList
+	 * @param serviceList
+	 * @param roomList
+	 * @param roomIndex
+	 */
 	public static void printInvoice(ArrayList<Payment>paymentList, ArrayList<RoomService>serviceList, ArrayList<Room>roomList, int roomIndex) {
 		int index = 0;		
 		Payment p = paymentList.get(index);
@@ -204,6 +239,12 @@ public class PaymentMenu extends Menu{
 
 	// Finding the difference between check in and check out date to get the number of weekdays 
 	// and weekend stayed
+	/**
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	public static int[] getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);        

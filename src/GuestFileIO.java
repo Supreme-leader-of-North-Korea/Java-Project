@@ -7,11 +7,17 @@ import java.util.Scanner;
 
 public class GuestFileIO extends FileIO<Guest>{
 
-	//Attributes
+	/**The name of the file which the information of the Guest will be written to and read from	 */
 	final static String fileName = "Guestlist.txt";
+	
+	/**Creating a new file object????	 */
 	final static File file = new File(fileName);
 
-	//Retrieve data from file
+	/**
+	 * Retrieve data from Guestlist.txt and stored them to glist.
+	 * @param glist An ArrayList of Guest.
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<Guest> glist) throws FileNotFoundException{
 		// to create file when it does not exist, else Exception will be thrown
 		try { 
@@ -34,6 +40,11 @@ public class GuestFileIO extends FileIO<Guest>{
 		myScanner.close();
 	}
 
+	/**
+	 * This method will print one row of guest information to the file name contains in fout.
+	 * @param g A Guest object.
+	 * @param fout A PrintWriter object.
+	 */
 	public void export (Guest g, PrintWriter fout) {
 		fout.print(g.getName() + "|");
 		fout.print(g.getAddress() + "|");
@@ -46,6 +57,11 @@ public class GuestFileIO extends FileIO<Guest>{
 		fout.println(g.getContact());
 	}
 
+	/**
+	 * This method will print every single data in glist into Guestlist.txt 
+	 * @param glist An ArrayList of Guest.
+	 * @throws FileNotFoundException
+	 */
 	public void exportAll (ArrayList<Guest> glist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 

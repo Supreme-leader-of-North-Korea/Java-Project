@@ -12,6 +12,11 @@ public class PaymentFileIO extends FileIO<Payment>{
 	final static File file = new File(fileName);
 
 	//Retrieve data from file
+	/**
+	 * 
+	 * @param plist
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<Payment> plist) throws FileNotFoundException{
 		// to create file when it does not exist, else Exception will be thrown
 		try { 
@@ -34,6 +39,12 @@ public class PaymentFileIO extends FileIO<Payment>{
 
 		myScanner.close();
 	}
+
+	/**
+	 * 
+	 * @param p
+	 * @param fout
+	 */
 	public void export (Payment p, PrintWriter fout) {
 		fout.print(p.getTax() + "|");
 		fout.print(p.getPromo() + "|");
@@ -47,6 +58,11 @@ public class PaymentFileIO extends FileIO<Payment>{
 		fout.println(p.getOverStayingFine());
 	}
 
+	/**
+	 * 
+	 * @param plist
+	 * @throws FileNotFoundException
+	 */
 	public void exportAll (ArrayList<Payment> plist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 

@@ -3,8 +3,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * 
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu,Kok Jia Hui
+ * @version 1.0
+ */
 public class ReservationMenu extends Menu {
-	//Reservation Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 * @throws FileNotFoundException
+	 */
 	public static void reservationMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
 
 		int choice = 0;
@@ -55,7 +68,9 @@ public class ReservationMenu extends Menu {
 
 	}
 
-	//Print reservation menu
+	/**
+	 * This method prints the Reservation Menu to inform the users of the options.
+	 */
 	public static void printReservationMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *               Reservation               *");
@@ -70,6 +85,13 @@ public class ReservationMenu extends Menu {
 	}
 
 	//Make reservation from reservation list
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 * @throws FileNotFoundException
+	 */
 	public static void makeReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
 		try {
 			String IC = readString("Please enter the guest IC Number: ");
@@ -222,6 +244,10 @@ public class ReservationMenu extends Menu {
 	}	        
 
 	//Search reservation from reservation list
+	/**
+	 * 
+	 * @param reservationList
+	 */
 	public static void searchReservation(ArrayList<Reservation>reservationList) {
 		int resID = readInt("Please enter the reservation ID you would like to search: ");
 		int index;
@@ -252,6 +278,12 @@ public class ReservationMenu extends Menu {
 	}
 
 	//Update reservation from reservation list
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 */
 	public static void updateReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		int resID = readInt("Please enter the reservation ID you would like to update: ");
 		int roomIndex = 0;
@@ -348,6 +380,10 @@ public class ReservationMenu extends Menu {
 	}
 
 	//Print reservation from reservation list
+	/**
+	 * 
+	 * @param reservationList
+	 */
 	public static void printReservation(ArrayList<Reservation>reservationList) {
 		if (!reservationList.isEmpty()) {
 			for (Reservation re: reservationList) {
@@ -369,6 +405,11 @@ public class ReservationMenu extends Menu {
 	}
 		
 	//Remove reservation from reservation list
+	/**
+	 * 
+	 * @param reservationList
+	 * @param roomList
+	 */
 	public static void removeReservation(ArrayList<Reservation>reservationList, ArrayList<Room>roomList) {
 		int resID = readInt("Please enter the reservation ID you would like to remove: ");
 		int index, roomIndex, resIndex;

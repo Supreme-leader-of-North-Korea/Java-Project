@@ -1,9 +1,21 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * 
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu,Kok Jia Hui
+ * @version 1.0
+ */
 public class RoomServiceMenu extends Menu {
 	//Room Service Menu -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+	/**
+	 * 
+	 * @param serviceList
+	 * @param menuList
+	 * @param roomList
+	 * @throws FileNotFoundException
+	 */
 	public static void roomServiceMenu(ArrayList<RoomService>serviceList, ArrayList<MenuItem>menuList, 
 			ArrayList<Room>roomList) throws FileNotFoundException{
 
@@ -53,6 +65,9 @@ public class RoomServiceMenu extends Menu {
 		} while (choice != 6);
 	}
 
+	/**
+	 * This method prints the Room Service Menu to inform the users of the options.
+	 */
 	public static void printRoomServiceMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *              Room Service               *");
@@ -66,6 +81,10 @@ public class RoomServiceMenu extends Menu {
 		System.out.println(" * 7. Quit                                 *");
 	}
 
+	/**
+	 * 
+	 * @param menuList
+	 */
 	public static void createNewMenu(ArrayList<MenuItem>menuList) {
 		String name = readNonEmptyString("Enter menu name: ");
 		String desc = readNonEmptyString("Preparation method: ");
@@ -77,6 +96,10 @@ public class RoomServiceMenu extends Menu {
 		
 	}
 
+	/**
+	 * 
+	 * @param menuList
+	 */
 	public static void updateMenu(ArrayList<MenuItem>menuList) {
 		if(printMenu(menuList)) {
 			try {
@@ -117,6 +140,10 @@ public class RoomServiceMenu extends Menu {
 		
 	}
 
+	/**
+	 * 
+	 * @param menuList
+	 */
 	public static void removeMenu(ArrayList<MenuItem>menuList) {
 		try {
 			if(printMenu(menuList)) {
@@ -142,6 +169,12 @@ public class RoomServiceMenu extends Menu {
 		}
 	}
 
+	/**
+	 * 
+	 * @param menuList
+	 * @param serviceList
+	 * @param roomList
+	 */
 	public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 		String roomNo = readString("Enter your room no: ");
 
@@ -176,6 +209,11 @@ public class RoomServiceMenu extends Menu {
 		}      
 	}
 
+	/**
+	 * 
+	 * @param menuList
+	 * @return
+	 */
 	public static boolean printMenu(ArrayList<MenuItem>menuList) {
 		int index = 1;
 		if (menuList.isEmpty()) {
@@ -194,6 +232,12 @@ public class RoomServiceMenu extends Menu {
 
 	}
 
+	/**
+	 * 
+	 * @param menuList
+	 * @param serviceList
+	 * @param roomList
+	 */
 	public static void updateRS(ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 		String roomNo = readNonEmptyString("Please Enter the room ID: ");
 		//roomServiceSearch returns array of int which contains the index of the menuItem which is place by the room no
@@ -237,6 +281,4 @@ public class RoomServiceMenu extends Menu {
 		}
 	}
 
-	
-	
 }

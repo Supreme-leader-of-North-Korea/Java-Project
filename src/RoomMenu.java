@@ -2,9 +2,24 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * 
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu,Kok Jia Hui
+ * @version 1.0
+ */
 public class RoomMenu extends Menu {
-	//Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+	
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 * @param serviceList
+	 * @param paymentList
+	 * @param menuList
+	 * @throws FileNotFoundException
+	 */
 	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
 			ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) throws FileNotFoundException{
@@ -58,7 +73,9 @@ public class RoomMenu extends Menu {
 		} while (choice != 7);  
 	}	        	
 
-	//print Menu
+	/**
+	 * This method prints the Room Menu to inform the users of the options.
+	 */
 	public static void printRoomMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                  Room                   *");
@@ -74,6 +91,11 @@ public class RoomMenu extends Menu {
 	}	
 
 	//Print details of room base on guest names
+	/**
+	 * 
+	 * @param roomList
+	 * @param guestList
+	 */
 	public static void searchRoomByName(ArrayList<Room>roomList,ArrayList<Guest>guestList) {
 		//Ask for guest name as primary key, IC is being return as the identifier
 		try {
@@ -108,6 +130,10 @@ public class RoomMenu extends Menu {
 	}	
 
 	//Print details of room base on room ID
+	/**
+	 * 
+	 * @param roomList
+	 */
 	public static void searchRoomByNo(ArrayList<Room>roomList) {
 		//Ask for room ID
 		String roomID = readString("Please enter the room number you would like to search: ");
@@ -137,6 +163,10 @@ public class RoomMenu extends Menu {
 	}        
 
 	//Update details of room 
+	/**
+	 * 
+	 * @param roomList
+	 */
 	public static void updateRoom(ArrayList<Room>roomList) {
 		//Ask for room ID
 		String roomID = readNonEmptyString("Please enter the room ID to update it's details: ");
@@ -224,6 +254,12 @@ public class RoomMenu extends Menu {
 	}        
 
 	//New check CheckIn
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 */
 	public static void checkIn(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		System.out.println(" ===========================================");
 		System.out.println(" 1. Walk In                                *");
@@ -241,6 +277,12 @@ public class RoomMenu extends Menu {
 	}        
 
 	//Check in by walk in
+	/**
+	 * 
+	 * @param roomList
+	 * @param guestList
+	 * @param reservationList
+	 */
 	public static void walkInCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
 		String identifier = readNonEmptyString("Please enter the guest IC Number: ");
 		int index;
@@ -324,6 +366,12 @@ public class RoomMenu extends Menu {
 	}
 
 	//Check in by reservation
+	/**
+	 * 
+	 * @param roomList
+	 * @param guestList
+	 * @param reservationList
+	 */
 	public static void reservationCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
 		int resID = readInt(" Please enter the reservation number: ");
 		int index;
@@ -366,6 +414,15 @@ public class RoomMenu extends Menu {
 		}
 	}
 
+	/**
+	 * 
+	 * @param guestList
+	 * @param roomList
+	 * @param reservationList
+	 * @param serviceList
+	 * @param paymentList
+	 * @param menuList
+	 */
 	public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
 			ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) {
 		String roomID = readString("Please enter the room ID: ");
@@ -415,6 +472,10 @@ public class RoomMenu extends Menu {
 		}
 	}
 
+	/**
+	 * 
+	 * @param roomList
+	 */
 	public static void printRoomReport(ArrayList<Room>roomList) {
 
 		//Print room occupancy rate
@@ -533,6 +594,10 @@ public class RoomMenu extends Menu {
 		printRooms (maintList);
 	}
 
+	/**
+	 * 
+	 * @param occuList
+	 */
 	public static void printRooms (ArrayList<Room>occuList) {
 
 		if (occuList.isEmpty())
@@ -547,6 +612,5 @@ public class RoomMenu extends Menu {
 
 		System.out.println("\n");
 	}
-
 
 }

@@ -12,6 +12,11 @@ public class MenuFileIO extends FileIO<MenuItem> {
 	final static File file = new File(fileName);
 
 	//Retrieve data from file
+	/**
+	 * 
+	 * @param list
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<MenuItem> list) throws FileNotFoundException{
 		try {
 			file.createNewFile();
@@ -32,6 +37,11 @@ public class MenuFileIO extends FileIO<MenuItem> {
 		myScanner.close();
 	}
 
+	/**
+	 * 
+	 * @param m
+	 * @param fout
+	 */
 	public void export (MenuItem m, PrintWriter fout) {
 		fout.print(m.getName() + "|");
 		fout.print(m.getDescription() + "|");
@@ -39,6 +49,11 @@ public class MenuFileIO extends FileIO<MenuItem> {
 
 	}
 
+	/**
+	 * 
+	 * @param list
+	 * @throws FileNotFoundException
+	 */
 	public void exportAll (ArrayList<MenuItem> list) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 

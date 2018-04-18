@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class HRPSApp {
-
+	
 	public static void main(String[] args) throws FileNotFoundException{
 
 		//List of data

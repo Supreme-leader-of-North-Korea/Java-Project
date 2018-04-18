@@ -12,6 +12,11 @@ public class ServiceFileIO extends FileIO<RoomService> {
 	final static File file = new File(fileName);
 
 	//Retrieve data from file
+	/**
+	 * 
+	 * @param list
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<RoomService> list) throws FileNotFoundException{
 		try {
 			file.createNewFile();
@@ -33,7 +38,12 @@ public class ServiceFileIO extends FileIO<RoomService> {
 		myScanner.close();
 	}
 
-	public  void export (RoomService rs, PrintWriter fout) {
+	/**
+	 * 
+	 * @param rs
+	 * @param fout
+	 */
+	public void export (RoomService rs, PrintWriter fout) {
 		fout.print(rs.getRoomId() + "|");
 		fout.print(rs.getMenuItemNo() + "|");
 		fout.print(rs.getQuantity() + "|");
@@ -42,7 +52,12 @@ public class ServiceFileIO extends FileIO<RoomService> {
 		fout.println(rs.getStatus());
 	}
 
-	public  void exportAll (ArrayList<RoomService> list) throws FileNotFoundException {
+	/**
+	 * 
+	 * @param list
+	 * @throws FileNotFoundException
+	 */
+	public void exportAll (ArrayList<RoomService> list) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 
 		for (RoomService temp: list) 
