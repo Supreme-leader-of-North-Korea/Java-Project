@@ -151,7 +151,7 @@ public class RoomMenu extends Menu {
 				System.out.println(" -------------------------------------------");
 				System.out.println("Please enter new room details ('Enter' key to skip)");
 				do {
-					String type = readString("Enter new bed type [(S)ingle/(D)ouble/(K)ing]:  ");
+					String type = readNonEmptyString("Enter new bed type [(S)ingle/(D)ouble/(K)ing]:  ");
 					switch(type.toUpperCase()) {
 					case "S":	roomList.get(index).setBedType(Room.BedType.SINGLE_SIZE);
 								input = true;
