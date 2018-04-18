@@ -170,7 +170,11 @@ public class RoomMenu extends Menu {
 								break;
 					}
 				}while(!input);
-
+				
+				Date maintStart;
+				Date maintEnd;
+				Date today = new Date();
+				boolean inputCheck = true; 
 				do {
 					String status = readString("Enter new room status: [(V)acant/(U)nder Maintenance]");
 					switch(status.toUpperCase()) {
@@ -183,8 +187,21 @@ public class RoomMenu extends Menu {
 								break;
 					case "U":	roomList.get(index).setRoomStatus(Room.RoomStatus.UNDER_MAINTENANCE);
 								roomList.get(index).setCustomerName("-");
-								roomList.get(index).setCheckInDate(null);
-								roomList.get(index).setCheckOutDate(null);
+								do {
+									if (!inputCheck)
+										System.out.println("Please enter a valid date");
+									maintStart = readDate("Please enter the starting date of maintenance [DD/MM/YYYY]: ");
+									inputCheck = false;
+								}while(maintStart.before(today));
+								roomList.get(index).setCheckInDate(maintStart);
+								inputCheck = true;
+								do {
+									if (!inputCheck)
+										System.out.println("Please enter a valid date");
+									maintEnd = readDate("Please enter the ending date of maintenance [DD/MM/YYYY]: ");
+									inputCheck = false;
+								}while(maintEnd.before(maintStart));
+								roomList.get(index).setCheckOutDate(maintEnd);
 								roomList.get(index).setPax("-");
 								input = true;
 								break;

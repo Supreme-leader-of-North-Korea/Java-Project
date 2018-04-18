@@ -279,26 +279,28 @@ public class ReservationMenu extends Menu {
 						found = true;
 					}           
 				}
-				if (found) {
-					roomList.get(roomIndex).setCustomerName(name);
-					Date in = readDate("Enter new Check In Date: ");
-					if (in != null) {
-						reservationList.get(index).setCheckInDate(in);
-						roomList.get(roomIndex).setCheckInDate(in);
+				if (roomIndex != -1) {
+					if (found) {
+						roomList.get(roomIndex).setCustomerName(name);
+						Date in = readDate("Enter new Check In Date: ");
+						if (in != null) {
+							reservationList.get(index).setCheckInDate(in);
+							roomList.get(roomIndex).setCheckInDate(in);
+						}
+						Date out = readDate("Enter new Check Out Date: ");
+						if (out != null) {
+							reservationList.get(index).setCheckOutDate(out);
+							roomList.get(roomIndex).setCheckOutDate(out);
+						}
+						int paxInt = readInt("Enter new number of pax staying: ");
+						String pax = Integer.toString(paxInt);
+						if (!pax.equals("")) {
+							reservationList.get(index).setPax(pax);
+							roomList.get(roomIndex).setPax(pax);
+						}
+						System.out.println(" -------------------------------------------");
+						System.out.println(" Reservation updated!");
 					}
-					Date out = readDate("Enter new Check Out Date: ");
-					if (out != null) {
-						reservationList.get(index).setCheckOutDate(out);
-						roomList.get(roomIndex).setCheckOutDate(out);
-					}
-					int paxInt = readInt("Enter new number of pax staying: ");
-					String pax = Integer.toString(paxInt);
-					if (!pax.equals("")) {
-						reservationList.get(index).setPax(pax);
-						roomList.get(roomIndex).setPax(pax);
-					}
-					System.out.println(" -------------------------------------------");
-					System.out.println(" Reservation updated!");
 				}
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException

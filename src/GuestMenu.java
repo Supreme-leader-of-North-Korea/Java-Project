@@ -182,11 +182,11 @@ public class GuestMenu extends Menu {
 				if (!nat.equals("")) 
 					guestList.get(index).setNationality(nat);
 
-				String ccd = String.valueOf(readLong("Enter new guest credit card detail: "));
-				if (!ccd.equals("")) 
-					guestList.get(index).setCreditDetails(ccd);
+				long ccd = readLong("Enter new guest credit card detail: ");
+				if (ccd != -1) 
+					guestList.get(index).setCreditDetails(String.valueOf(ccd));
 
-
+				//Assuming they can put country code
 				String contact = readString("Enter new guest contact number: ");
 				if (!contact.equals("")) 
 					guestList.get(index).setContact(contact);
@@ -204,8 +204,8 @@ public class GuestMenu extends Menu {
 				if (reservationIndex != -1) {
 					if (!name.equals("")) 
 						reservationList.get(reservationIndex).setGuestName(name);
-					if (!ccd.equals(""))
-						reservationList.get(reservationIndex).setCreditCard(ccd);
+					if (ccd != -1)
+						reservationList.get(reservationIndex).setCreditCard(String.valueOf(ccd));
 				}
 
 				System.out.println(" -------------------------------------------");

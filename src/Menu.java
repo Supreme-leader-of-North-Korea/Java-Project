@@ -123,17 +123,17 @@ public class Menu {
 			  OR user A intended check out date is after user B check in
 			  then user A cannot make reservation for this room */
 			if(!dateToStr(r.getCheckOutDate()).equals("null") && !dateToStr(r.getCheckInDate()).equals("null")) {	
-				if ( (checkIn.after(r.getCheckInDate())  && checkIn.before(r.getCheckOutDate())) || 
+				if ( ((checkIn.after(r.getCheckInDate()) || checkIn.compareTo(r.getCheckInDate()) == 0 )  && checkIn.before(r.getCheckOutDate())) || 
 						(checkOut.after(r.getCheckInDate()) && checkOut.before(r.getCheckOutDate())) ||
-						(checkIn.before(r.getCheckInDate()) && checkOut.after(r.getCheckOutDate())) ){
+						(checkIn.before(r.getCheckInDate()) && (checkOut.after(r.getCheckOutDate())) || checkOut.compareTo(r.getCheckOutDate()) == 0) ){
 					roomTemp.add(r);
 				}
 			}
 		}
 		for (Reservation re: reservationList) { 	
-				if ( (checkIn.after(re.getCheckInDate())  && checkIn.before(re.getCheckOutDate())) || 
+				if ( ((checkIn.after(re.getCheckInDate()) || checkIn.compareTo(re.getCheckInDate()) == 0 ) && checkIn.before(re.getCheckOutDate())) || 
 						(checkOut.after(re.getCheckInDate()) && checkOut.before(re.getCheckOutDate())) ||
-						(checkIn.before(re.getCheckInDate()) && checkOut.after(re.getCheckOutDate())) ){
+						(checkIn.before(re.getCheckInDate()) && (checkOut.after(re.getCheckOutDate()) || checkOut.compareTo(re.getCheckOutDate()) == 0)) ){
 					reserveTemp.add(re);
 				}
 		}	
@@ -141,7 +141,8 @@ public class Menu {
 		for (Reservation re: reserveTemp) { 
 			try {
 				index = genericSearch("getRoomId", re.getRoomId(), roomList);
-				roomTemp.add(roomList.get(index));
+				if (index != -1)
+					roomTemp.add(roomList.get(index));
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
 					| SecurityException | IllegalArgumentException | InvocationTargetException e) {
 				// TODO Auto-generated catch block
@@ -206,10 +207,14 @@ public class Menu {
 	public static int readInt(String prompt) {
 		int input = 0;
 		boolean valid = false;
-
+		String inputValidate;
 		while (!valid) {
 			try {
-				input = Integer.parseInt(readString(prompt));
+				inputValidate = readString(prompt);
+				if (!inputValidate.equals(""))
+					input =Integer.parseInt(inputValidate);
+				else
+					return -1;
 				if (input > 0)
 					valid = true;
 				else 
@@ -224,10 +229,14 @@ public class Menu {
 	public static long readLong(String prompt) {
 		long input = 0;
 		boolean valid = false;
-
+		String inputValidate;
 		while (!valid) {
 			try {
-				input = Long.parseLong(readString(prompt));
+				inputValidate = readString(prompt);
+				if (!inputValidate.equals(""))
+					input = Long.parseLong(inputValidate);
+				else
+					return -1;
 				if (input > 0)
 					valid = true;
 				else 
