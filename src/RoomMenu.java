@@ -242,11 +242,7 @@ public class RoomMenu extends Menu {
 				}while(checkIn.after(checkOut));
 				boolean input = false;		
 				String roomType = readNonEmptyString("Please Enter the type of room "
-<<<<<<< HEAD
 						+ "you would like to enquiry [(S)ingle/d(O)uble/d(E)luxe/(V)ip]:");
-=======
-						+ "you would like to enquiry [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
->>>>>>> cfe8bf8074a38d302cca4675fc5499e5811ce7df
 				do {
 					switch (roomType.toUpperCase()) {
 					case "S":	roomType = "SINGLE";
@@ -262,11 +258,7 @@ public class RoomMenu extends Menu {
 								input = true;
 								break;
 					default:	roomType = readNonEmptyString("Please Enter the correct type of room "
-<<<<<<< HEAD
 									+ "you would like to enquiry [(S)ingle/d(O)uble/d(E)luxe/(V)ip]:");
-=======
-									+ "you would like to enquiry [(S)ingle / d(O)uble / d(E)luxe / (V)ip]");
->>>>>>> cfe8bf8074a38d302cca4675fc5499e5811ce7df
 								input = false;
 								break;
 					}             
@@ -277,7 +269,6 @@ public class RoomMenu extends Menu {
 				String roomID;
 				int roomIndex;
 				input = false;
-<<<<<<< HEAD
 				if (walkinList.size() != 0) {
 					do {
 						//check if there is such a room
@@ -292,34 +283,6 @@ public class RoomMenu extends Menu {
 								input = true;
 								break;
 							}
-=======
-				do {
-					//check if there is such a room
-					do {
-						roomID = readNonEmptyString("Please enter the room ID: ");
-						roomIndex = genericSearch("getRoomId",roomID,roomList);
-					}while(roomIndex == -1);
-
-					//check if this room is in the list of rooms that are available 
-					for(Room r : walkinList) {
-						if (roomID.equals(r.getRoomId())) {
-							input = true;
-							break;
-						}
-					}
-				} while(!input);
-				/*			
-			if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED) || 
-				roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
-
-					if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED)){
-						int reservationIndex = reservationSearch(reservationList, roomID);
-						if(checkOut.before(reservationList.get(reservationIndex).getCheckInDate())){
-							System.out.println("Room is currently reserved from " 
-									+ reservationList.get(reservationIndex).getCheckInDate() + " to "
-									+ reservationList.get(reservationIndex).getCheckOutDate());
-							System.out.println("Please select another room!");
->>>>>>> cfe8bf8074a38d302cca4675fc5499e5811ce7df
 						}
 					} while(!input);
 
@@ -378,9 +341,6 @@ public class RoomMenu extends Menu {
 			e.printStackTrace();
 		}
 	}
-
-
-
 
 	public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
 			ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) {
