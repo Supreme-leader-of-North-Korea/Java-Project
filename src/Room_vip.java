@@ -5,12 +5,12 @@ public class Room_vip extends Room{
 	//Room attributes
 	private double rate;
 	private boolean wifiEnabled, withView, withSmoking;
-	
+
 	//Constructor
 	public Room_vip(String roomId, String customerName, BedType bedType, Date checkIn, Date checkOut, String pax, RoomStatus roomStatus, String guestIC) {
 		super(roomId, customerName, bedType, checkIn, checkOut, pax, roomStatus, guestIC);
 	}
-	
+
 	//Constructor overload, when room is vacant, there is no customer name
 	public Room_vip(String roomId, BedType bedType, RoomStatus roomStatus) {
 		super(roomId, bedType, roomStatus);
@@ -20,7 +20,7 @@ public class Room_vip extends Room{
 	public double getRate() {
 		return rate;
 	}
-	
+
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
@@ -40,7 +40,7 @@ public class Room_vip extends Room{
 	public boolean isWifiEnabled() {
 		return wifiEnabled;
 	}
-	
+
 	public boolean isWithView() {
 		return withView;
 	}

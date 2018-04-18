@@ -1,25 +1,21 @@
-
 public class Payment {
 	private double tax, promo, wifiPrice, tvPrice, WErates, singleRoomPrice;
 	private double doubleRoomPrice, overStayingFine, deluxeRoomPrice, vipRoomPrice;
-    
-	
-	
+
 	//Constructor
-    public Payment(double tax, double promo, double wifiPrice, double tvPrice, double WErates, double singleRoomPrice, 
-    		double doubleRoomPrice, double deluxeRoomPrice, double vipRoomPrice, double overStayingFine) {
-    	this.tax = tax;
-    	this.promo = promo;
-    	this.wifiPrice = wifiPrice;
-    	this.tvPrice = tvPrice;
-    	this.WErates = WErates;
+	public Payment(double tax, double promo, double wifiPrice, double tvPrice, double WErates, double singleRoomPrice, 
+			double doubleRoomPrice, double deluxeRoomPrice, double vipRoomPrice, double overStayingFine) {
+		this.tax = tax;
+		this.promo = promo;
+		this.wifiPrice = wifiPrice;
+		this.tvPrice = tvPrice;
+		this.WErates = WErates;
 		this.singleRoomPrice = singleRoomPrice;
 		this.doubleRoomPrice = doubleRoomPrice;
 		this.deluxeRoomPrice = deluxeRoomPrice;
 		this.vipRoomPrice = vipRoomPrice;
 		this.overStayingFine = overStayingFine;
 	}
-
 
 	//Getter and setters
 	public double getTax() {
@@ -101,5 +97,5 @@ public class Payment {
 	public void setOverStayingFine(double overStayingFine) {
 		this.overStayingFine = overStayingFine;
 	}  
-    
+
 }
