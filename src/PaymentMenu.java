@@ -24,6 +24,7 @@ public class PaymentMenu extends Menu{
 
 			switch(choice) {
 			case 1: updatePaymentRates(paymentList);
+					pfio.exportAll(paymentList);
 					break;
 			case 2: printRates(paymentList);
 					break;
@@ -40,7 +41,7 @@ public class PaymentMenu extends Menu{
 
 		} while (choice != 3);  
 	}
-
+	// Print payment menu
 	public static void printPaymentMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                 Payment                 *");
@@ -50,45 +51,44 @@ public class PaymentMenu extends Menu{
 		System.out.println(" * 3. Previous                             *");
 		System.out.println(" * 4. Quit                                 *");
 	}
-
+	// Updating the payment rates
 	public static void updatePaymentRates(ArrayList<Payment>paymentList) {
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 		System.out.println("Please enter new payment rates details ('Enter' key to skip)");
 
-		//Try to change to readDouble; readDouble
-		String promo = readString("Enter new promotion rates(%): ");
+		String promo = String.valueOf(readDouble("Enter new promotion rates(%): "));
 		if (!promo.equals("")) 
 			paymentList.get(index).setPromo(Double.parseDouble(promo));
 
-		String gst = readString("Enter new gst rates(%): ");
+		String gst = String.valueOf(readDouble("Enter new gst rates(%): "));
 		if (!gst.equals("")) 
 			paymentList.get(index).setTax(Double.parseDouble(gst));
 
-		String wifiRates = readString("Enter new wifiRates/day: ");
+		String wifiRates = String.valueOf(readDouble("Enter new wifiRates/day: "));
 		if (!wifiRates.equals("")) 
 			paymentList.get(index).setWifiPrice(Double.parseDouble(wifiRates));
 
-		String tvRates = readString("Enter new Cabled TV rates/day: ");
+		String tvRates = String.valueOf(readDouble("Enter new Cabled TV rates/day: "));
 		if (!tvRates.equals("")) 
 			paymentList.get(index).setTvPrice(Double.parseDouble(tvRates));
 
-		String singleRoomRates = readString("Enter new room rates (Single room): ");
+		String singleRoomRates = String.valueOf(readDouble("Enter new room rates (Single room): "));
 		if (!singleRoomRates.equals("")) 
 			paymentList.get(index).setSingleRoomPrice(Double.parseDouble(singleRoomRates));
 
-		String doubleRoomRates = readString("Enter new room rates (Double room): ");
+		String doubleRoomRates = String.valueOf(readDouble("Enter new room rates (Double room): "));
 		if (!doubleRoomRates.equals("")) 
 			paymentList.get(index).setDoubleRoomPrice(Double.parseDouble(doubleRoomRates));
 
-		String deluxeRoomRates = readString("Enter new room rates (Deluxe room): ");
+		String deluxeRoomRates = String.valueOf(readDouble("Enter new room rates (Deluxe room): "));
 		if (!deluxeRoomRates.equals("")) 
 			paymentList.get(index).setDeluxeRoomPrice(Double.parseDouble(deluxeRoomRates));
 
-		String vipRoomRates = readString("Enter new room rates (VIP room): ");
+		String vipRoomRates = String.valueOf(readDouble("Enter new room rates (VIP room): "));
 		if (!vipRoomRates.equals("")) 
 			paymentList.get(index).setVipRoomPrice(Double.parseDouble(vipRoomRates));		
 	}
-
+	// Print payment rates
 	public static void printRates(ArrayList<Payment>paymentList) {
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 
@@ -120,7 +120,7 @@ public class PaymentMenu extends Menu{
 	}
 
 
-
+	// Printing bill invoice, retrieving the total room service amount, and number of days stayed
 	public static void printInvoice(ArrayList<Payment>paymentList, ArrayList<RoomService>serviceList, ArrayList<Room>roomList, int roomIndex) {
 
 		int index = 0;		
@@ -135,7 +135,8 @@ public class PaymentMenu extends Menu{
 		double rsTotal = rsTotal(serviceList, roomId);
 		double WDrates;
 		boolean wifiEnable = roomList.get(roomIndex).isWifiEnabled();
-
+		
+		// Checking the room type and charge accordingly
 		if (roomList.get(roomIndex) instanceof Room_single) {
 			WDrates = paymentList.get(index).getSingleRoomPrice();
 		}else if (roomList.get(roomIndex) instanceof Room_double) {
@@ -204,6 +205,8 @@ public class PaymentMenu extends Menu{
 		System.out.println(" Grand Total:                      $" + df.format(total));
 	} 
 
+	// Finding the difference between check in and check out date to get the number of weekdays 
+	// and weekend stayed
 	public static int[] getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);        
@@ -235,7 +238,7 @@ public class PaymentMenu extends Menu{
 			}
 		} while (startCal.getTimeInMillis() < endCal.getTimeInMillis()); //excluding end date
 		totalDays[0] = weekDays;
-                totalDays[1] = weekEnds;
+		totalDays[1] = weekEnds;
 		return totalDays;
 	}
 }
