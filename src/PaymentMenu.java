@@ -151,8 +151,8 @@ public class PaymentMenu extends Menu{
 		}
 
 		// calculate no  of WeekDays and no WeekEnds and total of days stayed
-		Date checkIn = roomList.get(index).getCheckInDate();
-		Date checkOut = roomList.get(index).getCheckOutDate();
+		Date checkIn = roomList.get(roomIndex).getCheckInDate();
+		Date checkOut = roomList.get(roomIndex).getCheckOutDate();
 		int []nodays = getWorkingDaysBetweenTwoDates(checkIn,checkOut);
 		int weekDays = nodays[0];
 		int weekEnds = nodays[1];

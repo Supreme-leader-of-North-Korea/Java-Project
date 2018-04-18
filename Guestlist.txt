@@ -1,1 +1,3 @@
-alex wong|308 changi road|singapore|Male|sg citizen|Driving License|s12345a|234546234|2342
+chen yuxing|308 changi road|singaore|Male|singaporean|Driving License|s9274658e|7653678987653456|98765367
+Alex wong|bukit badok|singapore|Female|singaporean|Passport|s9487762b|7887|97865367
+chen xing xing|ang mo kio|singapore|Female|singaporean|Driving License|s7653678u|8763545678876546|98763567
