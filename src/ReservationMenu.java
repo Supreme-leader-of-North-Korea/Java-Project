@@ -65,34 +65,36 @@ public class ReservationMenu extends Menu {
 	}
 
 	public static void makeReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
-		String IC = readString("Please enter the guest IC Number: ");
-
-		int gindex;
 		try {
-			gindex = genericSearch("getIc",IC,guestList);
-			int resIndex = genericSearch("getGuestIC",IC,reservationList);
-
+			String IC = readString("Please enter the guest IC Number: ");
+			//Get the index where the IC matches the guestList
+			int gindex = genericSearch("getIc",IC,guestList);
+			//int resIndex = genericSearch("getGuestIC",IC,reservationList);
+			// if gindex is -1 mean there are no index in the array list which has this guest
 			if (gindex == -1) {
 				System.out.println("Guest with IC: " + IC + " not found!");
 				System.out.println("Please create guest first");
-			} else if (resIndex != -1) {
-				System.out.println("Guest : " + guestList.get(gindex).getName() + " has already made a reservation!");
 			} else {	
 				System.out.println("Guest with IC: " + IC + " found!");
+				String guestName = guestList.get(gindex).getName();
 				Date checkIn;
 				Date checkOut;
 				Date today = new Date();
-				boolean inputCheck = true;
-				
+
+				/*Verify that the check in date is after today. 
+				  Earliest reservation must be made 1 day before the check in date*/
+				boolean inputCheck = true; 
 				do {
 					if (!inputCheck)
 						System.out.println("Please enter a valid date");
 					checkIn = readDate("Please enter the check in date [DD/MM/YYYY]: ");
 					inputCheck = false;
 				}while(!checkIn.after(today));
-				
+
 				inputCheck = true;
-				
+
+				/*Verify that the check out date is after check in date. 
+				  Assume that the user will stay at least a minimum of one day*/
 				do {
 					if (!inputCheck)
 						System.out.println("Please enter a valid date");
@@ -100,43 +102,102 @@ public class ReservationMenu extends Menu {
 					inputCheck = false;
 				}while(!checkOut.after(checkIn));
 
-				//This method display all room types according to what the user choose 
-				//and return the list of room id that are available
-				String []roomIdarr = searchRoomType(roomList, checkIn, checkOut);
-
-				String roomID;
-				int roomIndex;	         
-				boolean input = false;
-				do {
-					//check if there is such a room
-					do {
-						roomID = readNonEmptyString("Please enter the room ID: ");
-						roomIndex = genericSearch("getRoomId",roomID,roomList);
-					}while(roomIndex == -1);
-
-					//check if this room is in the list of rooms that are available 
-					for(int i = 0; roomIdarr.length >= i ;i++) {
-						if (roomID.equals(roomIdarr[i])) {
-							input = true;
-							break;
-						}
-					}
-				} while(!input);
-
-
 				int paxInt = readInt("Please enter the number of pax staying: ");
 				String pax = Integer.toString(paxInt);
 
+				String roomID = "-";
+				int roomIndex = 0;
+
+				// Obtain user preferrence of room type
+				boolean input = false;
+				String roomType = readNonEmptyString("Please Enter the type of room:"
+						+ "you would like to enquiry [(S)ingle/d(O)uble/d(E)luxe/(V)ip] :");
+				do {
+					switch (roomType.toUpperCase()) {
+					case "S":	roomType = "SINGLE";
+								input = true;
+								break;
+					case "O":	roomType = "DOUBLE";
+								input = true;
+								break;
+					case "E":	roomType = "DELUXE";
+								input = true;
+								break;
+					case "V":	roomType = "VIP";
+								input = true;
+								break;
+					default:	roomType = readNonEmptyString("Please Enter the correct type of room which "
+								+ "you would like to enquiry [(S)ingle/d(O)uble/d(E)luxe/(V)ip] :");
+								input = false;
+								break;
+					}             
+				}while(!input);
+				
+				//Generating a reservation ID and making sure it there isn't a same reservation ID  
+				int index;
+				int reservationID;
+				do {
+					Random random = new Random(System.currentTimeMillis());
+					reservationID = 10000+random.nextInt(20000);
+					index = genericSearch("getReservationId",String.valueOf(reservationID),reservationList);
+				} while (index != -1);
+				
+				//Retrieve the arrayList of Room class which contains all possible reservation choice
+				ArrayList<Room> roomReservationList = new ArrayList<Room>();
+				roomReservationList = searchRoomType(roomType, reservationList, roomList, checkIn, checkOut);
+
+				
+				// if roomReservationList has 0 element, that means all room with room type of the user's choice is unavailable
+				
+				if (roomReservationList.size() == 0) {
+					System.out.println("Room of Room type " + roomType + " is unavailable at the moment!");
+					input = false;	
+					// if there are no available room type of the user's choice, he can be placed in waitlist
+					String response = readNonEmptyString("Would you like to be placed in the wait list? Y/N");
+					do {
+						switch (response.toUpperCase()) {
+						// generate a reservation ID here also
+						// if yes, we create a reservation object and store it into the reservation list
+						case "Y":	Reservation re = new Reservation(reservationID,"null", guestName, guestList.get(gindex).getCreditDetails(),
+									checkIn, checkOut, pax, Reservation.ReservationStatus.IN_WAITLIST, IC );
+									reservationList.add(re);
+									input = true;
+									break;
+						case "N":	input = true;
+									break;
+						default:	System.out.println("Please Enter Y/N!");
+									input = false;
+									break;
+						}             
+					}while(!input);
+					
+				} else {
+					boolean foundRoom = true;
+					input = false;
+					do {
+						//check if there is such a room
+						do {
+							if (!foundRoom)
+								System.out.println("Room : " + roomID + " does not exist!");
+							roomID = readNonEmptyString("Please enter the room ID: ");
+							roomIndex = genericSearch("getRoomId",roomID,roomList);
+							foundRoom = false;
+						}while(roomIndex == -1);
+
+						//check if this room is in the list of rooms that are available 
+						for(Room r : roomReservationList) {
+							if (roomID.equals(r.getRoomId())) {
+								input = true;
+								break;
+							}
+						}
+					} while(!input);
+				
 
 				//setting room status 
-				roomList.get(roomIndex).setCustomerName(guestList.get(gindex).getName());
-				roomList.get(roomIndex).setCheckInDate(checkIn);
-				roomList.get(roomIndex).setCheckOutDate(checkOut);
-				roomList.get(roomIndex).setPax(pax);
-				roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.RESERVED);
-				Random random = new Random( System.currentTimeMillis() );
-				int reservationID = 10000+random.nextInt(20000);
-
+				if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.VACANT)) {
+					roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.RESERVED);
+				} 
 				//adding reservation
 				Reservation reservation = new Reservation(reservationID, roomID, guestList.get(gindex).getName(), 
 						guestList.get(gindex).getCreditDetails(), checkIn, checkOut, pax, 
@@ -145,7 +206,8 @@ public class ReservationMenu extends Menu {
 
 				System.out.println("Room with room ID: " + roomID + " reserved!");
 				System.out.println("Reservation ID: " + reservationID);
-				System.out.println("Please present this ID during check in !");					
+				System.out.println("Please present this ID during check in !");	
+				}
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
 				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
@@ -248,23 +310,23 @@ public class ReservationMenu extends Menu {
 
 	public static void printReservation(ArrayList<Reservation>reservationList) {
 		int index = 0;
-                if (!reservationList.isEmpty()) {
-                    if(!reservationList.get(index).getReserveStatus().equals(Reservation.ReservationStatus.EXPIRED)) {
-                            for (Reservation re: reservationList) {
-                                System.out.println("Guest Name: " + reservationList.get(index).getGuestName() + 
-                                            "\nRoom ID: " + reservationList.get(index).getRoomId() + 
-                                            "\nCredit Card: " + reservationList.get(index).getCreditCard() + 
-                                            "\nCheck In Date: " + reservationList.get(index).getCheckInDate() + 
-                                            "\nCheck Out Date: " + reservationList.get(index).getCheckOutDate() + 
-                                            "\nPax:" + reservationList.get(index).getPax() +
-                                            "\nReservation Status: " + reservationList.get(index).getReserveStatus() +
-                                            "\nGuest IC: " + reservationList.get(index).getGuestIC() +
-                                            "\nReservation ID: " + reservationList.get(index).getReservationId());
-                                System.out.println(" -------------------------------------------");	
-                                index++;
-                            }
-                    }
-                } else 
-                    System.out.println("There is no reservation at the moment. ");
+		if (!reservationList.isEmpty()) {
+			if(!reservationList.get(index).getReserveStatus().equals(Reservation.ReservationStatus.EXPIRED)) {
+				for (Reservation re: reservationList) {
+					System.out.println("Guest Name: " + reservationList.get(index).getGuestName() + 
+							"\nRoom ID: " + reservationList.get(index).getRoomId() + 
+							"\nCredit Card: " + reservationList.get(index).getCreditCard() + 
+							"\nCheck In Date: " + reservationList.get(index).getCheckInDate() + 
+							"\nCheck Out Date: " + reservationList.get(index).getCheckOutDate() + 
+							"\nPax:" + reservationList.get(index).getPax() +
+							"\nReservation Status: " + reservationList.get(index).getReserveStatus() +
+							"\nGuest IC: " + reservationList.get(index).getGuestIC() +
+							"\nReservation ID: " + reservationList.get(index).getReservationId());
+					System.out.println(" -------------------------------------------");	
+					index++;
+				}
+			}
+		} else 
+			System.out.println("There is no reservation at the moment. ");
 	}
 }

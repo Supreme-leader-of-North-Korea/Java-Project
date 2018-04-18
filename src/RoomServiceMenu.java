@@ -45,6 +45,7 @@ public class RoomServiceMenu extends Menu {
 						break;
 				case 7: System.out.println("Exiting...");
 						mfio.exportAll(menuList);
+						sfio.exportAll(serviceList);
 						System.exit(0);
 						break;				
 				default:System.out.println("Wrong Input. Please input from 1 - 7.");
@@ -95,7 +96,7 @@ public class RoomServiceMenu extends Menu {
 						System.out.println("Menu with name: " + identifier + " found!");
 
 						System.out.println(" -------------------------------------------");
-						System.out.println("Please enter new menu details ('Enter' key to skip for name and description only)");
+						System.out.println("Please enter new menu details ('Enter' key to skip)");
 
 						String name = readString("Enter new menu name: ");
 						if (!name.equals("")) 
@@ -106,7 +107,7 @@ public class RoomServiceMenu extends Menu {
 							menuList.get(menuIndex).setDescription(desc);
 
 						double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
-						if (price != 0) 
+						if (price != -1) 
 							menuList.get(menuIndex).setPrice(price);
 						System.out.println(" -------------------------------------------");
 						System.out.println(" Menu item updated!");
