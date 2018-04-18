@@ -122,6 +122,10 @@ public class Menu {
 			/*if user A intended check in date is before user B check out 
 			  OR user A intended check out date is after user B check in
 			  then user A cannot make reservation for this room */
+<<<<<<< HEAD
+=======
+
+>>>>>>> cfe8bf8074a38d302cca4675fc5499e5811ce7df
 			if(!dateToStr(r.getCheckOutDate()).equals("null") && !dateToStr(r.getCheckInDate()).equals("null")) {	
 				if ( (checkIn.after(r.getCheckInDate())  && checkIn.before(r.getCheckOutDate())) || 
 						(checkOut.after(r.getCheckInDate()) && checkOut.before(r.getCheckOutDate())) ||
