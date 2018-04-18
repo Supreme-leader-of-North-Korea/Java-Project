@@ -56,37 +56,37 @@ public class PaymentMenu extends Menu{
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 		System.out.println("Please enter new payment rates details ('Enter' key to skip)");
 
-		String promo = String.valueOf(readDouble("Enter new promotion rates(%): "));
-		if (!promo.equals("")) 
-			paymentList.get(index).setPromo(Double.parseDouble(promo));
+		double promo = readDouble("Enter new promotion rates(%): ");
+		if (promo != -1) 
+			paymentList.get(index).setPromo(promo);
 
-		String gst = String.valueOf(readDouble("Enter new gst rates(%): "));
-		if (!gst.equals("")) 
-			paymentList.get(index).setTax(Double.parseDouble(gst));
+		double gst = readDouble("Enter new gst rates(%): ");
+		if (gst != -1) 
+			paymentList.get(index).setTax(gst);
 
-		String wifiRates = String.valueOf(readDouble("Enter new wifiRates/day: "));
-		if (!wifiRates.equals("")) 
-			paymentList.get(index).setWifiPrice(Double.parseDouble(wifiRates));
+		double wifiRates = readDouble("Enter new wifiRates/day: ");
+		if (wifiRates != -1)  
+			paymentList.get(index).setWifiPrice(wifiRates);
 
-		String tvRates = String.valueOf(readDouble("Enter new Cabled TV rates/day: "));
-		if (!tvRates.equals("")) 
-			paymentList.get(index).setTvPrice(Double.parseDouble(tvRates));
+		double tvRates = readDouble("Enter new Cabled TV rates/day: ");
+		if (tvRates != -1) 
+			paymentList.get(index).setTvPrice(tvRates);
 
-		String singleRoomRates = String.valueOf(readDouble("Enter new room rates (Single room): "));
-		if (!singleRoomRates.equals("")) 
-			paymentList.get(index).setSingleRoomPrice(Double.parseDouble(singleRoomRates));
+		double singleRoomRates = readDouble("Enter new room rates (Single room): ");
+		if (singleRoomRates != -1) 
+			paymentList.get(index).setSingleRoomPrice(singleRoomRates);
 
-		String doubleRoomRates = String.valueOf(readDouble("Enter new room rates (Double room): "));
-		if (!doubleRoomRates.equals("")) 
-			paymentList.get(index).setDoubleRoomPrice(Double.parseDouble(doubleRoomRates));
+		double doubleRoomRates = readDouble("Enter new room rates (Double room): ");
+		if (doubleRoomRates != -1)  
+			paymentList.get(index).setDoubleRoomPrice(doubleRoomRates);
 
-		String deluxeRoomRates = String.valueOf(readDouble("Enter new room rates (Deluxe room): "));
-		if (!deluxeRoomRates.equals("")) 
-			paymentList.get(index).setDeluxeRoomPrice(Double.parseDouble(deluxeRoomRates));
+		double deluxeRoomRates = readDouble("Enter new room rates (Deluxe room): ");
+		if (deluxeRoomRates != -1)  
+			paymentList.get(index).setDeluxeRoomPrice(deluxeRoomRates);
 
-		String vipRoomRates = String.valueOf(readDouble("Enter new room rates (VIP room): "));
-		if (!vipRoomRates.equals("")) 
-			paymentList.get(index).setVipRoomPrice(Double.parseDouble(vipRoomRates));		
+		double vipRoomRates = readDouble("Enter new room rates (VIP room): ");
+		if (vipRoomRates != -1) 
+			paymentList.get(index).setVipRoomPrice(vipRoomRates);		
 	}
 	// Print payment rates
 	public static void printRates(ArrayList<Payment>paymentList) {
