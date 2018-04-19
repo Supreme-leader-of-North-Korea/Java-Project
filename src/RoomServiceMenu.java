@@ -1,9 +1,22 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * RoomServiceMenu is a sub class of Menu class, which handles all the RoomService in the hotel.
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class RoomServiceMenu extends Menu {
-	//Room Service Menu -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+	
+	/**
+	 * This method directs the user to the RoomService Menu.
+	 * 
+	 * @param serviceList This list contains all the room services ordered by the Guest.
+	 * @param menuList This list contains all the Menu items in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @throws FileNotFoundException
+	 */
 	public static void roomServiceMenu(ArrayList<RoomService>serviceList, ArrayList<MenuItem>menuList, 
 			ArrayList<Room>roomList) throws FileNotFoundException{
 
@@ -53,6 +66,9 @@ public class RoomServiceMenu extends Menu {
 		} while (choice != 6);
 	}
 
+	/**
+	 * This method prints the Room Service Menu to inform the users of the options.
+	 */
 	public static void printRoomServiceMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *              Room Service               *");
@@ -66,6 +82,11 @@ public class RoomServiceMenu extends Menu {
 		System.out.println(" * 7. Quit                                 *");
 	}
 
+	/**
+	 * This method allows user to create new MenuItem and store it in menuList.
+	 * 
+	 * @param menuList This list contains all the Menu items in the system.
+	 */
 	public static void createNewMenu(ArrayList<MenuItem>menuList) {
 		String name = readNonEmptyString("Enter menu name: ");
 		String desc = readNonEmptyString("Preparation method: ");
@@ -77,6 +98,11 @@ public class RoomServiceMenu extends Menu {
 		
 	}
 
+	/**
+	 * This method allows user to update the existing MenuItem details from menuList.
+	 * 
+	 * @param menuList This list contains all the Menu items in the system.
+	 */
 	public static void updateMenu(ArrayList<MenuItem>menuList) {
 		if(printMenu(menuList)) {
 			try {
@@ -101,8 +127,7 @@ public class RoomServiceMenu extends Menu {
 						if (!desc.equals("")) 
 							menuList.get(menuIndex).setDescription(desc);
 
-						double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") ");
-						if (price != -1) 
+						double price = readDouble("Enter new menu price: (Current price : " + menuList.get(menuIndex).getPrice() + ") "); 
 							menuList.get(menuIndex).setPrice(price);
 						System.out.println(" -------------------------------------------");
 						System.out.println(" Menu item updated!");
@@ -117,6 +142,11 @@ public class RoomServiceMenu extends Menu {
 		
 	}
 
+	/**
+	 * This method allows user to remove the existing MenuItem details from menuList.
+	 * 
+	 * @param menuList This list contains all the Menu items in the system.
+	 */
 	public static void removeMenu(ArrayList<MenuItem>menuList) {
 		try {
 			if(printMenu(menuList)) {
@@ -142,6 +172,13 @@ public class RoomServiceMenu extends Menu {
 		}
 	}
 
+	/**
+	 * This method allows user to create new RoomService order and store it in serviceList.
+	 * 
+	 * @param menuList This list contains all the Menu items in the system.
+	 * @param serviceList This list contains all the room services ordered by the Guest.
+	 * @param roomList This list contains the details of all the room in the system.
+	 */
 	public static void createNewRS (ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 		String roomNo = readString("Enter your room no: ");
 
@@ -176,6 +213,13 @@ public class RoomServiceMenu extends Menu {
 		}      
 	}
 
+	/**
+	 * This method prints the list of MenuItem from menuList when the Guest is 
+	 * ordering RoomService.
+	 * 
+	 * @param menuList This list contains all the Menu items in the system.
+	 * @return True when the menuList is not empty, otherwise False.
+	 */
 	public static boolean printMenu(ArrayList<MenuItem>menuList) {
 		int index = 1;
 		if (menuList.isEmpty()) {
@@ -194,6 +238,13 @@ public class RoomServiceMenu extends Menu {
 
 	}
 
+	/**
+	 * This method allows user to update existing RoomService Status.
+	 * 
+	 * @param menuList This list contains all the Menu items in the system.
+	 * @param serviceList This list contains all the room services ordered by the Guest.
+	 * @param roomList This list contains the details of all the room in the system.
+	 */
 	public static void updateRS(ArrayList<MenuItem>menuList, ArrayList<RoomService>serviceList,ArrayList<Room>roomList) {
 		String roomNo = readNonEmptyString("Please Enter the room ID: ");
 		//roomServiceSearch returns array of int which contains the index of the menuItem which is place by the room no
@@ -218,17 +269,20 @@ public class RoomServiceMenu extends Menu {
 			if (found) {
 				int itemNo = readInt("Which item would you like to update: "); 
 				itemNo = itemNo - 1;
-				if (itemNo < items.size()){
-					String choice = readNonEmptyString("Please enter the new Status (P)reparing/(D)elivered: ");
-					switch(choice.toUpperCase()) {
-					case "P": 	items.get(itemNo).setStatus(RoomService.Status.PREPARING);
-								break;
-					case "D": 	items.get(itemNo).setStatus(RoomService.Status.DELIVERED);
-								break;
-					}
+				if (itemNo > 0) {
+					if (itemNo < items.size()){
+						String choice = readNonEmptyString("Please enter the new Status (P)reparing/(D)elivered: ");
+						switch(choice.toUpperCase()) {
+						case "P": 	items.get(itemNo).setStatus(RoomService.Status.PREPARING);
+						break;
+						case "D": 	items.get(itemNo).setStatus(RoomService.Status.DELIVERED);
+						break;
+						}
+					} else 
+						System.out.println("Please enter from 1 to " + items.size());
+					serviceList.addAll(items);
 				} else 
-					System.out.println("Please enter from 1 to " + items.size());
-				serviceList.addAll(items);
+					System.out.println("Please enter the correct input. ");
 			} else {
 				System.out.println("Please Enter a valid choice");
 			}
@@ -237,6 +291,4 @@ public class RoomServiceMenu extends Menu {
 		}
 	}
 
-	
-	
 }

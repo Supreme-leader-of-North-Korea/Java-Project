@@ -5,14 +5,27 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * ServiceFileIO handles input and output of data into RoomServiceList.txt
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class ServiceFileIO extends FileIO<RoomService> {
 
-	//Attributes
+	/**The name of the file which the information of the Room service will be written to and read from	 */
 	final static String fileName = "RoomServiceList.txt";
+	
+	/**Creating a new file object	 */
 	final static File file = new File(fileName);
 
-	//Retrieve data from file
-	public void parseList (ArrayList<RoomService> list) throws FileNotFoundException{
+	/**
+	 * This method reads in from RoomServiceList.txt and add each RoomService object into rslist.
+	 * 
+	 * @param rslist An ArrayList which holds all the details from RoomServiceList.txt.
+	 * @throws FileNotFoundException
+	 */
+	public void parseList (ArrayList<RoomService> rslist) throws FileNotFoundException{
 		try {
 			file.createNewFile();
 		} catch (Exception e) {
@@ -27,13 +40,19 @@ public class ServiceFileIO extends FileIO<RoomService> {
 
 			RoomService temp = new RoomService (arr[0], Integer.parseInt(arr[1]), Integer.parseInt(arr[2]), 
 					arr[3], Double.parseDouble(arr[4]), RoomService.strToStatus(arr[5]));
-			list.add(temp);
+			rslist.add(temp);
 		}
 
 		myScanner.close();
 	}
 
-	public  void export (RoomService rs, PrintWriter fout) {
+	/**
+	 * This method will export one Room object to a RoomServiceList.txt.
+	 * 
+	 * @param rs The RoomService object that is going to be exported.
+	 * @param fout A PrintWriter object.
+	 */
+	public void export (RoomService rs, PrintWriter fout) {
 		fout.print(rs.getRoomId() + "|");
 		fout.print(rs.getMenuItemNo() + "|");
 		fout.print(rs.getQuantity() + "|");
@@ -42,10 +61,17 @@ public class ServiceFileIO extends FileIO<RoomService> {
 		fout.println(rs.getStatus());
 	}
 
-	public  void exportAll (ArrayList<RoomService> list) throws FileNotFoundException {
+	/**
+	 * This method exports every RoomService object stored in the list to RoomServiceList.txt.
+	 * It calls the export function repeatedly until it reaches the end of list.
+	 * 
+	 * @param rslist This ArrayList contains all the new updates made from the user and the existing ones.
+	 * @throws FileNotFoundException
+	 */
+	public void exportAll (ArrayList<RoomService> rslist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 
-		for (RoomService temp: list) 
+		for (RoomService temp: rslist) 
 			export (temp, fileOut);
 
 		fileOut.close();

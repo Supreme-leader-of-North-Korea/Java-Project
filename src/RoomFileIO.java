@@ -5,14 +5,26 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ * RoomFileIO handles input and output of data into RoomList.txt
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class RoomFileIO extends FileIO<Room>{
 
-	//Attributes
+	/**The name of the file which the information of the Room will be written to and read from	 */
 	final static String fileName = "RoomList.txt";
+
+	/**Creating a new file object	 */
 	final static File file = new File(fileName);
 
-	//Retrieve data from file
+	/**
+	 * This method reads in from RoomList.txt and add each Room object into rlist.
+	 * 
+	 * @param rlist - An Array List which holds all the details from RoomList.txt.
+	 * @throws FileNotFoundException
+	 */
 	public void parseList (ArrayList<Room> rlist) throws FileNotFoundException{
 
 		// to create file when it does not exist, else Exception will be thrown
@@ -114,6 +126,12 @@ public class RoomFileIO extends FileIO<Room>{
 		myScanner.close();
 	}
 
+	/**
+	 * This method will export one Room object to a RoomList.txt.
+	 * 
+	 * @param r The Room object that is going to be exported.
+	 * @param fout A PrintWriter object.
+	 */
 	public void export (Room r, PrintWriter fout) {
 		fout.print(r.getRoomId() + "|");
 		fout.print(r.getCustomerName() + "|");
@@ -135,6 +153,13 @@ public class RoomFileIO extends FileIO<Room>{
 		fout.println("|" + r.getGuestIC());
 	}
 
+	/**
+	 * This method exports every Room object stored in the rlist to RoomList.txt.
+	 * It calls the export function repeatedly until it reaches the end of rlist.
+	 * 
+	 * @param rlist This ArrayList contains all the new updates made from the user and the existing ones.
+	 * @throws FileNotFoundException
+	 */
 	public void exportAll (ArrayList<Room> rlist) throws FileNotFoundException {
 		PrintWriter fileOut = new PrintWriter (new FileOutputStream (fileName, false));
 

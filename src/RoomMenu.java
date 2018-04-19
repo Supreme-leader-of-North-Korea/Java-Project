@@ -2,9 +2,25 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * RoomMenu is a sub class of Menu class, which handles all the Room in the hotel.
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class RoomMenu extends Menu {
-	//Room Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+	
+	/**
+	 * This method directs the user to the Room Menu.
+	 * 
+	 * @param guestList - This list contains the details of all the guest registered in the system.
+	 * @param roomList - This list contains the details of all the room in the system.
+	 * @param reservationList - This list contains all the reservations details.
+	 * @param serviceList - This list contains all the room services ordered by the Guest.
+	 * @param paymentList - This list contains the Payment rates of the hotel.
+	 * @param menuList - This list contains all the Menu items in the system.
+	 * @throws FileNotFoundException
+	 */
 	public static void roomMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
 			ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) throws FileNotFoundException{
@@ -58,7 +74,9 @@ public class RoomMenu extends Menu {
 		} while (choice != 7);  
 	}	        	
 
-	//print Menu
+	/**
+	 * This method prints the Room Menu to inform the users of the options.
+	 */
 	public static void printRoomMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                  Room                   *");
@@ -73,7 +91,12 @@ public class RoomMenu extends Menu {
 		System.out.println(" * 8. Quit                                 *");
 	}	
 
-	//Print details of room base on guest names
+	/**
+	 * This method prints details of the room based on the Guest name given by the user.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 */
 	public static void searchRoomByName(ArrayList<Room>roomList,ArrayList<Guest>guestList) {
 		//Ask for guest name as primary key, IC is being return as the identifier
 		try {
@@ -107,7 +130,11 @@ public class RoomMenu extends Menu {
 		}
 	}	
 
-	//Print details of room base on room ID
+	/**
+	 * This method prints details of the room based on the room ID given by the user.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 */
 	public static void searchRoomByNo(ArrayList<Room>roomList) {
 		//Ask for room ID
 		String roomID = readString("Please enter the room number you would like to search: ");
@@ -136,7 +163,11 @@ public class RoomMenu extends Menu {
 		}
 	}        
 
-	//Update details of room 
+	/**
+	 * This method updates details of a room based on the room ID given by the user.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 */
 	public static void updateRoom(ArrayList<Room>roomList) {
 		//Ask for room ID
 		String roomID = readNonEmptyString("Please enter the room ID to update it's details: ");
@@ -223,7 +254,13 @@ public class RoomMenu extends Menu {
 		}
 	}        
 
-	//New check CheckIn
+	/**
+	 * This method asks for the method of check in.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 */
 	public static void checkIn(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		System.out.println(" ===========================================");
 		System.out.println(" 1. Walk In                                *");
@@ -240,7 +277,13 @@ public class RoomMenu extends Menu {
 		}
 	}        
 
-	//Check in by walk in
+	/**
+	 * This method allows Guest to check in without reservation.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 */
 	public static void walkInCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
 		String identifier = readNonEmptyString("Please enter the guest IC Number: ");
 		int index;
@@ -323,7 +366,13 @@ public class RoomMenu extends Menu {
 		}
 	}
 
-	//Check in by reservation
+	/**
+	 * This method allows Guest to check in only if they made reservation.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 */
 	public static void reservationCheckIn(ArrayList<Room>roomList, ArrayList<Guest>guestList, ArrayList<Reservation>reservationList) {
 		int resID = readInt(" Please enter the reservation number: ");
 		int index;
@@ -366,6 +415,20 @@ public class RoomMenu extends Menu {
 		}
 	}
 
+	/**
+	 * This method allows Guest to check out.
+	 * roomList, reservationList and serviceList 
+	 * will be updated accordingly upon checking out.
+	 * Bill invoice will be calculated and displayed
+	 * based on the paymentList and serviceList.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 * @param serviceList This list contains all the room services ordered by the Guest.
+	 * @param paymentList This list contains the Payment rates of the hotel.
+	 * @param menuList This list contains all the Menu items in the system.
+	 */
 	public static void checkOut(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList, 
 			ArrayList<RoomService>serviceList, ArrayList<Payment>paymentList, ArrayList<MenuItem>menuList) {
 		String roomID = readString("Please enter the room ID: ");
@@ -415,6 +478,11 @@ public class RoomMenu extends Menu {
 		}
 	}
 
+	/**
+	 * This method prints out relevant details of the room based on the Room Status.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 */
 	public static void printRoomReport(ArrayList<Room>roomList) {
 
 		//Print room occupancy rate
@@ -533,6 +601,11 @@ public class RoomMenu extends Menu {
 		printRooms (maintList);
 	}
 
+	/**
+	 * This method prints out details of OCCUPIED room stored in occuList.
+	 * 
+	 * @param occuList This list contains Room object that is OCCUPIED.
+	 */
 	public static void printRooms (ArrayList<Room>occuList) {
 
 		if (occuList.isEmpty())
@@ -547,6 +620,5 @@ public class RoomMenu extends Menu {
 
 		System.out.println("\n");
 	}
-
 
 }

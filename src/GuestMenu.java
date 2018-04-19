@@ -1,8 +1,22 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * GuestMenu is a sub class of Menu class, which handles all the Guests registered in the hotel.
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class GuestMenu extends Menu {
-	// Guest Menu
+
+	/**
+	 * This method directs the user to the Guest Menu based on user input.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 * @throws FileNotFoundException
+	 */
 	public static void guestMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList) throws FileNotFoundException {
 		int choice = 0;
@@ -51,7 +65,9 @@ public class GuestMenu extends Menu {
 		} while (choice != 4);  
 	}
 
-	// Printing Guest Menu
+	/**
+	 * This method prints the Guest Menu to inform the users of the options.
+	 */
 	public static void printGuestMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                  Guest                  *");
@@ -63,7 +79,11 @@ public class GuestMenu extends Menu {
 		System.out.println(" * 5. Quit                                 *");
 	}
 
-	// Creating a new Guest
+	/**
+	 * This method creates a new Guest into the system.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 */
 	public static void createNewGuest(ArrayList<Guest>guestList) {
 		boolean input = false;
 		System.out.println("All fields are mandatory");
@@ -123,7 +143,14 @@ public class GuestMenu extends Menu {
 		}
 	}
 
-	// Updating a existing Guest
+	/**
+	 * This method updates an existing Guest details which is inside guestList
+	 * Updating Guest will also update roomList and reservationList accordingly
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 */
 	public static void updateGuest(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		//Ask for guest identity(IC) to update guest
 
@@ -182,7 +209,6 @@ public class GuestMenu extends Menu {
 					g.setNationality(nat);
 
 				long ccd = readLong("Enter new guest credit card detail: ");
-				if (ccd != -1) 
 					g.setCreditDetails(String.valueOf(ccd));
 
 				//Assuming they can put country code
@@ -214,7 +240,11 @@ public class GuestMenu extends Menu {
 		}
 	}
 
-	//Searching Guest
+	/**
+	 * This method allows user to search for a Guest details.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 */
 	public static void searchGuest(ArrayList<Guest>guestList) {
 		//Ask for guest name to search
 		String identifier = readString("Please enter name of guest to search: ");

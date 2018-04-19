@@ -3,8 +3,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * ReservationMenu is a sub class of Menu class, which handles all the reservation in the hotel.
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class ReservationMenu extends Menu {
-	//Reservation Menu ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * This method directs the user to the Reservation Menu.
+	 * 
+	 * @param guestList - This list contains the details of all the guest registered in the system.
+	 * @param roomList - This list contains the details of all the room in the system.
+	 * @param reservationList - This list contains all the reservations details.
+	 * @throws FileNotFoundException
+	 */
 	public static void reservationMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
 
 		int choice = 0;
@@ -27,7 +41,7 @@ public class ReservationMenu extends Menu {
 					break;
 			case 2: searchReservation(reservationList);
 					break;
-			case 3: updateReservation(guestList, roomList, reservationList);
+			case 3: updateReservation(roomList, reservationList);
 					refio.exportAll(reservationList);
 					rfio.exportAll(roomList);
 					break;
@@ -55,7 +69,9 @@ public class ReservationMenu extends Menu {
 
 	}
 
-	//Print reservation menu
+	/**
+	 * This method prints the Reservation Menu to inform the users of the options.
+	 */
 	public static void printReservationMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *               Reservation               *");
@@ -69,7 +85,15 @@ public class ReservationMenu extends Menu {
 		System.out.println(" * 7. Quit                                 *");
 	}
 
-	//Make reservation from reservation list
+	/**
+	 * This method creates new Reservation into the system by taking in Guest details from guestList.
+	 * The room the user desire will be obtained from roomList and successful reservation will be added into the reservationList.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 * @throws FileNotFoundException
+	 */
 	public static void makeReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) throws FileNotFoundException{
 		try {
 			String IC = readString("Please enter the guest IC Number: ");
@@ -221,7 +245,11 @@ public class ReservationMenu extends Menu {
 		}
 	}	        
 
-	//Search reservation from reservation list
+	/**
+	 * This method search for the reservation in reservationList.
+	 * 
+	 * @param reservationList This list contains all the reservations details.
+	 */
 	public static void searchReservation(ArrayList<Reservation>reservationList) {
 		int resID = readInt("Please enter the reservation ID you would like to search: ");
 		int index;
@@ -251,8 +279,14 @@ public class ReservationMenu extends Menu {
 		}
 	}
 
-	//Update reservation from reservation list
-	public static void updateReservation(ArrayList<Guest>guestList, ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
+	/**
+	 * This method updates Reservation from reservationList.
+	 * roomList is used to check for available room type that the user desire.
+	 * 
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details.
+	 */
+	public static void updateReservation(ArrayList<Room>roomList, ArrayList<Reservation>reservationList) {
 		int resID = readInt("Please enter the reservation ID you would like to update: ");
 		int roomIndex = 0;
 		int index;
@@ -347,7 +381,11 @@ public class ReservationMenu extends Menu {
 		}
 	}
 
-	//Print reservation from reservation list
+	/**
+	 * This method prints all Reservation from reservationList, except for EXPIRED Status.
+	 * 
+	 * @param reservationList This list contains all the reservations details.
+	 */
 	public static void printReservation(ArrayList<Reservation>reservationList) {
 		if (!reservationList.isEmpty()) {
 			for (Reservation re: reservationList) {
@@ -368,24 +406,33 @@ public class ReservationMenu extends Menu {
 			System.out.println("There is no reservation at the moment. ");
 	}
 		
-	//Remove reservation from reservation list
+	/**
+	 * This method removes Reservation from reservationList.
+	 * The Status in Room will also be updated accordingly based on the Status in roomList.
+	 * 
+	 * @param reservationList - This list contains all the reservations details.
+	 * @param roomList This list contains the details of all the room in the system.
+	 */
 	public static void removeReservation(ArrayList<Reservation>reservationList, ArrayList<Room>roomList) {
 		int resID = readInt("Please enter the reservation ID you would like to remove: ");
 		int index, roomIndex, resIndex;
 		try {
 			index = genericSearch("getReservationId", String.valueOf(resID) , reservationList);
 			String roomId;
-			roomId = reservationList.get(index).getRoomId();
-			reservationList.remove(index);
-			roomIndex = genericSearch("getRoomId", roomId, roomList);
-			
-			if (!roomId.equals("null")) {
-				if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED)){
-					resIndex = genericSearch("getRoomId", roomId, reservationList);
-					if (resIndex == -1)
-						roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.VACANT);
+			if (index != -1) {
+				roomId = reservationList.get(index).getRoomId();
+				reservationList.remove(index);
+				roomIndex = genericSearch("getRoomId", roomId, roomList);
+				System.out.println("Reservation successfully removed !");
+				if (!roomId.equals("null")) {
+					if(roomList.get(roomIndex).getRoomStatus().equals(Room.RoomStatus.RESERVED)){
+						resIndex = genericSearch("getRoomId", roomId, reservationList);
+						if (resIndex == -1)
+							roomList.get(roomIndex).setRoomStatus(Room.RoomStatus.VACANT);
+					}
 				}
-			}
+			} else 
+				System.out.println("Reservation not found ! Please check your reservation ID again.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

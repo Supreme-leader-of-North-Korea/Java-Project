@@ -4,8 +4,25 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Payment Menu which allows the staff to update
+ * and print the payment rates and total price.
+ * 
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class PaymentMenu extends Menu{
 
+	/**
+	 * This method directs the user to the Payment Menu based on the user inputs.
+	 * 
+	 * @param guestList This list contains the details of all the guest registered in the system.
+	 * @param roomList This list contains the details of all the room in the system.
+	 * @param reservationList This list contains all the reservations details in the system.
+	 * @param serviceList This list contains the details of all the room services ordered in the system.
+	 * @param paymentList This list contains the hotel rates.
+	 * @throws FileNotFoundException
+	 */
 	public static void paymentMenu(ArrayList<Guest>guestList, ArrayList<Room>roomList, 
 			ArrayList<Reservation>reservationList, ArrayList<RoomService>serviceList,
 			ArrayList<Payment>paymentList) throws FileNotFoundException{
@@ -40,7 +57,10 @@ public class PaymentMenu extends Menu{
 
 		} while (choice != 3);  
 	}
-	// Print payment menu
+	
+	/**
+	 * This method print the payment menu to inform the users of the options.
+	 */
 	public static void printPaymentMenu() {
 		System.out.println(" ===========================================");
 		System.out.println(" *                 Payment                 *");
@@ -50,45 +70,46 @@ public class PaymentMenu extends Menu{
 		System.out.println(" * 3. Previous                             *");
 		System.out.println(" * 4. Quit                                 *");
 	}
-	// Updating the payment rates
+
+	/**
+	 * This method updates the payment rates of the hotel that is stored in paymentList.
+	 * @param paymentList This list contains the hotel rates.
+	 */
 	public static void updatePaymentRates(ArrayList<Payment>paymentList) {
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 		System.out.println("Please enter new payment rates details ('Enter' key to skip)");
 		Payment p = paymentList.get(index);
 		
-		double promo = readDouble("Enter new promotion rates(%): ");
-		if (promo != -1) 
+		double promo = readDouble("Enter new promotion rates(%): (Current :" + p.getPromo() +") "); 
 			p.setPromo(promo);
 
-		double gst = readDouble("Enter new gst rates(%): ");
-		if (gst != -1) 
+		double gst = readDouble("Enter new gst rates(%): (Current :" + p.getTax() + ")");
 			p.setTax(gst);
 
-		double wifiRates = readDouble("Enter new wifiRates/day: ");
-		if (wifiRates != -1)  
+		double wifiRates = readDouble("Enter new wifiRates/day: (Current :" + p.getWifiPrice() +") ");
 			p.setWifiPrice(wifiRates);
 
-		double tvRates = readDouble("Enter new Cabled TV rates/day: ");
-		if (tvRates != -1) 
+		double tvRates = readDouble("Enter new Cabled TV rates/day: (Current :" + p.getTvPrice() +") ");
 			p.setTvPrice(tvRates);
 
-		double singleRoomRates = readDouble("Enter new room rates (Single room): ");
-		if (singleRoomRates != -1) 
+		double singleRoomRates = readDouble("Enter new room rates (Single room): (Current :" + p.getSingleRoomPrice() + ") ");
 			p.setSingleRoomPrice(singleRoomRates);
 
-		double doubleRoomRates = readDouble("Enter new room rates (Double room): ");
-		if (doubleRoomRates != -1)  
+		double doubleRoomRates = readDouble("Enter new room rates (Double room): (Current :" + p.getDoubleRoomPrice() + ") ");
 			p.setDoubleRoomPrice(doubleRoomRates);
 
-		double deluxeRoomRates = readDouble("Enter new room rates (Deluxe room): ");
-		if (deluxeRoomRates != -1)  
+		double deluxeRoomRates = readDouble("Enter new room rates (Deluxe room): (Current :" + p.getDeluxeRoomPrice() + ") ");
 			p.setDeluxeRoomPrice(deluxeRoomRates);
 
-		double vipRoomRates = readDouble("Enter new room rates (VIP room): ");
-		if (vipRoomRates != -1) 
+		double vipRoomRates = readDouble("Enter new room rates (VIP room): (Current :" + p.getVipRoomPrice() + ") ");
 			p.setVipRoomPrice(vipRoomRates);		
 	}
+	
 	// Print payment rates
+	/**
+	 * This method prints out the payment rates of the hotel stored in paymentList.
+	 * @param paymentList This list contains the hotel rates.
+	 */
 	public static void printRates(ArrayList<Payment>paymentList) {
 		int index = 0; //there will be one row in paymentList for now as we do not keep history  	
 		Payment p = paymentList.get(index);
@@ -120,8 +141,15 @@ public class PaymentMenu extends Menu{
 		System.out.println(" Cabled Television                   $" + df.format(tvRates) +"/day");
 	}
 
-
-	// Printing bill invoice, retrieving the total room service amount, and number of days stayed
+	/**
+	 * This method sums up the total bill invoice which is calculated based on the details
+	 * obtained from roomList, paymentList and serviceList.
+	 * 
+	 * @param paymentList This list contains the hotel rates.
+	 * @param serviceList This list contains all the room services ordered.
+	 * @param roomList This list contains the details of all the room in the hotel.
+	 * @param roomIndex This index contains the ID of the room that is checking out.
+	 */
 	public static void printInvoice(ArrayList<Payment>paymentList, ArrayList<RoomService>serviceList, ArrayList<Room>roomList, int roomIndex) {
 		int index = 0;		
 		Payment p = paymentList.get(index);
@@ -202,8 +230,14 @@ public class PaymentMenu extends Menu{
 		System.out.println(" Grand Total:                      $" + df.format(total));
 	} 
 
-	// Finding the difference between check in and check out date to get the number of weekdays 
-	// and weekend stayed
+	/**
+	 * This method finds the difference between the startDate and the 
+	 * endDate date to get the number of weekdays and weekends.
+	 * 
+	 * @param startDate The starting date of an event.
+	 * @param endDate The ending date of an event.
+	 * @return An Integer Array of size 2, which contains the number of weekdays and weekends.
+	 */
 	public static int[] getWorkingDaysBetweenTwoDates(Date startDate, Date endDate) {
 		Calendar startCal = Calendar.getInstance();
 		startCal.setTime(startDate);        

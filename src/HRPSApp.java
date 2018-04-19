@@ -1,8 +1,13 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
+/**
+ * The Main Entry point of the programme
+ *
+ * @author Li Jin Quan, Lee Jian Hao, Chen Xing Yu, Kok Jia Hui
+ * @version 1.0
+ */
 public class HRPSApp {
-
+	
 	public static void main(String[] args) throws FileNotFoundException{
 
 		//List of data
