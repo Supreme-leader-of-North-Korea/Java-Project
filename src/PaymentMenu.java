@@ -215,16 +215,16 @@ public class PaymentMenu extends Menu{
 		System.out.println(" =======================================");
 		System.out.println(" *               Invoice               *");
 		System.out.println(" =======================================");
-		System.out.println(" No of days stayed:                 " + (weekDays+weekEnds));
-		System.out.println(weekDays +" Weekdays($"+ WDrates +"/days):  " + wdPrice);
-		System.out.println(weekEnds +" Weekends($"+ WErates * WDrates +"/days):  " + wePrice);
+		System.out.println(" No of days stayed:                   " + df.format(weekDays+weekEnds));
+		System.out.println("   " + weekDays +" Weekdays($"+ WDrates +"/days):        $" + df.format(wdPrice));
+		System.out.println("   " + weekEnds +" Weekends($"+ WErates * WDrates +"/days):        $" + df.format(wePrice));
 		if (overStayFine) {
-			System.out.println(" 	Delayed Check Out Fine:        $" + df.format(fineRate));
+			System.out.println(" Delayed Check Out Fine:           $" + df.format(fineRate));
 		}
 		System.out.println(" Room Service Total                $" + df.format(rsTotal));
 		System.out.println(" ---------------------------------------");
 		System.out.println(" Sub-total:                        $" + df.format(subtotal));
-		System.out.println(" GST("+ tax +"%)                   $" + df.format(gst));
+		System.out.println(" GST("+ tax +"%)                         $" + df.format(gst));
 		System.out.println(" Promotion(if any):                $" + df.format(promotion) );
 		System.out.println(" =======================================");
 		System.out.println(" Grand Total:                      $" + df.format(total));
