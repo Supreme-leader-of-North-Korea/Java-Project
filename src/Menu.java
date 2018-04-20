@@ -300,7 +300,7 @@ public class Menu {
 		boolean valid = false;
 		while (!valid) {
 			try {
-				input = Integer.parseInt(readNonEmptyString(prompt));
+				input = Integer.parseInt(readString(prompt));
 				if (input > 0)
 					valid = true;
 				else 
@@ -325,7 +325,7 @@ public class Menu {
 		boolean valid = false;
 		while (!valid) {
 			try {
-				input = Long.parseLong(readNonEmptyString(prompt));
+				input = Long.parseLong(readString(prompt));
 				if (input > 0)
 					valid = true;
 				else 
@@ -351,7 +351,7 @@ public class Menu {
 		boolean valid = false;
 		while (!valid) {
 			try {
-				input = Double.parseDouble(readNonEmptyString(prompt));
+				input = Double.parseDouble(readString(prompt));
 				if (input > 0)
 					valid = true;
 				else 
